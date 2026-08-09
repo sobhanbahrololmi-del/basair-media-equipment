@@ -3,501 +3,334 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>سامانه مدیریت رسانه بصائر</title>
 
 <style>
 *{box-sizing:border-box}
-
-:root{
-    --primary:#263746;
-    --primary2:#34495e;
-    --bg:#f4f6f8;
-    --card:#fff;
-    --text:#20252b;
-    --muted:#68737d;
-    --green:#16803c;
-    --yellow:#d68910;
-    --red:#c0392b;
-    --blue:#2980b9;
-    --purple:#7d3c98;
-    --border:#e1e5e8;
-}
-
 body{
     margin:0;
     font-family:Tahoma,Arial,sans-serif;
-    background:var(--bg);
-    color:var(--text);
+    background:#f3f5f7;
+    color:#20252b;
 }
-
-button,input,select,textarea{
-    font-family:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.hidden{
-    display:none!important;
-}
-
-/* LOGIN */
+button,input,select,textarea{font-family:inherit}
+button{cursor:pointer;border:0}
+.hidden{display:none!important}
 
 .login-page{
     min-height:100vh;
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#18232d,#34495e);
     padding:20px;
-    background:linear-gradient(135deg,#1f2d3a,#34495e);
 }
-
 .login-box{
     width:100%;
-    max-width:430px;
+    max-width:420px;
     background:white;
-    border-radius:18px;
+    border-radius:22px;
     padding:35px;
-    box-shadow:0 20px 60px rgba(0,0,0,.25);
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
     text-align:center;
 }
-
 .login-logo{
     width:70px;
     height:70px;
-    margin:0 auto 15px;
-    border-radius:50%;
-    background:var(--primary);
+    margin:auto auto 15px;
+    border-radius:20px;
+    background:#2c3e50;
     color:white;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:34px;
+    font-size:38px;
     font-weight:bold;
 }
-
-.login-box h1{
-    font-size:21px;
-    margin:0 0 8px;
-}
-
-.login-box p{
-    color:var(--muted);
-    font-size:13px;
-    margin-bottom:25px;
-}
-
-.login-field{
-    text-align:right;
-    margin-bottom:15px;
-}
-
-.login-field label{
-    display:block;
-    font-size:13px;
-    font-weight:bold;
-    margin-bottom:6px;
-}
-
+.login-box h1{font-size:22px;margin:0 0 10px}
+.login-box p{font-size:13px;color:#777;margin-bottom:25px}
+.login-field{text-align:right;margin-bottom:15px}
+.login-field label{display:block;font-size:13px;font-weight:bold;margin-bottom:6px}
 .login-field input{
     width:100%;
     padding:13px;
-    border:1px solid #ccd2d7;
-    border-radius:8px;
+    border:1px solid #ddd;
+    border-radius:9px;
     outline:none;
 }
-
-.login-field input:focus{
-    border-color:var(--blue);
-}
-
+.login-field input:focus{border-color:#34495e}
 .login-btn{
     width:100%;
-    border:0;
-    background:var(--primary);
-    color:white;
     padding:13px;
-    border-radius:8px;
+    border-radius:9px;
+    background:#2c3e50;
+    color:#fff;
     font-size:14px;
-    margin-top:5px;
-}
-
-.login-btn:hover{
-    background:#1c2a36;
-}
-
-.login-error{
-    display:none;
-    margin-top:14px;
-    padding:10px;
-    border-radius:7px;
-    background:#fdecea;
-    color:var(--red);
-    font-size:12px;
-}
-
-/* APP */
-
-.app{
-    min-height:100vh;
-}
-
-.topbar{
-    height:65px;
-    background:var(--primary);
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 20px;
-    position:sticky;
-    top:0;
-    z-index:500;
-}
-
-.topbar-right{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.menu-button{
-    width:42px;
-    height:42px;
-    border:0;
-    border-radius:8px;
-    background:#34495e;
-    color:white;
-    font-size:22px;
-}
-
-.menu-button:hover{
-    background:#40576b;
-}
-
-.system-title{
     font-weight:bold;
 }
-
-.user-area{
-    display:flex;
-    align-items:center;
-    gap:10px;
+.login-error{
+    display:none;
+    margin-top:12px;
+    padding:10px;
+    border-radius:8px;
+    background:#fdecea;
+    color:#c0392b;
     font-size:12px;
 }
 
-.logout-btn{
-    border:1px solid rgba(255,255,255,.3);
-    background:transparent;
-    color:white;
-    padding:7px 12px;
-    border-radius:7px;
-}
-
+.app{display:none;min-height:100vh}
 .sidebar{
     position:fixed;
     right:0;
     top:0;
     bottom:0;
-    width:280px;
-    background:#1e2b36;
-    color:white;
+    width:260px;
+    background:#202b34;
+    color:#fff;
     z-index:1000;
-    transform:translateX(100%);
-    transition:.25s;
-    padding-top:15px;
-    box-shadow:-8px 0 25px rgba(0,0,0,.2);
+    overflow-y:auto;
 }
-
-.sidebar.open{
-    transform:translateX(0);
+.sidebar-header{
+    padding:25px 20px;
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
-
-.sidebar-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:12px 18px 20px;
-    border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.sidebar-close{
-    border:0;
-    background:#34495e;
-    color:white;
-    width:35px;
-    height:35px;
-    border-radius:7px;
-    font-size:20px;
-}
-
-.nav{
-    padding:12px;
-}
-
+.sidebar-header strong{font-size:18px}
+.sidebar-header small{display:block;margin-top:8px;color:#aeb8bf}
+.nav{padding:15px 10px}
 .nav button{
     width:100%;
-    border:0;
+    padding:13px 14px;
     background:transparent;
-    color:#e9eef1;
+    color:#dce2e6;
     text-align:right;
-    padding:13px;
-    border-radius:7px;
+    border-radius:9px;
     margin-bottom:4px;
     font-size:13px;
 }
-
-.nav button:hover,
-.nav button.active{
+.nav button:hover,.nav button.active{
     background:#34495e;
+    color:#fff;
 }
-
-.main{
-    max-width:1500px;
-    margin:auto;
-    padding:20px;
-}
-
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
-
-.page-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
-    gap:10px;
-}
-
-.page-title h2{
-    margin:0;
-    font-size:22px;
-}
-
-.page-title p{
-    margin:5px 0 0;
-    color:var(--muted);
-    font-size:12px;
-}
-
-.card{
-    background:white;
-    border-radius:12px;
-    padding:18px;
-    margin-bottom:15px;
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
-
-.grid{
-    display:grid;
-    gap:14px;
-}
-
-.grid-4{
-    grid-template-columns:repeat(4,1fr);
-}
-
-.grid-3{
-    grid-template-columns:repeat(3,1fr);
-}
-
-.grid-2{
-    grid-template-columns:repeat(2,1fr);
-}
-
-.stat{
-    background:white;
-    border-radius:12px;
-    padding:18px;
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
-
-.stat-number{
-    font-size:28px;
-    font-weight:bold;
-    margin-bottom:5px;
-}
-
-.stat-label{
-    color:var(--muted);
-    font-size:12px;
-}
-
-.section-title{
-    font-size:15px;
-    font-weight:bold;
-    margin-bottom:14px;
-}
-
-.status-card{
-    border-right:5px solid var(--primary);
-}
-
-.status-card.green{
-    border-right-color:var(--green);
-}
-
-.status-card.yellow{
-    border-right-color:var(--yellow);
-}
-
-.status-card.red{
-    border-right-color:var(--red);
-}
-
-.status-card.blue{
-    border-right-color:var(--blue);
-}
-
-.small{
-    font-size:12px;
-    color:var(--muted);
-}
-
-.btn{
-    border:0;
-    border-radius:7px;
-    padding:10px 14px;
-    font-size:12px;
-}
-
-.btn-primary{
-    background:var(--primary);
-    color:white;
-}
-
-.btn-success{
-    background:#27ae60;
-    color:white;
-}
-
-.btn-warning{
-    background:#f39c12;
-    color:white;
-}
-
-.btn-danger{
+.logout{
+    margin:15px 10px;
+    width:calc(100% - 20px);
+    padding:12px;
     background:#c0392b;
     color:white;
+    border-radius:9px;
+}
+.main{
+    margin-right:260px;
+    min-height:100vh;
+}
+.topbar{
+    background:white;
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    border-bottom:1px solid #e4e7e9;
+    position:sticky;
+    top:0;
+    z-index:500;
+}
+.menu-btn{
+    display:none;
+    background:#2c3e50;
+    color:#fff;
+    width:42px;
+    height:42px;
+    border-radius:9px;
+    font-size:22px;
+}
+.user-info{text-align:left}
+.user-info strong{display:block;font-size:13px}
+.user-info small{color:#777}
+.content{padding:25px}
+.page{display:none}
+.page.active{display:block}
+.page-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+.page-title h2{margin:0;font-size:22px}
+.page-title p{margin:6px 0 0;color:#777;font-size:12px}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+.card{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+.card .num{font-size:28px;font-weight:bold}
+.card .label{color:#777;font-size:12px;margin-top:6px}
+.card.clickable{cursor:pointer}
+.card.clickable:hover{transform:translateY(-2px)}
+
+.grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+.grid-2{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+.panel{
+    background:white;
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+.panel h3{margin:0 0 15px;font-size:16px}
+
+.project-status{
+    border:1px solid #e5e8ea;
+    border-radius:12px;
+    padding:15px;
+}
+.project-status h4{margin:0 0 12px}
+.project-status .row{
+    display:flex;
+    justify-content:space-between;
+    padding:7px 0;
+    border-bottom:1px solid #eee;
+    font-size:12px;
+}
+.project-status .row:last-child{border:0}
+.project-status .value{
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.btn-secondary{
-    background:#7f8c8d;
+.green{color:#16803c}
+.yellow{color:#d68910}
+.red{color:#c0392b}
+.blue{color:#2980b9}
+.gray{color:#777}
+
+.alert{
+    padding:12px;
+    background:#fff7e6;
+    border-right:4px solid #f39c12;
+    margin-bottom:8px;
+    border-radius:7px;
+    font-size:12px;
+}
+.empty{
+    padding:25px;
+    text-align:center;
+    color:#888;
+    font-size:13px;
+}
+
+.toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:15px;
+}
+.toolbar input,.toolbar select{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    min-width:180px;
+}
+.btn{
+    padding:10px 15px;
+    border-radius:8px;
     color:white;
+    font-size:12px;
 }
-
-.btn-blue{
-    background:#2980b9;
-    color:white;
-}
-
-.btn-purple{
-    background:#7d3c98;
-    color:white;
-}
-
-.btn:disabled{
-    opacity:.5;
-    cursor:not-allowed;
-}
+.btn-primary{background:#2c3e50}
+.btn-success{background:#27ae60}
+.btn-warning{background:#f39c12}
+.btn-danger{background:#c0392b}
+.btn-info{background:#2980b9}
+.btn-gray{background:#7f8c8d}
 
 .table-wrap{
     overflow:auto;
+    background:white;
+    border-radius:12px;
 }
-
 table{
     width:100%;
     border-collapse:collapse;
     min-width:800px;
 }
-
 th,td{
-    padding:10px;
-    border:1px solid var(--border);
+    padding:11px 9px;
+    border:1px solid #e1e4e6;
     text-align:center;
     font-size:12px;
 }
-
-th{
-    background:var(--primary);
-    color:white;
-}
+th{background:#2c3e50;color:white}
+tr:nth-child(even){background:#fafafa}
 
 .badge{
     display:inline-block;
     padding:5px 9px;
     border-radius:20px;
-    font-size:11px;
-    font-weight:bold;
+    font-size:10px;
 }
-
-.badge-green{
-    background:#e8f6ed;
-    color:var(--green);
-}
-
-.badge-yellow{
-    background:#fff5df;
-    color:#9a6508;
-}
-
-.badge-red{
-    background:#fdecea;
-    color:var(--red);
-}
-
-.badge-blue{
-    background:#eaf4fb;
-    color:var(--blue);
-}
-
-.badge-gray{
-    background:#eef0f2;
-    color:#59636b;
-}
+.badge-green{background:#e5f6eb;color:#16803c}
+.badge-yellow{background:#fff3d6;color:#9a6800}
+.badge-red{background:#fde8e6;color:#c0392b}
+.badge-blue{background:#e6f2fb;color:#2471a3}
+.badge-gray{background:#eee;color:#666}
 
 .form-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:12px;
+    gap:13px;
 }
-
-.form-group{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-}
-
-.form-group.full{
-    grid-column:1/-1;
-}
-
-.form-group label{
-    font-size:12px;
-    font-weight:bold;
-}
-
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:12px;font-weight:bold}
 .form-group input,
 .form-group select,
 .form-group textarea{
-    width:100%;
     padding:10px;
-    border:1px solid #ccd2d7;
-    border-radius:7px;
+    border:1px solid #d8dcdf;
+    border-radius:8px;
     outline:none;
 }
+.form-group textarea{min-height:90px;resize:vertical}
 
-.form-group textarea{
-    min-height:100px;
-    resize:vertical;
+.task-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px;
+    background:#f7f8f9;
+    border-radius:8px;
+    margin-bottom:7px;
 }
+.task-row input[type=checkbox]{width:18px;height:18px}
+.task-row span{flex:1;font-size:12px}
+.task-row.done span{text-decoration:line-through;color:#999}
+
+.progress{
+    height:8px;
+    background:#e8ebed;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:8px;
+}
+.progress div{height:100%;background:#27ae60}
 
 .modal{
     display:none;
@@ -509,169 +342,57 @@ th{
     justify-content:center;
     padding:15px;
 }
-
-.modal.open{
-    display:flex;
-}
-
-.modal-content{
-    background:white;
+.modal.show{display:flex}
+.modal-box{
     width:100%;
     max-width:750px;
     max-height:90vh;
     overflow:auto;
-    border-radius:14px;
+    background:white;
+    border-radius:15px;
     padding:22px;
 }
-
 .modal-head{
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    margin-bottom:18px;
+    align-items:center;
+    margin-bottom:20px;
 }
-
-.modal-head h3{
-    margin:0;
+.modal-head h3{margin:0}
+.close-btn{
+    width:35px;height:35px;
+    border-radius:8px;
+    background:#eee;
+    font-size:20px;
 }
-
-.close-modal{
-    border:0;
-    background:#eef0f2;
-    width:35px;
-    height:35px;
-    border-radius:7px;
-    font-size:18px;
-}
-
 .modal-actions{
     display:flex;
-    gap:8px;
     justify-content:flex-end;
+    gap:8px;
     margin-top:18px;
 }
 
-.task-item{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:10px;
-    background:#f7f8f9;
-    border-radius:7px;
-    margin-bottom:7px;
-}
-
-.task-item input{
-    width:18px;
-    height:18px;
-}
-
-.task-done{
-    text-decoration:line-through;
-    opacity:.55;
-}
-
-.alert-item{
-    border-right:4px solid var(--red);
-    padding:10px 12px;
-    background:#fff7f6;
-    margin-bottom:8px;
-    border-radius:5px;
-    font-size:12px;
-}
-
-.project-card{
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:15px;
-    margin-bottom:10px;
-}
-
-.project-top{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    align-items:center;
-}
-
-.progress{
-    height:8px;
-    background:#e8ebed;
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:10px;
-}
-
-.progress-bar{
-    height:100%;
-    background:var(--blue);
-}
-
-.checklist{
-    margin-top:10px;
-}
-
-.empty{
-    text-align:center;
-    padding:30px;
-    color:var(--muted);
-}
-
-.archive-item{
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:15px;
-    margin-bottom:10px;
-}
+.equipment-table th{white-space:nowrap}
+.main-equipment{background:#e9eef2;font-weight:bold}
+.sub-equipment{background:#fafafa}
+.sub-equipment td:first-child{padding-right:30px}
 
 @media(max-width:1000px){
-    .grid-4{
-        grid-template-columns:repeat(2,1fr);
-    }
+    .sidebar{transform:translateX(100%);transition:.25s}
+    .sidebar.open{transform:translateX(0)}
+    .main{margin-right:0}
+    .menu-btn{display:block}
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .grid-3{grid-template-columns:1fr}
 }
-
-@media(max-width:700px){
-    .grid-4,
-    .grid-3,
-    .grid-2,
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .form-group.full{
-        grid-column:auto;
-    }
-
-    .user-area span{
-        display:none;
-    }
-
-    .main{
-        padding:12px;
-    }
-
-    .page-title{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-}
-
-@media print{
-    .topbar,
-    .sidebar,
-    .btn,
-    .no-print{
-        display:none!important;
-    }
-
-    .main{
-        padding:0;
-    }
-
-    .card{
-        box-shadow:none;
-        border:1px solid #ddd;
-    }
+@media(max-width:600px){
+    .content{padding:12px}
+    .cards{grid-template-columns:1fr 1fr;gap:8px}
+    .card{padding:14px}
+    .card .num{font-size:22px}
+    .grid-2,.form-grid{grid-template-columns:1fr}
+    .form-group.full{grid-column:auto}
+    .topbar{padding:0 12px}
 }
 </style>
 
@@ -679,175 +400,131 @@ th{
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- LOGIN -->
 
 <div id="loginPage" class="login-page">
-<div class="login-box">
+    <div class="login-box">
+        <div class="login-logo">ب</div>
+        <h1>سامانه مدیریت رسانه بصائر</h1>
+        <p>رمز دسترسی خود را وارد کنید.</p>
 
-<div class="login-logo">ب</div>
+    <div class="login-field">
+        <label>رمز عبور</label>
+        <input id="loginPassword" type="password" autocomplete="current-password"
+               onkeydown="if(event.key==='Enter') login()">
+    </div>
 
-<h1>سامانه مدیریت رسانه بصائر</h1>
-<p>برای ورود، نام کاربری و رمز عبور خود را وارد کنید.</p>
-
-<div class="login-field">
-<label for="loginUsername">نام کاربری</label>
-<input id="loginUsername" autocomplete="username">
-</div>
-
-<div class="login-field">
-<label for="loginPassword">رمز عبور</label>
-<input id="loginPassword" type="password" autocomplete="current-password">
-</div>
-
-<button id="loginButton" class="login-btn" type="button">
-ورود به سامانه
-</button>
-
-<div id="loginError" class="login-error">
-نام کاربری یا رمز عبور اشتباه است.
+    <button class="login-btn" onclick="login()">ورود به سامانه</button>
+    <div id="loginError" class="login-error">رمز عبور اشتباه است.</div>
 </div>
 
 </div>
-</div>
 
-<!-- ================= APP ================= -->
+<!-- APP -->
 
-<div id="app" class="app hidden">
+<div id="app" class="app">
 
-<header class="topbar">
-
-<div class="topbar-right">
-<button class="menu-button" id="menuButton">☰</button>
-<div class="system-title">سامانه مدیریت رسانه بصائر</div>
-</div>
-
-<div class="user-area">
-<span id="currentUserName"></span>
-<button class="logout-btn" id="logoutButton">خروج</button>
-</div>
-
-</header>
-
-<aside class="sidebar" id="sidebar">
-
-<div class="sidebar-head">
-<strong>منوی سامانه</strong>
-<button class="sidebar-close" id="sidebarClose">×</button>
-</div>
+<aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <strong>سامانه مدیریت رسانه</strong>
+        <small>مجموعه بصائر</small>
+    </div>
 
 <nav class="nav">
-
-<button data-page="dashboardPage">🏠 داشبورد</button><button data-page="projectsPage">📁 پروژه‌ها</button><button data-page="reportsPage">📝 گزارش هفتگی</button><button data-page="tasksPage">✅ وظایف محول‌شده</button><button data-page="archivePage">🗄 آرشیو</button><button data-page="performancePage">📊 ارزیابی عملکرد</button><button data-page="peoplePage">👥 نیروها</button><button data-page="equipmentPage">📦 تجهیزات</button><button data-page="monthlyPage">🗓 مدیریت ماهانه</button>
-
+    <button onclick="showPage('dashboard',this)">🏠 داشبورد</button>
+    <button onclick="showPage('projects',this)">📁 پروژه‌ها</button>
+    <button onclick="showPage('reports',this)">📝 گزارش هفتگی</button>
+    <button onclick="showPage('archive',this)">🗄 آرشیو گزارش‌ها</button>
+    <button onclick="showPage('tasks',this)">✅ وظایف محول‌شده</button>
+    <button onclick="showPage('performance',this)">📊 ارزیابی عملکرد</button>
+    <button onclick="showPage('people',this)">👥 مدیریت نیروها</button>
+    <button onclick="showPage('equipment',this)">📦 تجهیزات</button>
+    <button onclick="showPage('monthly',this)">🗓 مدیریت ماهانه</button>
+    <button onclick="showPage('notifications',this)">🔔 اعلان‌ها</button>
 </nav>
+
+<button class="logout" onclick="logout()">خروج از سامانه</button>
+
 </aside>
 
 <main class="main">
+<header class="topbar">
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <div>
+        <strong id="pageTopTitle">داشبورد</strong>
+    </div>
+    <div class="user-info">
+        <strong id="currentRole">مدیر رسانه</strong>
+        <small>دسترسی فعال</small>
+    </div>
+</header>
+
+<div class="content">
 
 <!-- DASHBOARD -->
 
-<section id="dashboardPage" class="page active">
-
+<section id="page-dashboard" class="page active">
 <div class="page-title">
-<div>
-<h2>داشبورد مدیریتی</h2>
-<p>نمای کلی وضعیت واحد رسانه</p>
+    <div>
+        <h2>داشبورد مدیریتی</h2>
+        <p>نمای کلی وضعیت رسانه</p>
+    </div>
+</div>
+
+<div class="cards">
+    <div class="card clickable" onclick="showPage('projects')">
+        <div class="num" id="dashProjects">0</div>
+        <div class="label">پروژه‌های فعال</div>
+    </div>
+    <div class="card clickable">
+        <div class="num red" id="dashDelayed">0</div>
+        <div class="label">پروژه‌های عقب‌مانده</div>
+    </div>
+    <div class="card">
+        <div class="num green" id="dashDone">0</div>
+        <div class="label">پروژه‌های تکمیل‌شده</div>
+    </div>
+    <div class="card clickable" onclick="showPage('people')">
+        <div class="num" id="dashPeople">0</div>
+        <div class="label">نیروهای فعال</div>
+    </div>
+</div>
+
+<div class="grid-3">
+<div class="panel">
+<h3>📦 وضعیت پروژه‌ها</h3>
+<div class="project-status">
+<h4>🎬 تولید</h4>
+<div class="row"><span>فعال</span><span class="value green" onclick="filterProjects('فعال','تولید')" id="prodActive">0</span></div>
+<div class="row"><span>عقب‌مانده</span><span class="value red" onclick="filterProjects('عقب‌مانده','تولید')" id="prodDelayed">0</span></div>
+<div class="row"><span>تکمیل‌شده</span><span class="value green" onclick="filterProjects('تکمیل‌شده','تولید')" id="prodDone">0</span></div>
 </div>
 </div>
 
-<div class="grid grid-4">
-
-<div class="stat">
-<div class="stat-number" id="dashProjects">0</div>
-<div class="stat-label">پروژه‌های فعال</div>
-</div>
-
-<div class="stat">
-<div class="stat-number" id="dashDelayed">0</div>
-<div class="stat-label">پروژه‌های عقب‌مانده</div>
-</div>
-
-<div class="stat">
-<div class="stat-number" id="dashPeople">0</div>
-<div class="stat-label">نیروها</div>
-</div>
-
-<div class="stat">
-<div class="stat-number" id="dashReports">0</div>
-<div class="stat-label">گزارش‌های تأییدنشده</div>
-</div>
-
-</div>
-
-<div class="card">
-<div class="section-title">📦 وضعیت پروژه‌ها</div>
-
-<div class="grid grid-3">
-
-<div class="card status-card blue">
-<strong>تولید</strong>
-<p>فعال: <b id="prodActive">0</b></p>
-<p>عقب‌مانده: <b id="prodDelayed">0</b></p>
-<p>تکمیل‌شده: <b id="prodDone">0</b></p>
-</div>
-
-<div class="card status-card yellow">
-<strong>پس‌تولید</strong>
-<p>فعال: <b id="postActive">0</b></p>
-<p>عقب‌مانده: <b id="postDelayed">0</b></p>
-<p>تکمیل‌شده: <b id="postDone">0</b></p>
-</div>
-
-<div class="card status-card green">
-<strong>انتشار</strong>
-<p>فعال: <b id="pubActive">0</b></p>
-<p>عقب‌مانده: <b id="pubDelayed">0</b></p>
-<p>تکمیل‌شده: <b id="pubDone">0</b></p>
-</div>
-
-</div>
-</div>
-
-<div class="card">
-<div class="section-title">📊 عملکرد بخش‌ها</div>
+<div class="panel">
+<h3>📊 عملکرد بخش‌ها</h3>
 <div id="dashboardPerformance"></div>
 </div>
 
-<div class="card">
-<div class="section-title">⚠️ هشدارها</div>
+<div class="panel">
+<h3>⚠️ هشدارها</h3>
 <div id="dashboardAlerts"></div>
 </div>
-
+</div>
 </section>
 
 <!-- PROJECTS -->
 
-<section id="projectsPage" class="page">
-
+<section id="page-projects" class="page">
 <div class="page-title">
-<div>
-<h2>مدیریت پروژه‌ها</h2>
-<p>کنترل پروژه‌های واحد رسانه</p>
+    <div><h2>📁 مدیریت پروژه‌ها</h2><p>کنترل کامل پروژه‌های رسانه</p></div>
+    <button class="btn btn-success admin-only" onclick="openProjectModal()">➕ پروژه جدید</button>
 </div>
 
-<button class="btn btn-success" id="addProjectButton">
-➕ پروژه جدید
-</button>
-</div>
-
-<div class="card">
-
-<div class="form-grid">
-
-<div class="form-group">
-<label>جست‌وجو</label>
-<input id="projectSearch" placeholder="نام پروژه...">
-</div>
-
-<div class="form-group">
-<label>وضعیت</label>
-<select id="projectStatusFilter">
-<option value="">همه</option>
+<div class="toolbar">
+<input id="projectSearch" placeholder="جست‌وجوی پروژه..." oninput="renderProjects()">
+<select id="projectStatusFilter" onchange="renderProjects()">
+<option value="">همه وضعیت‌ها</option>
 <option>فعال</option>
 <option>عقب‌مانده</option>
 <option>تکمیل‌شده</option>
@@ -855,3485 +532,1070 @@ th{
 </select>
 </div>
 
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>نام پروژه</th><th>نوع</th><th>بخش</th><th>مسئول</th>
+<th>شروع</th><th>ددلاین</th><th>وضعیت</th><th>پیشرفت</th><th>عملیات</th>
+</tr>
+</thead>
+<tbody id="projectsBody"></tbody>
+</table>
 </div>
-
-</div>
-
-<div id="projectsList"></div>
-
 </section>
 
 <!-- REPORTS -->
 
-<section id="reportsPage" class="page">
-
+<section id="page-reports" class="page">
 <div class="page-title">
-<div>
-<h2>گزارش‌های هفتگی</h2>
-<p>ثبت، بررسی و مدیریت گزارش عملکرد</p>
+<div><h2>📝 گزارش‌های هفتگی</h2><p>ثبت و مدیریت گزارش عملکرد</p></div>
+<button class="btn btn-success" onclick="openReportModal()">➕ ثبت گزارش</button>
 </div>
-
-<button class="btn btn-success" id="newReportButton">
-➕ گزارش جدید
-</button>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>مدیر</th><th>بخش</th><th>هفته</th><th>برنامه</th><th>انجام</th>
+<th>کیفیت</th><th>امتیاز</th><th>وضعیت</th><th>عملیات</th>
+</tr>
+</thead>
+<tbody id="reportsBody"></tbody>
+</table>
 </div>
-
-<div class="card">
-<div id="reportsList"></div>
-</div>
-
-</section>
-
-<!-- TASKS -->
-
-<section id="tasksPage" class="page">
-
-<div class="page-title">
-
-<div>
-<h2>وظایف محول‌شده</h2>
-<p>مدیریت وظایف هفتگی و چک‌لیست عملکرد</p>
-</div>
-
-<button class="btn btn-success" id="newTaskButton">
-➕ وظیفه جدید
-</button>
-
-</div>
-
-<div class="card">
-
-<div class="grid grid-3">
-
-<div class="stat">
-<div class="stat-number" id="taskTotal">0</div>
-<div class="stat-label">کل وظایف</div>
-</div>
-
-<div class="stat">
-<div class="stat-number" id="taskDone">0</div>
-<div class="stat-label">انجام‌شده</div>
-</div>
-
-<div class="stat">
-<div class="stat-number" id="taskPending">0</div>
-<div class="stat-label">باقی‌مانده</div>
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-<div id="tasksList"></div>
-</div>
-
 </section>
 
 <!-- ARCHIVE -->
 
-<section id="archivePage" class="page">
-
+<section id="page-archive" class="page">
 <div class="page-title">
-<div>
-<h2>🗄 آرشیو</h2>
-<p>گزارش‌های هفتگی تأییدشده و خروجی نهایی مدیر رسانه</p>
+<div><h2>🗄 آرشیو گزارش‌ها</h2><p>گزارش‌های تأیید و نهایی‌شده</p></div>
+<button class="btn btn-primary admin-only" onclick="exportReports()">📤 خروجی گزارش‌ها</button>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>مدیر</th><th>بخش</th><th>هفته</th><th>امتیاز</th><th>تأیید توسط</th><th>تاریخ تأیید</th><th>عملیات</th></tr>
+</thead>
+<tbody id="archiveBody"></tbody>
+</table>
+</div>
+</section>
+
+<!-- TASKS -->
+
+<section id="page-tasks" class="page">
+<div class="page-title">
+<div><h2>✅ وظایف محول‌شده</h2><p>مدیریت وظایف هفتگی مدیران</p></div>
+<button class="btn btn-success admin-only" onclick="openTaskModal()">➕ وظیفه جدید</button>
 </div>
 
-<button class="btn btn-primary" onclick="window.print()">
-🖨 چاپ آرشیو
-</button>
+<div class="panel">
+<div id="tasksList"></div>
 </div>
-
-<div class="card">
-
-<div id="archiveList"></div>
-
-</div>
-
 </section>
 
 <!-- PERFORMANCE -->
 
-<section id="performancePage" class="page">
-
-<div class="page-title">
-<div>
-<h2>📊 ارزیابی عملکرد</h2>
-<p>محاسبه عملکرد بر اساس گزارش‌های تأییدشده</p>
+<section id="page-performance" class="page">
+<div class="page-title"><div><h2>📊 ارزیابی عملکرد</h2><p>محاسبه بر اساس گزارش‌های هفتگی</p></div></div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>مدیر</th><th>بخش</th><th>گزارش‌ها</th><th>میانگین امتیاز</th><th>وضعیت</th></tr></thead>
+<tbody id="performanceBody"></tbody>
+</table>
 </div>
-</div>
-
-<div id="performanceList"></div>
-
 </section>
 
 <!-- PEOPLE -->
 
-<section id="peoplePage" class="page">
-
+<section id="page-people" class="page">
 <div class="page-title">
-<div>
-<h2>👥 مدیریت نیروها</h2>
-<p>اعضا و مدیران واحد رسانه</p>
+<div><h2>👥 مدیریت نیروها</h2><p>اعضای تیم رسانه</p></div>
+<button class="btn btn-success admin-only" onclick="openPersonModal()">➕ نیروی جدید</button>
 </div>
-
-<button class="btn btn-success" id="addPersonButton">
-➕ نیروی جدید
-</button>
+<div class="table-wrap">
+<table>
+<thead><tr><th>نام</th><th>نقش</th><th>بخش</th><th>وضعیت</th><th>مهارت‌ها</th><th>عملیات</th></tr></thead>
+<tbody id="peopleBody"></tbody>
+</table>
 </div>
-
-<div class="card">
-<div id="peopleList"></div>
-</div>
-
 </section>
 
 <!-- EQUIPMENT -->
 
-<section id="equipmentPage" class="page">
-
+<section id="page-equipment" class="page">
 <div class="page-title">
-<div>
-<h2>📦 مدیریت تجهیزات</h2>
-<p>سیستم کامل مدیریت تجهیزات واحد رسانه</p>
+<div><h2>📦 مدیریت تجهیزات</h2><p>سامانه کامل ثبت، کنترل و امانت تجهیزات</p></div>
+<button class="btn btn-success admin-only" onclick="openEquipmentModal()">➕ افزودن تجهیز</button>
 </div>
 
-<button class="btn btn-success" id="addEquipmentButton">
-➕ افزودن تجهیز
-</button>
+<div class="cards">
+<div class="card"><div class="num" id="eqMain">0</div><div class="label">تجهیزات اصلی</div></div>
+<div class="card"><div class="num" id="eqSub">0</div><div class="label">زیرمجموعه‌ها</div></div>
+<div class="card"><div class="num" id="eqAudio">0</div><div class="label">صوت</div></div>
+<div class="card"><div class="num red" id="eqProblem">0</div><div class="label">نیازمند پیگیری</div></div>
 </div>
 
-<div class="grid grid-4">
-
-<div class="stat">
-<div class="stat-number" id="eqMain">0</div>
-<div class="stat-label">تجهیزات اصلی</div>
-</div>
-
-<div class="stat">
-<div class="stat-number" id="eqSub">0</div>
-<div class="stat-label">زیرمجموعه‌ها</div>
-</div>
-
-<div class="stat">
-<div class="stat-number" id="eqAudio">0</div>
-<div class="stat-label">تجهیزات صوت</div>
-</div>
-
-<div class="stat">
-<div class="stat-number" id="eqProblem">0</div>
-<div class="stat-label">نیازمند پیگیری</div>
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="form-grid">
-
-<div class="form-group">
-<label>جست‌وجو</label>
-<input id="equipmentSearch" placeholder="کد، نام، دسته یا وضعیت...">
-</div>
-
-<div class="form-group">
-<label>وضعیت</label>
-<select id="equipmentStatusFilter">
-<option value="">همه</option>
-<option>سالم</option>
-<option>نیازمند بررسی</option>
-<option>نیازمند تعمیر</option>
-<option>خراب</option>
-<option>مفقود</option>
-<option>امانت داده شده</option>
+<div class="toolbar">
+<input id="eqSearch" placeholder="جست‌وجو..." oninput="renderEquipment()">
+<select id="eqStatus" onchange="renderEquipment()">
+<option value="">همه وضعیت‌ها</option>
+<option>سالم</option><option>نیازمند بررسی</option><option>نیازمند تعمیر</option>
+<option>خراب</option><option>مفقود</option><option>امانت داده شده</option>
 </select>
 </div>
 
-</div>
-
-</div>
-
-<div class="card">
-
 <div class="table-wrap">
-
-<table>
-
+<table class="equipment-table">
 <thead>
-<tr>
-<th>کد</th>
-<th>نام تجهیز</th>
-<th>دسته</th>
-<th>وابسته به</th>
-<th>وضعیت</th>
-<th>محل</th>
-<th>آخرین بررسی</th>
-<th>توضیحات</th>
-<th>عملیات</th>
-</tr>
+<tr><th>کد</th><th>نام تجهیز</th><th>دسته</th><th>وابسته به</th>
+<th>وضعیت</th><th>محل نگهداری</th><th>آخرین بررسی</th><th>توضیحات</th><th>عملیات</th></tr>
 </thead>
-
 <tbody id="equipmentBody"></tbody>
-
 </table>
-
 </div>
-
-</div>
-
-<div class="card no-print">
-
-<button class="btn btn-primary" id="exportButton">
-📤 پشتیبان‌گیری
-</button>
-
-<button class="btn btn-secondary" id="importButton">
-📥 بازیابی پشتیبان
-</button>
-
-<input id="importFile" type="file" accept=".json" style="display:none">
-
-</div>
-
 </section>
 
 <!-- MONTHLY -->
 
-<section id="monthlyPage" class="page">
-
+<section id="page-monthly" class="page">
 <div class="page-title">
-
-<div>
-<h2>🗓 مدیریت ماهانه</h2>
-<p>مدیریت چرخه ماهانه پروژه‌ها، وظایف و گزارش‌ها</p>
+<div><h2>🗓 مدیریت ماهانه</h2><p>کنترل شروع و پایان چرخه ماهانه</p></div>
+<button class="btn btn-primary admin-only" onclick="startNewMonth()">شروع ماه جدید</button>
 </div>
 
-<button class="btn btn-success" id="newMonthButton">
-🚀 شروع ماه جدید
-</button>
-
+<div class="panel">
+<h3>ماه جاری</h3>
+<div style="font-size:25px;font-weight:bold" id="currentMonth"></div>
+<p id="monthInfo" style="color:#777;font-size:12px"></p>
 </div>
 
-<div class="card">
-
-<div class="section-title">
-ماه جاری
+<div class="panel">
+<h3>⚠️ توجه</h3>
+<p style="font-size:13px;line-height:2">
+با شروع ماه جدید، پروژه‌های قبلی حذف نمی‌شوند و گزارش‌ها نیز در آرشیو باقی می‌مانند.
+وظایف انجام‌نشده و وضعیت‌های عملیاتی ماه جدید از نو مدیریت می‌شوند.
+</p>
 </div>
-
-<div id="currentMonthBox"></div>
-
-</div>
-
-<div class="card">
-
-<div class="section-title">
-تاریخچه ماه‌ها
-</div>
-
-<div id="monthsList"></div>
-
-</div>
-
 </section>
 
+<!-- NOTIFICATIONS -->
+
+<section id="page-notifications" class="page">
+<div class="page-title"><div><h2>🔔 اعلان‌ها</h2><p>هشدارهای استخراج‌شده از سیستم</p></div></div>
+<div class="panel" id="notificationsList"></div>
+</section>
+
+</div>
 </main>
 </div>
 
-<!-- ================= MODALS ================= -->
+<!-- MODALS -->
 
-<!-- PROJECT MODAL -->
-
-<div class="modal" id="projectModal">
-
-<div class="modal-content">
-
-<div class="modal-head">
-<h3 id="projectModalTitle">پروژه جدید</h3>
-<button class="close-modal" data-close="projectModal">×</button>
-</div>
-
+<div id="projectModal" class="modal">
+<div class="modal-box">
+<div class="modal-head"><h3 id="projectModalTitle">پروژه جدید</h3><button class="close-btn" onclick="closeModal('projectModal')">×</button></div>
 <div class="form-grid">
-
-<div class="form-group">
-<label>نام پروژه</label>
-<input id="projectName">
+<div class="form-group"><label>نام پروژه</label><input id="pName"></div>
+<div class="form-group"><label>نوع پروژه</label><input id="pType" placeholder="مستند / رویداد / پادکست..."></div>
+<div class="form-group"><label>بخش</label><select id="pDept"><option>تولید</option><option>پس‌تولید</option><option>انتشار</option></select></div>
+<div class="form-group"><label>مسئول</label><input id="pManager"></div>
+<div class="form-group"><label>تاریخ شروع</label><input id="pStart"></div>
+<div class="form-group"><label>ددلاین</label><input id="pDeadline"></div>
+<div class="form-group"><label>وضعیت</label><select id="pStatus"><option>فعال</option><option>عقب‌مانده</option><option>تکمیل‌شده</option><option>متوقف‌شده</option></select></div>
+<div class="form-group"><label>درصد پیشرفت</label><input id="pProgress" type="number" min="0" max="100" value="0"></div>
+<div class="form-group full"><label>توضیحات</label><textarea id="pDesc"></textarea></div>
 </div>
-
-<div class="form-group">
-<label>نوع پروژه</label>
-<select id="projectType">
-<option>رویداد</option>
-<option>مستند</option>
-<option>کلیپ</option>
-<option>پادکست</option>
-<option>پوشش رسانه‌ای</option>
-<option>سایر</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>بخش</label>
-<select id="projectDepartment">
-<option>تولید</option>
-<option>پس‌تولید</option>
-<option>انتشار</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>زیر‌بخش</label>
-<input id="projectSubDepartment">
-</div>
-
-<div class="form-group">
-<label>مدیر پروژه</label>
-<input id="projectManager">
-</div>
-
-<div class="form-group">
-<label>اولویت</label>
-<select id="projectPriority">
-<option>کم</option>
-<option selected>متوسط</option>
-<option>زیاد</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>تاریخ شروع</label>
-<input id="projectStart">
-</div>
-
-<div class="form-group">
-<label>ددلاین</label>
-<input id="projectDeadline">
-</div>
-
-<div class="form-group">
-<label>وضعیت</label>
-<select id="projectStatus">
-<option>فعال</option>
-<option>عقب‌مانده</option>
-<option>تکمیل‌شده</option>
-<option>متوقف‌شده</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>درصد پیشرفت</label>
-<input id="projectProgress" type="number" min="0" max="100" value="0">
-</div>
-
-<div class="form-group full">
-<label>اعضای درگیر</label>
-<input id="projectMembers" placeholder="نام اعضا را با ویرگول جدا کنید">
-</div>
-
-<div class="form-group full">
-<label>توضیحات</label>
-<textarea id="projectDescription"></textarea>
-</div>
-
-</div>
-
-<div class="modal-actions">
-<button class="btn btn-secondary" data-close="projectModal">انصراف</button>
-<button class="btn btn-success" id="saveProjectButton">ذخیره</button>
-</div>
-
+<div class="modal-actions"><button class="btn btn-gray" onclick="closeModal('projectModal')">انصراف</button><button class="btn btn-success" onclick="saveProject()">ذخیره</button></div>
 </div>
 </div>
 
-<!-- REPORT MODAL -->
-
-<div class="modal" id="reportModal">
-
-<div class="modal-content">
-
-<div class="modal-head">
-<h3 id="reportModalTitle">گزارش هفتگی</h3>
-<button class="close-modal" data-close="reportModal">×</button>
-</div>
-
+<div id="reportModal" class="modal">
+<div class="modal-box">
+<div class="modal-head"><h3 id="reportModalTitle">گزارش هفتگی</h3><button class="close-btn" onclick="closeModal('reportModal')">×</button></div>
 <div class="form-grid">
-
-<div class="form-group">
-<label>مدیر</label>
-<input id="reportManager" readonly>
-</div>
-
-<div class="form-group">
-<label>بخش</label>
-<input id="reportDepartment" readonly>
-</div>
-
-<div class="form-group">
-<label>هفته</label>
-<input id="reportWeek" placeholder="مثلاً هفته اول مهر">
-</div>
-
-<div class="form-group">
-<label>تاریخ گزارش</label>
-<input id="reportDate">
-</div>
-
-<div class="form-group">
-<label>کارهای برنامه‌ریزی‌شده</label>
-<input id="reportPlanned" type="number" min="0" value="0">
-</div>
-
-<div class="form-group">
-<label>کارهای انجام‌شده</label>
-<input id="reportCompleted" type="number" min="0" value="0">
-</div>
-
-<div class="form-group">
-<label>کارهای با تأخیر</label>
-<input id="reportDelayed" type="number" min="0" value="0">
-</div>
-
-<div class="form-group">
-<label>کیفیت کار از ۱۰</label>
-<input id="reportQuality" type="number" min="0" max="10" value="0">
-</div>
-
+<div class="form-group"><label>مدیر</label><input id="rManager" readonly></div>
+<div class="form-group"><label>بخش</label><input id="rDept" readonly></div>
+<div class="form-group"><label>تاریخ</label><input id="rDate"></div>
+<div class="form-group"><label>هفته</label><input id="rWeek" placeholder="هفته اول"></div>
+<div class="form-group"><label>کارهای برنامه‌ریزی‌شده</label><input id="rPlanned" type="number" min="0"></div>
+<div class="form-group"><label>کارهای انجام‌شده</label><input id="rCompleted" type="number" min="0"></div>
+<div class="form-group"><label>کارهای با تأخیر</label><input id="rDelayed" type="number" min="0"></div>
+<div class="form-group"><label>کیفیت از ۱۰</label><input id="rQuality" type="number" min="0" max="10"></div>
+<div class="form-group full"><label>کارهای انجام‌شده</label><textarea id="rDoneList"></textarea></div>
+<div class="form-group full"><label>علت تأخیرها</label><textarea id="rDelayReason"></textarea></div>
+<div class="form-group full"><label>مشکلات و موانع</label><textarea id="rIssues"></textarea></div>
+<div class="form-group full"><label>پیشنهادها</label><textarea id="rSuggestions"></textarea></div>
 <div class="form-group full">
-<label>کارهای برنامه‌ریزی‌شده</label>
-<textarea id="reportPlannedList" placeholder="هر کار را در یک خط بنویسید"></textarea>
+<label>وظایف محول‌شده</label>
+<div id="reportTasks"></div>
 </div>
-
-<div class="form-group full">
-<label>کارهای انجام‌شده</label>
-<textarea id="reportCompletedList" placeholder="هر کار را در یک خط بنویسید"></textarea>
 </div>
-
-<div class="form-group full">
-<label>علت تأخیرها</label>
-<textarea id="reportDelayReasons"></textarea>
-</div>
-
-<div class="form-group full">
-<label>پروژه‌های مرتبط</label>
-<select id="reportProjects" multiple style="min-height:100px"></select>
-</div>
-
-<div class="form-group full">
-<label>مشکلات و چالش‌ها</label>
-<textarea id="reportIssues"></textarea>
-</div>
-
-<div class="form-group full">
-<label>پیشنهادها به مدیریت</label>
-<textarea id="reportSuggestions"></textarea>
-</div>
-
-</div>
-
 <div class="modal-actions">
-<button class="btn btn-secondary" data-close="reportModal">انصراف</button>
-<button class="btn btn-success" id="saveReportButton">ذخیره گزارش</button>
+<button class="btn btn-danger admin-only" id="deleteReportBtn" onclick="deleteReport()">حذف</button>
+<button class="btn btn-warning admin-only" id="approveReportBtn" onclick="approveReport()">تأیید و آرشیو</button>
+<button class="btn btn-gray" onclick="closeModal('reportModal')">بستن</button>
+<button class="btn btn-success" onclick="saveReport()">ذخیره</button>
+</div>
+</div>
 </div>
 
-</div>
-</div>
-
-<!-- TASK MODAL -->
-
-<div class="modal" id="taskModal">
-
-<div class="modal-content">
-
-<div class="modal-head">
-<h3>وظیفه جدید</h3>
-<button class="close-modal" data-close="taskModal">×</button>
-</div>
-
+<div id="taskModal" class="modal">
+<div class="modal-box">
+<div class="modal-head"><h3>وظیفه جدید</h3><button class="close-btn" onclick="closeModal('taskModal')">×</button></div>
 <div class="form-grid">
-
-<div class="form-group">
-<label>عنوان وظیفه</label>
-<input id="taskTitle">
+<div class="form-group full"><label>عنوان وظیفه</label><input id="tTitle"></div>
+<div class="form-group"><label>مربوط به مدیر</label><select id="tManager"></select></div>
+<div class="form-group"><label>ددلاین</label><input id="tDeadline"></div>
+<div class="form-group full"><label>توضیحات</label><textarea id="tDesc"></textarea></div>
 </div>
-
-<div class="form-group">
-<label>مسئول</label>
-<select id="taskAssignee">
-<option value="مدیر فیلمبرداری">مدیر فیلمبرداری</option>
-<option value="مدیر عکسبرداری">مدیر عکسبرداری</option>
-<option value="مدیر صوت">مدیر صوت</option>
-<option value="مدیر ادیت">مدیر ادیت</option>
-<option value="مدیر گرافیک">مدیر گرافیک</option>
-<option value="مدیر انتشار">مدیر انتشار</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>ددلاین</label>
-<input id="taskDeadline">
-</div>
-
-<div class="form-group">
-<label>مربوط به پروژه</label>
-<select id="taskProject"></select>
-</div>
-
-<div class="form-group full">
-<label>توضیحات</label>
-<textarea id="taskDescription"></textarea>
-</div>
-
-</div>
-
-<div class="modal-actions">
-<button class="btn btn-secondary" data-close="taskModal">انصراف</button>
-<button class="btn btn-success" id="saveTaskButton">ثبت وظیفه</button>
-</div>
-
+<div class="modal-actions"><button class="btn btn-gray" onclick="closeModal('taskModal')">انصراف</button><button class="btn btn-success" onclick="saveTask()">ثبت وظیفه</button></div>
 </div>
 </div>
 
-<!-- EQUIPMENT MODAL -->
-
-<div class="modal" id="equipmentModal">
-
-<div class="modal-content">
-
-<div class="modal-head">
-<h3 id="equipmentModalTitle">افزودن تجهیز</h3>
-<button class="close-modal" data-close="equipmentModal">×</button>
-</div>
-
+<div id="personModal" class="modal">
+<div class="modal-box">
+<div class="modal-head"><h3>نیروی جدید</h3><button class="close-btn" onclick="closeModal('personModal')">×</button></div>
 <div class="form-grid">
-
-<div class="form-group">
-<label>کد</label>
-<input id="eqCode">
+<div class="form-group"><label>نام</label><input id="personName"></div>
+<div class="form-group"><label>نقش</label><input id="personRole"></div>
+<div class="form-group"><label>بخش</label><input id="personDept"></div>
+<div class="form-group"><label>وضعیت</label><select id="personStatus"><option>فعال</option><option>غیرفعال</option></select></div>
+<div class="form-group full"><label>مهارت‌ها</label><textarea id="personSkills"></textarea></div>
 </div>
-
-<div class="form-group">
-<label>نوع</label>
-<select id="eqType">
-<option value="main">تجهیز اصلی</option>
-<option value="sub">زیرمجموعه</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>نام تجهیز</label>
-<input id="eqName">
-</div>
-
-<div class="form-group">
-<label>دسته</label>
-<select id="eqCategory">
-<option>تصویر</option>
-<option>صوت</option>
-<option>سایر</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>وابسته به</label>
-<select id="eqParent"></select>
-</div>
-
-<div class="form-group">
-<label>وضعیت</label>
-<select id="eqStatus">
-<option>سالم</option>
-<option>نیازمند بررسی</option>
-<option>نیازمند تعمیر</option>
-<option>خراب</option>
-<option>مفقود</option>
-<option>امانت داده شده</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>محل نگهداری</label>
-<input id="eqLocation">
-</div>
-
-<div class="form-group">
-<label>آخرین بررسی</label>
-<input id="eqCheckDate">
-</div>
-
-<div class="form-group">
-<label>تحویل به</label>
-<input id="eqLoanTo">
-</div>
-
-<div class="form-group">
-<label>تاریخ تحویل</label>
-<input id="eqLoanDate">
-</div>
-
-<div class="form-group">
-<label>تاریخ بازگشت</label>
-<input id="eqReturnDate">
-</div>
-
-<div class="form-group full">
-<label>توضیحات</label>
-<textarea id="eqDescription"></textarea>
-</div>
-
-</div>
-
-<div class="modal-actions">
-<button class="btn btn-secondary" data-close="equipmentModal">انصراف</button>
-<button class="btn btn-success" id="saveEquipmentButton">ذخیره تجهیز</button>
-</div>
-
+<div class="modal-actions"><button class="btn btn-gray" onclick="closeModal('personModal')">انصراف</button><button class="btn btn-success" onclick="savePerson()">ذخیره</button></div>
 </div>
 </div>
 
-<!-- PERSON MODAL -->
-
-<div class="modal" id="personModal">
-
-<div class="modal-content">
-
-<div class="modal-head">
-<h3>افزودن نیرو</h3>
-<button class="close-modal" data-close="personModal">×</button>
-</div>
-
+<div id="equipmentModal" class="modal">
+<div class="modal-box">
+<div class="modal-head"><h3>افزودن / ویرایش تجهیز</h3><button class="close-btn" onclick="closeModal('equipmentModal')">×</button></div>
 <div class="form-grid">
-
-<div class="form-group">
-<label>نام</label>
-<input id="personName">
+<div class="form-group"><label>کد</label><input id="eCode"></div>
+<div class="form-group"><label>نوع</label><select id="eType"><option value="main">تجهیز اصلی</option><option value="sub">زیرمجموعه</option></select></div>
+<div class="form-group"><label>نام تجهیز</label><input id="eName"></div>
+<div class="form-group"><label>دسته</label><select id="eCategory"><option>تصویر</option><option>صوت</option><option>سایر</option></select></div>
+<div class="form-group"><label>وابسته به</label><select id="eParent"></select></div>
+<div class="form-group"><label>وضعیت</label><select id="eStatus"><option>سالم</option><option>نیازمند بررسی</option><option>نیازمند تعمیر</option><option>خراب</option><option>مفقود</option><option>امانت داده شده</option></select></div>
+<div class="form-group"><label>محل نگهداری</label><input id="eLocation"></div>
+<div class="form-group"><label>آخرین بررسی</label><input id="eCheck"></div>
+<div class="form-group"><label>تحویل به</label><input id="eLoanTo"></div>
+<div class="form-group"><label>تاریخ تحویل</label><input id="eLoanDate"></div>
+<div class="form-group"><label>تاریخ بازگشت</label><input id="eReturnDate"></div>
+<div class="form-group full"><label>توضیحات</label><textarea id="eDesc"></textarea></div>
 </div>
-
-<div class="form-group">
-<label>نقش</label>
-<input id="personRole">
-</div>
-
-<div class="form-group">
-<label>بخش</label>
-<input id="personDepartment">
-</div>
-
-<div class="form-group">
-<label>وضعیت</label>
-<select id="personStatus">
-<option>فعال</option>
-<option>غیرفعال</option>
-</select>
-</div>
-
-<div class="form-group full">
-<label>مهارت‌ها</label>
-<input id="personSkills">
-</div>
-
-</div>
-
-<div class="modal-actions">
-<button class="btn btn-secondary" data-close="personModal">انصراف</button>
-<button class="btn btn-success" id="savePersonButton">ذخیره</button>
-</div>
-
+<div class="modal-actions"><button class="btn btn-gray" onclick="closeModal('equipmentModal')">انصراف</button><button class="btn btn-success" onclick="saveEquipment()">ذخیره</button></div>
 </div>
 </div>
 
 <script>
+/* =========================
+   AUTH
+========================= */
 
-/* =========================================================
-   LOGIN
-========================================================= */
+const USERS={
+    "Basair@1405!Media":{role:"مدیر رسانه",dept:"all"},
+    "Basair@1405!Film":{role:"مدیر فیلمبرداری",dept:"فیلمبرداری"},
+    "Basair@1405!Photo":{role:"مدیر عکسبرداری",dept:"عکسبرداری"},
+    "Basair@1405!Audio":{role:"مدیر صوت",dept:"صوت"},
+    "Basair@1405!Edit":{role:"مدیر ادیت",dept:"ادیت"},
+    "Basair@1405!Graphic":{role:"مدیر گرافیک",dept:"گرافیک"},
+    "Basair@1405!Publish":{role:"مدیر انتشار",dept:"انتشار"}
+};
 
-const USERS = [
-{
-    username:"basair.admin",
-    password:"B!sair_1405@Admin",
-    name:"مدیر رسانه",
-    role:"admin",
-    department:"مدیریت"
-},
-{
-    username:"basair.camera",
-    password:"Cam!1405_Bs#27",
-    name:"مدیر فیلمبرداری",
-    role:"manager",
-    department:"فیلمبرداری"
-},
-{
-    username:"basair.photo",
-    password:"Photo@Bs_1405#41",
-    name:"مدیر عکسبرداری",
-    role:"manager",
-    department:"عکسبرداری"
-},
-{
-    username:"basair.audio",
-    password:"Aud!o_Bs#1405_63",
-    name:"مدیر صوت",
-    role:"manager",
-    department:"صوت"
-},
-{
-    username:"basair.edit",
-    password:"Edit@Bs_1405#58",
-    name:"مدیر ادیت",
-    role:"manager",
-    department:"ادیت"
-},
-{
-    username:"basair.graphic",
-    password:"Graph!Bs_1405#74",
-    name:"مدیر گرافیک",
-    role:"manager",
-    department:"گرافیک"
-},
-{
-    username:"basair.publish",
-    password:"Pub@Bs_1405#86",
-    name:"مدیر انتشار",
-    role:"manager",
-    department:"انتشار"
-}
-];
-
-let currentUser = null;
+let currentUser=null;
+let editingProject=null;
+let editingReport=null;
+let editingEquipment=null;
 
 function login(){
-
-    const username =
-        document.getElementById("loginUsername").value.trim();
-
-    const password =
-        document.getElementById("loginPassword").value;
-
-    const user = USERS.find(
-        u => u.username === username &&
-             u.password === password
-    );
-
-    const error =
-        document.getElementById("loginError");
-
-    if(!user){
-
+    const pass=document.getElementById("loginPassword").value.trim();
+    const error=document.getElementById("loginError");
+    if(USERS[pass]){
+        currentUser=USERS[pass];
+        sessionStorage.setItem("basair_user",pass);
+        document.getElementById("loginPage").style.display="none";
+        document.getElementById("app").style.display="block";
+        document.getElementById("currentRole").textContent=currentUser.role;
+        applyPermissions();
+        initialize();
+    }else{
         error.style.display="block";
-
-        document.getElementById("loginPassword").value="";
-
-        return;
     }
-
-    currentUser = user;
-
-    sessionStorage.setItem(
-        "basair_current_user",
-        JSON.stringify(user)
-    );
-
-    error.style.display="none";
-
-    document.getElementById("loginPage").classList.add("hidden");
-    document.getElementById("app").classList.remove("hidden");
-
-    document.getElementById("currentUserName").textContent =
-        user.name;
-
-    applyPermissions();
-
-    renderAll();
 }
 
 function logout(){
-
-    sessionStorage.removeItem("basair_current_user");
-
+    sessionStorage.removeItem("basair_user");
     currentUser=null;
-
-    document.getElementById("app").classList.add("hidden");
-    document.getElementById("loginPage").classList.remove("hidden");
-
-    document.getElementById("loginUsername").value="";
+    document.getElementById("app").style.display="none";
+    document.getElementById("loginPage").style.display="flex";
     document.getElementById("loginPassword").value="";
 }
 
-document.getElementById("loginButton")
-.addEventListener("click",login);
-
-document.getElementById("loginPassword")
-.addEventListener("keydown",function(e){
-    if(e.key==="Enter") login();
-});
-
-document.getElementById("logoutButton")
-.addEventListener("click",logout);
-
-
-/* =========================================================
-   STORAGE
-========================================================= */
-
-function load(key, fallback){
-
-    try{
-
-        const data =
-            JSON.parse(localStorage.getItem(key));
-
-        return data ?? fallback;
-
-    }catch(e){
-
-        return fallback;
-
+function checkSession(){
+    const pass=sessionStorage.getItem("basair_user");
+    if(pass && USERS[pass]){
+        currentUser=USERS[pass];
+        document.getElementById("loginPage").style.display="none";
+        document.getElementById("app").style.display="block";
+        document.getElementById("currentRole").textContent=currentUser.role;
+        applyPermissions();
+        initialize();
     }
-
 }
-
-function save(key,data){
-
-    localStorage.setItem(
-        key,
-        JSON.stringify(data)
-    );
-
-}
-
-
-/* =========================================================
-   DEFAULT DATA
-========================================================= */
-
-let projects = load("basair_projects",[]);
-
-let reports = load("basair_reports",[]);
-
-let tasks = load("basair_tasks",[]);
-
-let archive = load("basair_archive",[]);
-
-let people = load("basair_people",[
-    {
-        id:1,
-        name:"مدیر رسانه",
-        role:"مدیر رسانه",
-        department:"مدیریت",
-        status:"فعال",
-        skills:"مدیریت"
-    },
-    {
-        id:2,
-        name:"مدیر فیلمبرداری",
-        role:"مدیر بخش",
-        department:"فیلمبرداری",
-        status:"فعال",
-        skills:"فیلمبرداری"
-    },
-    {
-        id:3,
-        name:"مدیر عکسبرداری",
-        role:"مدیر بخش",
-        department:"عکسبرداری",
-        status:"فعال",
-        skills:"عکاسی"
-    },
-    {
-        id:4,
-        name:"مدیر صوت",
-        role:"مدیر بخش",
-        department:"صوت",
-        status:"فعال",
-        skills:"ضبط و صدابرداری"
-    },
-    {
-        id:5,
-        name:"مدیر ادیت",
-        role:"مدیر بخش",
-        department:"ادیت",
-        status:"فعال",
-        skills:"تدوین"
-    },
-    {
-        id:6,
-        name:"مدیر گرافیک",
-        role:"مدیر بخش",
-        department:"گرافیک",
-        status:"فعال",
-        skills:"طراحی"
-    },
-    {
-        id:7,
-        name:"مدیر انتشار",
-        role:"مدیر بخش",
-        department:"انتشار",
-        status:"فعال",
-        skills:"انتشار"
-    }
-]);
-
-let equipment = load(
-    "basair_media_equipment",
-    [
-        {code:"M001",type:"main",name:"پروژکتور کوچک 1",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"S001",type:"sub",name:"آداپتور",category:"تصویر",parent:"M001",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"S002",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M001",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M002",type:"main",name:"پروژکتور کوچک 2",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"S003",type:"sub",name:"آداپتور",category:"تصویر",parent:"M002",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"S004",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M002",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M003",type:"main",name:"نور اصلی 1",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M004",type:"main",name:"نور اصلی 2",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M005",type:"main",name:"سافت باکس 1",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M006",type:"main",name:"سافت باکس 2",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M007",type:"main",name:"سه پایه پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M008",type:"main",name:"سه پایه نور",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M009",type:"main",name:"سه راهی 4",category:"سایر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M011",type:"main",name:"ویدیو پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M017",type:"main",name:"بسته AUX",category:"صوت",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"S008",type:"sub",name:"کابل AUX بلند",category:"صوت",parent:"M017",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M018",type:"main",name:"بسته HDMI",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"S010",type:"sub",name:"HDMI 2 متری",category:"تصویر",parent:"M018",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"S011",type:"sub",name:"HDMI 10 متری",category:"تصویر",parent:"M018",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M019",type:"main",name:"DJI",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M020",type:"main",name:"میکروفون یقه‌ای",category:"صوت",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M023",type:"main",name:"SD کارت 128",category:"سایر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M024",type:"main",name:"سه پایه دوربین",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M025",type:"main",name:"دوربین Sony A7 III",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M026",type:"main",name:"کیف دوربین",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M029",type:"main",name:"پرده پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M030",type:"main",name:"تبدیل AV به VGA",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M031",type:"main",name:"تبدیل VGA به HDMI",category:"تصویر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""},
-        {code:"M032",type:"main",name:"فلش 32 گیگ",category:"سایر",parent:"",status:"سالم",location:"",checkDate:"",description:"",loanTo:"",loanDate:"",returnDate:""}
-    ]
-);
-
-let currentProjectId=null;
-let currentReportId=null;
-let currentEquipmentCode=null;
-
-let currentMonth =
-    localStorage.getItem("basair_current_month") || "1405/01";
-
-let months =
-    load("basair_months",[
-        {
-            id:"1405/01",
-            startedAt:new Date().toLocaleDateString("fa-IR")
-        }
-    ]);
-
-
-/* =========================================================
-   PERMISSIONS
-========================================================= */
 
 function isAdmin(){
-
-    return currentUser &&
-           currentUser.role==="admin";
-
-}
-
-function canViewReport(report){
-
-    if(isAdmin()) return true;
-
-    return report.department===currentUser.department;
-
-}
-
-function canEditReport(report){
-
-    return isAdmin();
-
-}
-
-function canDeleteReport(report){
-
-    return isAdmin();
-
+    return currentUser && currentUser.dept==="all";
 }
 
 function applyPermissions(){
-
-    const reportsButton =
-        document.querySelector('[data-page="reportsPage"]');
-
-    if(reportsButton){
-
-        reportsButton.style.display="block";
-
-    }
-
-    const archiveButton =
-        document.querySelector('[data-page="archivePage"]');
-
-    if(archiveButton){
-
-        archiveButton.style.display =
-            isAdmin() ? "block" : "none";
-
-    }
-
-    const monthlyButton =
-        document.querySelector('[data-page="monthlyPage"]');
-
-    if(monthlyButton){
-
-        monthlyButton.style.display =
-            isAdmin() ? "block" : "none";
-
-    }
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-const sidebar =
-    document.getElementById("sidebar");
-
-document.getElementById("menuButton")
-.addEventListener("click",()=>{
-    sidebar.classList.add("open");
-});
-
-document.getElementById("sidebarClose")
-.addEventListener("click",()=>{
-    sidebar.classList.remove("open");
-});
-
-document.querySelectorAll(".nav button")
-.forEach(button=>{
-
-    button.addEventListener("click",()=>{
-
-        const pageId =
-            button.dataset.page;
-
-        document.querySelectorAll(".page")
-        .forEach(page=>{
-            page.classList.remove("active");
-        });
-
-        const page =
-            document.getElementById(pageId);
-
-        if(page) page.classList.add("active");
-
-        document.querySelectorAll(".nav button")
-        .forEach(x=>x.classList.remove("active"));
-
-        button.classList.add("active");
-
-        sidebar.classList.remove("open");
-
-        renderAll();
-
+    document.querySelectorAll(".admin-only").forEach(el=>{
+        el.style.display=isAdmin()?"":"none";
     });
-
-});
-
-
-/* =========================================================
-   MODAL HELPERS
-========================================================= */
-
-function openModal(id){
-
-    document.getElementById(id)
-    .classList.add("open");
-
 }
 
-function closeModal(id){
-
-    document.getElementById(id)
-    .classList.remove("open");
-
-}
-
-document.querySelectorAll("[data-close]")
-.forEach(button=>{
-
-    button.addEventListener("click",()=>{
-        closeModal(button.dataset.close);
-    });
-
-});
-
-
-/* =========================================================
-   PROJECTS
-========================================================= */
-
-document.getElementById("addProjectButton")
-.addEventListener("click",()=>{
-
-    currentProjectId=null;
-
-    document.getElementById("projectModalTitle")
-    .textContent="پروژه جدید";
-
-    clearProjectForm();
-
-    openModal("projectModal");
-
-});
-
-function clearProjectForm(){
-
-    [
-        "projectName",
-        "projectSubDepartment",
-        "projectManager",
-        "projectStart",
-        "projectDeadline",
-        "projectMembers",
-        "projectDescription"
-    ].forEach(id=>{
-        document.getElementById(id).value="";
-    });
-
-    document.getElementById("projectProgress").value=0;
-    document.getElementById("projectStatus").value="فعال";
-    document.getElementById("projectPriority").value="متوسط";
-
-}
-
-document.getElementById("saveProjectButton")
-.addEventListener("click",()=>{
-
-    const data={
-
-        id:currentProjectId || Date.now(),
-
-        name:document.getElementById("projectName").value.trim(),
-
-        type:document.getElementById("projectType").value,
-
-        department:document.getElementById("projectDepartment").value,
-
-        subDepartment:
-            document.getElementById("projectSubDepartment").value.trim(),
-
-        manager:
-            document.getElementById("projectManager").value.trim(),
-
-        priority:
-            document.getElementById("projectPriority").value,
-
-        start:
-            document.getElementById("projectStart").value.trim(),
-
-        deadline:
-            document.getElementById("projectDeadline").value.trim(),
-
-        status:
-            document.getElementById("projectStatus").value,
-
-        progress:
-            Math.max(
-                0,
-                Math.min(
-                    100,
-                    Number(document.getElementById("projectProgress").value)||0
-                )
-            ),
-
-        members:
-            document.getElementById("projectMembers").value.trim(),
-
-        description:
-            document.getElementById("projectDescription").value.trim(),
-
-        month:currentMonth,
-
-        updatedAt:new Date().toLocaleString("fa-IR")
-
-    };
-
-    if(!data.name){
-
-        alert("نام پروژه الزامی است.");
-        return;
-
-    }
-
-    if(currentProjectId){
-
-        const index =
-            projects.findIndex(x=>x.id===currentProjectId);
-
-        if(index!==-1){
-
-            projects[index]={
-                ...projects[index],
-                ...data
-            };
-
-        }
-
-    }else{
-
-        projects.push(data);
-
-    }
-
-    save("basair_projects",projects);
-
-    closeModal("projectModal");
-
-    renderAll();
-
-});
-
-function editProject(id){
-
-    if(!isAdmin()){
-
-        alert("ویرایش پروژه فقط برای مدیر رسانه فعال است.");
-        return;
-
-    }
-
-    const project =
-        projects.find(x=>x.id===id);
-
-    if(!project) return;
-
-    currentProjectId=id;
-
-    document.getElementById("projectModalTitle")
-    .textContent="ویرایش پروژه";
-
-    document.getElementById("projectName").value=project.name;
-    document.getElementById("projectType").value=project.type;
-    document.getElementById("projectDepartment").value=project.department;
-    document.getElementById("projectSubDepartment").value=project.subDepartment||"";
-    document.getElementById("projectManager").value=project.manager||"";
-    document.getElementById("projectPriority").value=project.priority||"متوسط";
-    document.getElementById("projectStart").value=project.start||"";
-    document.getElementById("projectDeadline").value=project.deadline||"";
-    document.getElementById("projectStatus").value=project.status;
-    document.getElementById("projectProgress").value=project.progress||0;
-    document.getElementById("projectMembers").value=project.members||"";
-    document.getElementById("projectDescription").value=project.description||"";
-
-    openModal("projectModal");
-
-}
-
-function deleteProject(id){
-
-    if(!isAdmin()){
-
-        alert("حذف پروژه فقط برای مدیر رسانه فعال است.");
-        return;
-
-    }
-
-    if(!confirm("این پروژه حذف شود؟")) return;
-
-    projects =
-        projects.filter(x=>x.id!==id);
-
-    save("basair_projects",projects);
-
-    renderAll();
-
-}
-
-function renderProjects(){
-
-    const container =
-        document.getElementById("projectsList");
-
-    if(!container) return;
-
-    const search =
-        (document.getElementById("projectSearch")?.value||"")
-        .toLowerCase();
-
-    const status =
-        document.getElementById("projectStatusFilter")?.value||"";
-
-    const list =
-        projects.filter(p=>{
-
-            const visible =
-                isAdmin() ||
-                p.department===currentUser.department;
-
-            return visible &&
-                (!search ||
-                p.name.toLowerCase().includes(search)) &&
-                (!status || p.status===status);
-
-        });
-
-    if(!list.length){
-
-        container.innerHTML=
-            '<div class="card empty">پروژه‌ای ثبت نشده است.</div>';
-
-        return;
-
-    }
-
-    container.innerHTML=
-        list.map(p=>`
-
-        <div class="project-card">
-
-        <div class="project-top">
-
-        <div>
-        <strong>${escapeHTML(p.name)}</strong>
-        <div class="small">
-        ${escapeHTML(p.type)} | ${escapeHTML(p.department)}
-        </div>
-        </div>
-
-        ${statusBadge(p.status)}
-
-        </div>
-
-        <p class="small">
-        مدیر: ${escapeHTML(p.manager||"تعیین نشده")}
-        <br>
-        ددلاین: ${escapeHTML(p.deadline||"تعیین نشده")}
-        <br>
-        اولویت: ${escapeHTML(p.priority||"متوسط")}
-        </p>
-
-        <div class="progress">
-        <div class="progress-bar" style="width:${Number(p.progress)||0}%"></div>
-        </div>
-
-        <p class="small">
-        پیشرفت: ${Number(p.progress)||0}٪
-        </p>
-
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-
-        <button class="btn btn-blue"
-        onclick="viewProject(${p.id})">
-        مشاهده
-        </button>
-
-        ${
-            isAdmin()
-            ?
-            `
-            <button class="btn btn-warning"
-            onclick="editProject(${p.id})">
-            ویرایش
-            </button>
-
-            <button class="btn btn-danger"
-            onclick="deleteProject(${p.id})">
-            حذف
-            </button>
-            `
-            :
-            ""
-        }
-
-        </div>
-
-        </div>
-
-        `).join("");
-
-}
-
-function viewProject(id){
-
-    const p =
-        projects.find(x=>x.id===id);
-
-    if(!p) return;
-
-    alert(
-        "پروژه: "+p.name+
-        "\n\nنوع: "+p.type+
-        "\nبخش: "+p.department+
-        "\nمدیر: "+(p.manager||"-")+
-        "\nوضعیت: "+p.status+
-        "\nپیشرفت: "+(p.progress||0)+"٪"+
-        "\nددلاین: "+(p.deadline||"-")+
-        "\nاعضا: "+(p.members||"-")+
-        "\n\n"+(p.description||"")
-    );
-
-}
-
-
-/* =========================================================
-   REPORTS
-========================================================= */
-
-document.getElementById("newReportButton")
-.addEventListener("click",()=>{
-
-    currentReportId=null;
-
-    document.getElementById("reportModalTitle")
-    .textContent="گزارش هفتگی جدید";
-
-    clearReportForm();
-
-    document.getElementById("reportManager").value=
-        currentUser.name;
-
-    document.getElementById("reportDepartment").value=
-        currentUser.department;
-
-    populateReportProjects();
-
-    openModal("reportModal");
-
-});
-
-function clearReportForm(){
-
-    [
-        "reportWeek",
-        "reportDate",
-        "reportPlanned",
-        "reportCompleted",
-        "reportDelayed",
-        "reportQuality",
-        "reportPlannedList",
-        "reportCompletedList",
-        "reportDelayReasons",
-        "reportIssues",
-        "reportSuggestions"
-    ].forEach(id=>{
-        document.getElementById(id).value="";
-    });
-
-    document.getElementById("reportPlanned").value=0;
-    document.getElementById("reportCompleted").value=0;
-    document.getElementById("reportDelayed").value=0;
-    document.getElementById("reportQuality").value=0;
-
-}
-
-function populateReportProjects(){
-
-    const select =
-        document.getElementById("reportProjects");
-
-    select.innerHTML="";
-
-    projects.forEach(p=>{
-
-        const option =
-            document.createElement("option");
-
-        option.value=p.id;
-        option.textContent=p.name;
-
-        select.appendChild(option);
-
-    });
-
-}
-
-document.getElementById("saveReportButton")
-.addEventListener("click",saveReport);
-
-function saveReport(){
-
-    const planned =
-        Number(document.getElementById("reportPlanned").value)||0;
-
-    const completed =
-        Number(document.getElementById("reportCompleted").value)||0;
-
-    const delayed =
-        Number(document.getElementById("reportDelayed").value)||0;
-
-    const quality =
-        Number(document.getElementById("reportQuality").value)||0;
-
-    const selectedProjects =
-        [...document.getElementById("reportProjects").selectedOptions]
-        .map(x=>Number(x.value));
-
-    const report={
-
-        id:currentReportId || Date.now(),
-
-        manager:currentUser.name,
-
-        department:currentUser.department,
-
-        week:
-            document.getElementById("reportWeek").value.trim(),
-
-        date:
-            document.getElementById("reportDate").value.trim(),
-
-        planned,
-
-        completed,
-
-        delayed,
-
-        quality,
-
-        plannedList:
-            document.getElementById("reportPlannedList").value.trim(),
-
-        completedList:
-            document.getElementById("reportCompletedList").value.trim(),
-
-        delayReasons:
-            document.getElementById("reportDelayReasons").value.trim(),
-
-        projects:selectedProjects,
-
-        issues:
-            document.getElementById("reportIssues").value.trim(),
-
-        suggestions:
-            document.getElementById("reportSuggestions").value.trim(),
-
-        status:"pending",
-
-        month:currentMonth,
-
-        createdAt:new Date().toLocaleString("fa-IR")
-
-    };
-
-    if(!report.week){
-
-        alert("هفته گزارش را وارد کنید.");
-        return;
-
-    }
-
-    if(currentReportId){
-
-        const index =
-            reports.findIndex(x=>x.id===currentReportId);
-
-        if(index!==-1){
-
-            reports[index]={
-                ...reports[index],
-                ...report
-            };
-
-        }
-
-    }else{
-
-        reports.push(report);
-
-    }
-
-    save("basair_reports",reports);
-
-    closeModal("reportModal");
-
-    renderAll();
-
-}
-
-function editReport(id){
-
-    const report =
-        reports.find(x=>x.id===id);
-
-    if(!report) return;
-
-    if(!canEditReport(report)){
-
-        alert("ویرایش گزارش فقط توسط مدیر رسانه انجام می‌شود.");
-        return;
-
-    }
-
-    currentReportId=id;
-
-    document.getElementById("reportModalTitle")
-    .textContent="ویرایش گزارش";
-
-    document.getElementById("reportManager").value=report.manager;
-    document.getElementById("reportDepartment").value=report.department;
-    document.getElementById("reportWeek").value=report.week||"";
-    document.getElementById("reportDate").value=report.date||"";
-    document.getElementById("reportPlanned").value=report.planned||0;
-    document.getElementById("reportCompleted").value=report.completed||0;
-    document.getElementById("reportDelayed").value=report.delayed||0;
-    document.getElementById("reportQuality").value=report.quality||0;
-    document.getElementById("reportPlannedList").value=report.plannedList||"";
-    document.getElementById("reportCompletedList").value=report.completedList||"";
-    document.getElementById("reportDelayReasons").value=report.delayReasons||"";
-    document.getElementById("reportIssues").value=report.issues||"";
-    document.getElementById("reportSuggestions").value=report.suggestions||"";
-
-    populateReportProjects();
-
-    [...document.getElementById("reportProjects").options]
-    .forEach(option=>{
-        option.selected =
-            report.projects?.includes(Number(option.value));
-    });
-
-    openModal("reportModal");
-
-}
-
-function deleteReport(id){
-
-    const report =
-        reports.find(x=>x.id===id);
-
-    if(!report) return;
-
-    if(!canDeleteReport(report)){
-
-        alert("حذف گزارش فقط توسط مدیر رسانه انجام می‌شود.");
-        return;
-
-    }
-
-    if(!confirm("این گزارش حذف شود؟")) return;
-
-    reports =
-        reports.filter(x=>x.id!==id);
-
-    save("basair_reports",reports);
-
-    renderAll();
-
-}
-
-function calculateScore(report){
-
-    if(!report.planned){
-
-        return Math.round(
-            (Number(report.quality)||0)*10
-        );
-
-    }
-
-    const completion =
-        Math.min(
-            100,
-            (report.completed/report.planned)*100
-        );
-
-    const quality =
-        Math.min(10,Number(report.quality)||0)*10;
-
-    const delayPenalty =
-        report.planned>0
-        ?
-        Math.max(
-            0,
-            100-(report.delayed/report.planned*100)
-        )
-        :
-        100;
-
-    return Math.round(
-        completion*.60+
-        quality*.30+
-        delayPenalty*.10
-    );
-
-}
-
-function approveReport(id){
-
-    if(!isAdmin()){
-
-        alert("تأیید نهایی گزارش فقط برای مدیر رسانه است.");
-        return;
-
-    }
-
-    const report =
-        reports.find(x=>x.id===id);
-
-    if(!report) return;
-
-    report.status="approved";
-
-    report.approvedAt=
-        new Date().toLocaleString("fa-IR");
-
-    report.approvedBy=currentUser.name;
-
-    save("basair_reports",reports);
-
-    archiveReport(report);
-
-    alert("گزارش تأیید و در آرشیو ثبت شد.");
-
-    renderAll();
-
-}
-
-function archiveReport(report){
-
-    const existing =
-        archive.find(x=>x.reportId===report.id);
-
-    const archived={
-        ...report,
-        reportId:report.id,
-        archivedAt:new Date().toLocaleString("fa-IR")
-    };
-
-    if(existing){
-
-        const index=
-            archive.findIndex(x=>x.reportId===report.id);
-
-        archive[index]=archived;
-
-    }else{
-
-        archive.push(archived);
-
-    }
-
-    save("basair_archive",archive);
-
-}
-
-function renderReports(){
-
-    const container =
-        document.getElementById("reportsList");
-
-    if(!container) return;
-
-    const list =
-        reports.filter(canViewReport);
-
-    if(!list.length){
-
-        container.innerHTML=
-            '<div class="empty">هنوز گزارشی ثبت نشده است.</div>';
-
-        return;
-
-    }
-
-    container.innerHTML=
-        list.map(r=>{
-
-            const score =
-                calculateScore(r);
-
-            return `
-
-            <div class="archive-item">
-
-            <div class="project-top">
-
-            <div>
-            <strong>${escapeHTML(r.manager)}</strong>
-            <div class="small">
-            ${escapeHTML(r.department)} |
-            ${escapeHTML(r.week||"بدون هفته")}
-            </div>
-            </div>
-
-            ${r.status==="approved"
-                ?'<span class="badge badge-green">تأیید شده</span>'
-                :'<span class="badge badge-yellow">در انتظار تأیید</span>'
-            }
-
-            </div>
-
-            <p class="small">
-            برنامه: ${r.planned}
-            |
-            انجام‌شده: ${r.completed}
-            |
-            تأخیر: ${r.delayed}
-            |
-            کیفیت: ${r.quality}/10
-            |
-            امتیاز: ${score}٪
-            </p>
-
-            ${
-                r.issues
-                ?
-                `<div class="alert-item">
-                ⚠️ ${escapeHTML(r.issues)}
-                </div>`
-                :
-                ""
-            }
-
-            <div style="display:flex;gap:6px;flex-wrap:wrap">
-
-            <button class="btn btn-blue"
-            onclick="viewReport(${r.id})">
-            مشاهده
-            </button>
-
-            ${
-                isAdmin()
-                ?
-                `
-                <button class="btn btn-warning"
-                onclick="editReport(${r.id})">
-                ویرایش
-                </button>
-
-                <button class="btn btn-danger"
-                onclick="deleteReport(${r.id})">
-                حذف
-                </button>
-
-                ${
-                    r.status!=="approved"
-                    ?
-                    `<button class="btn btn-success"
-                    onclick="approveReport(${r.id})">
-                    ✓ تأیید و آرشیو
-                    </button>`
-                    :
-                    ""
-                }
-                `
-                :
-                ""
-            }
-
-            </div>
-
-            </div>
-
-            `;
-
-        }).join("");
-
-}
-
-function viewReport(id){
-
-    const r =
-        reports.find(x=>x.id===id);
-
-    if(!r) return;
-
-    if(!canViewReport(r)){
-
-        alert("شما به این گزارش دسترسی ندارید.");
-        return;
-
-    }
-
-    alert(
-
-        "گزارش هفتگی"+
-        "\n\nمدیر: "+r.manager+
-        "\nبخش: "+r.department+
-        "\nهفته: "+r.week+
-        "\n\nبرنامه: "+r.planned+
-        "\nانجام‌شده: "+r.completed+
-        "\nتأخیر: "+r.delayed+
-        "\nکیفیت: "+r.quality+"/10"+
-        "\nامتیاز: "+calculateScore(r)+"٪"+
-        "\n\nمشکلات:\n"+(r.issues||"موردی ثبت نشده")+
-        "\n\nپیشنهادها:\n"+(r.suggestions||"موردی ثبت نشده")
-
-    );
-
-}
-
-
-/* =========================================================
-   TASKS
-========================================================= */
-
-document.getElementById("newTaskButton")
-.addEventListener("click",()=>{
-
-    if(!isAdmin()){
-
-        alert("ثبت وظیفه محول‌شده فقط برای مدیر رسانه است.");
-        return;
-
-    }
-
-    document.getElementById("taskTitle").value="";
-    document.getElementById("taskDeadline").value="";
-    document.getElementById("taskDescription").value="";
-
-    populateTaskProjects();
-
-    openModal("taskModal");
-
-});
-
-function populateTaskProjects(){
-
-    const select=
-        document.getElementById("taskProject");
-
-    select.innerHTML=
-        '<option value="">بدون پروژه</option>';
-
-    projects.forEach(p=>{
-
-        const option=
-            document.createElement("option");
-
-        option.value=p.id;
-        option.textContent=p.name;
-
-        select.appendChild(option);
-
-    });
-
-}
-
-document.getElementById("saveTaskButton")
-.addEventListener("click",()=>{
-
-    const title=
-        document.getElementById("taskTitle").value.trim();
-
-    if(!title){
-
-        alert("عنوان وظیفه الزامی است.");
-        return;
-
-    }
-
-    tasks.push({
-
-        id:Date.now(),
-
-        title,
-
-        assignee:
-            document.getElementById("taskAssignee").value,
-
-        deadline:
-            document.getElementById("taskDeadline").value.trim(),
-
-        project:
-            document.getElementById("taskProject").value,
-
-        description:
-            document.getElementById("taskDescription").value.trim(),
-
-        done:false,
-
-        month:currentMonth,
-
-        createdAt:new Date().toLocaleString("fa-IR")
-
-    });
-
-    save("basair_tasks",tasks);
-
-    closeModal("taskModal");
-
-    renderAll();
-
-});
-
-function toggleTask(id){
-
-    const task=
-        tasks.find(x=>x.id===id);
-
-    if(!task) return;
-
-    if(!isAdmin() &&
-       task.assignee!==currentUser.name &&
-       task.assignee!==currentUser.department){
-
-        alert("این وظیفه برای شما نیست.");
-        return;
-
-    }
-
-    task.done=!task.done;
-
-    save("basair_tasks",tasks);
-
-    renderAll();
-
-}
-
-function deleteTask(id){
-
-    if(!isAdmin()){
-
-        alert("حذف وظیفه فقط برای مدیر رسانه است.");
-        return;
-
-    }
-
-    if(!confirm("وظیفه حذف شود؟")) return;
-
-    tasks=
-        tasks.filter(x=>x.id!==id);
-
-    save("basair_tasks",tasks);
-
-    renderAll();
-
-}
-
-function renderTasks(){
-
-    const container=
-        document.getElementById("tasksList");
-
-    if(!container) return;
-
-    const visible=
-        isAdmin()
-        ?
-        tasks
-        :
-        tasks.filter(
-            t =>
-                t.assignee===currentUser.name ||
-                t.assignee===currentUser.department
-        );
-
-    document.getElementById("taskTotal")
-    .textContent=visible.length;
-
-    document.getElementById("taskDone")
-    .textContent=visible.filter(x=>x.done).length;
-
-    document.getElementById("taskPending")
-    .textContent=visible.filter(x=>!x.done).length;
-
-    if(!visible.length){
-
-        container.innerHTML=
-            '<div class="empty">وظیفه‌ای وجود ندارد.</div>';
-
-        return;
-
-    }
-
-    container.innerHTML=
-        visible.map(t=>`
-
-        <div class="task-item">
-
-        <input type="checkbox"
-        ${t.done?"checked":""}
-        onchange="toggleTask(${t.id})">
-
-        <div style="flex:1">
-
-        <div class="${t.done?"task-done":""}">
-        <strong>${escapeHTML(t.title)}</strong>
-        </div>
-
-        <div class="small">
-        مسئول: ${escapeHTML(t.assignee)}
-        |
-        ددلاین: ${escapeHTML(t.deadline||"-")}
-        </div>
-
-        ${
-            t.description
-            ?
-            `<div class="small">
-            ${escapeHTML(t.description)}
-            </div>`
-            :
-            ""
-        }
-
-        </div>
-
-        ${
-            isAdmin()
-            ?
-            `<button class="btn btn-danger"
-            onclick="deleteTask(${t.id})">
-            حذف
-            </button>`
-            :
-            ""
-        }
-
-        </div>
-
-        `).join("");
-
-}
-
-
-/* =========================================================
-   ARCHIVE
-========================================================= */
-
-function renderArchive(){
-
-    const container=
-        document.getElementById("archiveList");
-
-    if(!container) return;
-
-    if(!isAdmin()){
-
-        container.innerHTML=
-            '<div class="empty">این بخش فقط برای مدیر رسانه قابل دسترسی است.</div>';
-
-        return;
-
-    }
-
-    if(!archive.length){
-
-        container.innerHTML=
-            '<div class="empty">هنوز گزارشی در آرشیو ثبت نشده است.</div>';
-
-        return;
-
-    }
-
-    container.innerHTML=
-        archive.slice().reverse().map(r=>`
-
-        <div class="archive-item">
-
-        <div class="project-top">
-
-        <div>
-        <strong>
-        گزارش ${escapeHTML(r.week||"هفتگی")}
-        </strong>
-
-        <div class="small">
-        ${escapeHTML(r.manager)}
-        |
-        ${escapeHTML(r.department)}
-        </div>
-        </div>
-
-        <span class="badge badge-green">
-        آرشیو شده
-        </span>
-
-        </div>
-
-        <p class="small">
-        امتیاز عملکرد: <strong>
-        ${calculateScore(r)}٪
-        </strong>
-        </p>
-
-        <p class="small">
-        تاریخ تأیید:
-        ${escapeHTML(r.approvedAt||"-")}
-        </p>
-
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-
-        <button class="btn btn-blue"
-        onclick="viewReport(${r.reportId})">
-        مشاهده خروجی
-        </button>
-
-        <button class="btn btn-primary"
-        onclick="printArchive(${r.reportId})">
-        🖨 چاپ
-        </button>
-
-        </div>
-
-        </div>
-
-        `).join("");
-
-}
-
-function printArchive(id){
-
-    const r=
-        archive.find(x=>x.reportId===id);
-
-    if(!r) return;
-
-    const w=
-        window.open("","_blank");
-
-    w.document.write(`
-
-    <html dir="rtl">
-
-    <head>
-
-    <meta charset="UTF-8">
-
-    <title>گزارش هفتگی</title>
-
-    <style>
-
-    body{
-        font-family:Tahoma;
-        padding:30px;
-        line-height:2;
-    }
-
-    h1{
-        text-align:center;
-    }
-
-    .box{
-        border:1px solid #ccc;
-        padding:15px;
-        margin-bottom:15px;
-        border-radius:8px;
-    }
-
-    </style>
-
-</head>
-
-<body>
-
-<h1>گزارش هفتگی واحد رسانه بصائر</h1>
-
-<div class="box">
-مدیر: ${escapeHTML(r.manager)}
-<br>
-بخش: ${escapeHTML(r.department)}
-<br>
-هفته: ${escapeHTML(r.week)}
-<br>
-تاریخ: ${escapeHTML(r.date||"-")}
-</div>
-
-<div class="box">
-کارهای برنامه‌ریزی‌شده: ${r.planned}
-<br>
-انجام‌شده: ${r.completed}
-<br>
-تأخیر: ${r.delayed}
-<br>
-کیفیت: ${r.quality}/10
-<br>
-امتیاز عملکرد: ${calculateScore(r)}٪
-</div>
-
-<div class="box">
-<strong>کارهای برنامه‌ریزی‌شده</strong>
-<br>
-${escapeHTML(r.plannedList||"-").replace(/\n/g,"<br>")}
-</div>
-
-<div class="box">
-<strong>کارهای انجام‌شده</strong>
-<br>
-${escapeHTML(r.completedList||"-").replace(/\n/g,"<br>")}
-</div>
-
-<div class="box">
-<strong>مشکلات و چالش‌ها</strong>
-<br>
-${escapeHTML(r.issues||"موردی ثبت نشده")}
-</div>
-
-<div class="box">
-<strong>پیشنهادها</strong>
-<br>
-${escapeHTML(r.suggestions||"موردی ثبت نشده")}
-</div>
-
-</body>
-
-</html>
-
-`);
-
-w.document.close();
-
-w.print();
-
-}
-
-/* =========================================================PERFORMANCE========================================================= */
-
-function renderPerformance(){
-
-const container=
-    document.getElementById("performanceList");
-
-if(!container) return;
-
-const departments=[
-    "فیلمبرداری",
-    "عکسبرداری",
-    "صوت",
-    "ادیت",
-    "گرافیک",
-    "انتشار"
+/* =========================
+   DATA
+========================= */
+
+let projects=JSON.parse(localStorage.getItem("basair_projects")||"[]");
+let reports=JSON.parse(localStorage.getItem("basair_reports")||"[]");
+let tasks=JSON.parse(localStorage.getItem("basair_tasks")||"[]");
+let people=JSON.parse(localStorage.getItem("basair_people")||"[]");
+let equipment=JSON.parse(localStorage.getItem("basair_equipment")||"null");
+let notifications=JSON.parse(localStorage.getItem("basair_notifications")||"[]");
+let currentMonth=localStorage.getItem("basair_month")||"1405/07";
+
+if(!equipment){
+equipment=[
+{code:"M001",type:"main",name:"پروژکتور کوچک 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"S001",type:"sub",name:"آداپتور",category:"تصویر",parent:"M001",status:"سالم",location:"",checkDate:""},
+{code:"S002",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M001",status:"سالم",location:"",checkDate:""},
+{code:"M002",type:"main",name:"پروژکتور کوچک 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"S003",type:"sub",name:"آداپتور",category:"تصویر",parent:"M002",status:"سالم",location:"",checkDate:""},
+{code:"S004",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M002",status:"سالم",location:"",checkDate:""},
+{code:"M003",type:"main",name:"نور اصلی 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"S005",type:"sub",name:"کابل پاور",category:"تصویر",parent:"M003",status:"سالم",location:"",checkDate:""},
+{code:"M004",type:"main",name:"نور اصلی 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"S006",type:"sub",name:"کابل پاور",category:"تصویر",parent:"M004",status:"سالم",location:"",checkDate:""},
+{code:"M005",type:"main",name:"سافت باکس 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M006",type:"main",name:"سافت باکس 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M007",type:"main",name:"سه پایه پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M008",type:"main",name:"سه پایه نور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M009",type:"main",name:"سه راهی 4",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M010",type:"main",name:"رزرو",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M011",type:"main",name:"ویدیو پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"S007",type:"sub",name:"کابل پاور و کنترل",category:"تصویر",parent:"M011",status:"سالم",location:"",checkDate:""},
+{code:"M012",type:"main",name:"سه راهی 1",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M013",type:"main",name:"سه راهی 2",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M014",type:"main",name:"سه راهی 3",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M015",type:"main",name:"DVD 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M016",type:"main",name:"آنتن",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M017",type:"main",name:"بسته AUX",category:"صوت",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"S008",type:"sub",name:"کابل AUX بلند",category:"صوت",parent:"M017",status:"سالم",location:"",checkDate:""},
+{code:"S009",type:"sub",name:"کابل دو سر تبدیل",category:"صوت",parent:"M017",status:"سالم",location:"",checkDate:""},
+{code:"M018",type:"main",name:"بسته HDMI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"S010",type:"sub",name:"HDMI 2 متری",category:"تصویر",parent:"M018",status:"سالم",location:"",checkDate:""},
+{code:"S011",type:"sub",name:"HDMI 10 متری",category:"تصویر",parent:"M018",status:"سالم",location:"",checkDate:""},
+{code:"M019",type:"main",name:"DJI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M020",type:"main",name:"میکروفون یقه‌ای",category:"صوت",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M021",type:"main",name:"DVD 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M022",type:"main",name:"فلش 128",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M023",type:"main",name:"SD کارت 128",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M024",type:"main",name:"سه پایه دوربین",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M025",type:"main",name:"دوربین Sony A7 III",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M026",type:"main",name:"کیف دوربین",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M027",type:"main",name:"سه راهی 5",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M028",type:"main",name:"سه راهی 6",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M029",type:"main",name:"پرده پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M030",type:"main",name:"تبدیل AV به VGA",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M031",type:"main",name:"تبدیل VGA به HDMI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M032",type:"main",name:"فلش 32 گیگ",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""}
 ];
-
-container.innerHTML=
-    `<div class="grid grid-3">`+
-
-    departments.map(dep=>{
-
-        const rs=
-            reports.filter(
-                r =>
-                    r.department===dep &&
-                    r.status==="approved"
-            );
-
-        const score=
-            rs.length
-            ?
-            Math.round(
-                rs.reduce(
-                    (sum,r)=>sum+calculateScore(r),
-                    0
-                )/rs.length
-            )
-            :
-            0;
-
-        const cls=
-            score>=80
-            ?
-            "green"
-            :
-            score>=20
-            ?
-            "yellow"
-            :
-            "red";
-
-        return `
-
-        <div class="card status-card ${cls}">
-
-        <strong>${dep}</strong>
-
-        <div class="stat-number">
-        ${score}٪
-        </div>
-
-        <div class="small">
-        تعداد گزارش تأییدشده:
-        ${rs.length}
-        </div>
-
-        </div>
-
-        `;
-
-    }).join("")+
-
-    `</div>`;
-
+saveAll();
 }
 
-/* =========================================================PEOPLE========================================================= */
-
-document.getElementById("addPersonButton").addEventListener("click",()=>{
-
-if(!isAdmin()){
-
-    alert("مدیریت نیروها فقط برای مدیر رسانه است.");
-    return;
-
-}
-
-[
-    "personName",
-    "personRole",
-    "personDepartment",
-    "personSkills"
-].forEach(id=>{
-    document.getElementById(id).value="";
-});
-
-document.getElementById("personStatus").value="فعال";
-
-openModal("personModal");
-
-});
-
-document.getElementById("savePersonButton").addEventListener("click",()=>{
-
-const name=
-    document.getElementById("personName").value.trim();
-
-if(!name){
-
-    alert("نام نیرو الزامی است.");
-    return;
-
-}
-
-people.push({
-
-    id:Date.now(),
-
-    name,
-
-    role:
-        document.getElementById("personRole").value.trim(),
-
-    department:
-        document.getElementById("personDepartment").value.trim(),
-
-    status:
-        document.getElementById("personStatus").value,
-
-    skills:
-        document.getElementById("personSkills").value.trim()
-
-});
-
-save("basair_people",people);
-
-closeModal("personModal");
-
-renderAll();
-
-});
-
-function deletePerson(id){
-
-if(!isAdmin()) return;
-
-if(!confirm("این نیرو حذف شود؟")) return;
-
-people=
-    people.filter(x=>x.id!==id);
-
-save("basair_people",people);
-
-renderAll();
-
-}
-
-function renderPeople(){
-
-const container=
-    document.getElementById("peopleList");
-
-if(!container) return;
-
-container.innerHTML=
-    people.map(p=>`
-
-    <div class="project-card">
-
-    <div class="project-top">
-
-    <div>
-    <strong>${escapeHTML(p.name)}</strong>
-
-    <div class="small">
-    ${escapeHTML(p.role||"-")}
-    |
-    ${escapeHTML(p.department||"-")}
-    </div>
-    </div>
-
-    ${p.status==="فعال"
-        ?'<span class="badge badge-green">فعال</span>'
-        :'<span class="badge badge-gray">غیرفعال</span>'
-    }
-
-    </div>
-
-    <p class="small">
-    مهارت‌ها: ${escapeHTML(p.skills||"-")}
-    </p>
-
-    ${
-        isAdmin()
-        ?
-        `<button class="btn btn-danger"
-        onclick="deletePerson(${p.id})">
-        حذف
-        </button>`
-        :
-        ""
-    }
-
-    </div>
-
-    `).join("");
-
-}
-
-/* =========================================================EQUIPMENT========================================================= */
-
-document.getElementById("addEquipmentButton").addEventListener("click",()=>{
-
-if(!isAdmin()){
-
-    alert("مدیریت تجهیزات فقط برای مدیر رسانه است.");
-    return;
-
-}
-
-currentEquipmentCode=null;
-
-clearEquipmentForm();
-
-document.getElementById("equipmentModalTitle")
-.textContent="افزودن تجهیز";
-
-updateEquipmentParents();
-
-openModal("equipmentModal");
-
-});
-
-function clearEquipmentForm(){
-
-[
-    "eqCode",
-    "eqName",
-    "eqLocation",
-    "eqCheckDate",
-    "eqLoanTo",
-    "eqLoanDate",
-    "eqReturnDate",
-    "eqDescription"
-].forEach(id=>{
-    document.getElementById(id).value="";
-});
-
-document.getElementById("eqType").value="main";
-document.getElementById("eqCategory").value="تصویر";
-document.getElementById("eqStatus").value="سالم";
-
-}
-
-function updateEquipmentParents(){
-
-const select=
-    document.getElementById("eqParent");
-
-select.innerHTML=
-    '<option value="">بدون وابستگی</option>';
-
-equipment
-.filter(x=>x.type==="main")
-.forEach(item=>{
-
-    const option=
-        document.createElement("option");
-
-    option.value=item.code;
-    option.textContent=
-        item.code+" — "+item.name;
-
-    select.appendChild(option);
-
-});
-
-}
-
-document.getElementById("saveEquipmentButton").addEventListener("click",()=>{
-
-const item={
-
-    code:
-        document.getElementById("eqCode").value.trim().toUpperCase(),
-
-    type:
-        document.getElementById("eqType").value,
-
-    name:
-        document.getElementById("eqName").value.trim(),
-
-    category:
-        document.getElementById("eqCategory").value,
-
-    parent:
-        document.getElementById("eqParent").value,
-
-    status:
-        document.getElementById("eqStatus").value,
-
-    location:
-        document.getElementById("eqLocation").value.trim(),
-
-    checkDate:
-        document.getElementById("eqCheckDate").value.trim(),
-
-    loanTo:
-        document.getElementById("eqLoanTo").value.trim(),
-
-    loanDate:
-        document.getElementById("eqLoanDate").value.trim(),
-
-    returnDate:
-        document.getElementById("eqReturnDate").value.trim(),
-
-    description:
-        document.getElementById("eqDescription").value.trim()
-
-};
-
-if(!item.code || !item.name){
-
-    alert("کد و نام تجهیز الزامی است.");
-    return;
-
-}
-
-if(item.type==="sub" && !item.parent){
-
-    alert("برای زیرمجموعه باید تجهیز اصلی انتخاب شود.");
-    return;
-
-}
-
-if(item.type==="main"){
-
-    item.parent="";
-
-}
-
-const duplicate=
-    equipment.find(
-        x =>
-            x.code===item.code &&
-            x.code!==currentEquipmentCode
-    );
-
-if(duplicate){
-
-    alert("این کد قبلاً استفاده شده است.");
-    return;
-
-}
-
-if(currentEquipmentCode){
-
-    const index=
-        equipment.findIndex(
-            x=>x.code===currentEquipmentCode
-        );
-
-    if(index!==-1){
-
-        equipment[index]=item;
-
-    }
-
-}else{
-
-    equipment.push(item);
-
-}
-
-save("basair_media_equipment",equipment);
-
-closeModal("equipmentModal");
-
-renderAll();
-
-});
-
-function editEquipment(code){
-
-if(!isAdmin()){
-
-    alert("ویرایش تجهیزات فقط برای مدیر رسانه است.");
-    return;
-
-}
-
-const item=
-    equipment.find(x=>x.code===code);
-
-if(!item) return;
-
-currentEquipmentCode=code;
-
-document.getElementById("equipmentModalTitle")
-.textContent="ویرایش تجهیز";
-
-updateEquipmentParents();
-
-document.getElementById("eqCode").value=item.code;
-document.getElementById("eqType").value=item.type;
-document.getElementById("eqName").value=item.name;
-document.getElementById("eqCategory").value=item.category;
-document.getElementById("eqParent").value=item.parent||"";
-document.getElementById("eqStatus").value=item.status;
-document.getElementById("eqLocation").value=item.location||"";
-document.getElementById("eqCheckDate").value=item.checkDate||"";
-document.getElementById("eqLoanTo").value=item.loanTo||"";
-document.getElementById("eqLoanDate").value=item.loanDate||"";
-document.getElementById("eqReturnDate").value=item.returnDate||"";
-document.getElementById("eqDescription").value=item.description||"";
-
-openModal("equipmentModal");
-
-}
-
-function deleteEquipment(code){
-
-if(!isAdmin()){
-
-    alert("حذف تجهیزات فقط برای مدیر رسانه است.");
-    return;
-
-}
-
-const item=
-    equipment.find(x=>x.code===code);
-
-if(!item) return;
-
-const children=
-    equipment.filter(x=>x.parent===code);
-
-let message=
-    "آیا «"+item.name+"» حذف شود؟";
-
-if(children.length){
-
-    message+=
-        "\n\n"+
-        children.length+
-        " زیرمجموعه نیز حذف خواهد شد.";
-
-}
-
-if(!confirm(message)) return;
-
-equipment=
-    equipment.filter(
-        x =>
-            x.code!==code &&
-            x.parent!==code
-    );
-
-save("basair_media_equipment",equipment);
-
-renderAll();
-
-}
-
-function renderEquipment(){
-
-const body=
-    document.getElementById("equipmentBody");
-
-if(!body) return;
-
-const search=
-    (document.getElementById("equipmentSearch")?.value||"")
-    .toLowerCase();
-
-const status=
-    document.getElementById("equipmentStatusFilter")?.value||"";
-
-body.innerHTML="";
-
-const mains=
-    equipment.filter(x=>x.type==="main");
-
-mains.forEach(main=>{
-
-    const children=
-        equipment.filter(
-            x=>x.type==="sub" &&
-               x.parent===main.code
-        );
-
-    const mainText=
-        (
-            main.code+
-            " "+
-            main.name+
-            " "+
-            main.category+
-            " "+
-            main.status
-        ).toLowerCase();
-
-    const mainMatch=
-        (!search || mainText.includes(search)) &&
-        (!status || main.status===status);
-
-    if(mainMatch){
-
-        body.appendChild(
-            equipmentRow(main,false)
-        );
-
-    }
-
-    children.forEach(child=>{
-
-        const text=
-            (
-                child.code+
-                " "+
-                child.name+
-                " "+
-                child.category+
-                " "+
-                child.status
-            ).toLowerCase();
-
-        if(
-            (!search || text.includes(search)) &&
-            (!status || child.status===status)
-        ){
-
-            body.appendChild(
-                equipmentRow(child,true)
-            );
-
-        }
-
-    });
-
-});
-
-document.getElementById("eqMain")
-.textContent=
-    equipment.filter(x=>x.type==="main").length;
-
-document.getElementById("eqSub")
-.textContent=
-    equipment.filter(x=>x.type==="sub").length;
-
-document.getElementById("eqAudio")
-.textContent=
-    equipment.filter(x=>x.category==="صوت").length;
-
-document.getElementById("eqProblem")
-.textContent=
-    equipment.filter(x=>x.status!=="سالم").length;
-
-}
-
-function equipmentRow(item,isChild){
-
-const tr=
-    document.createElement("tr");
-
-tr.innerHTML=`
-
-<td>${escapeHTML(item.code)}</td>
-
-<td>
-${isChild?"↳ ":""}
-${escapeHTML(item.name)}
-</td>
-
-<td>${escapeHTML(item.category)}</td>
-
-<td>${escapeHTML(item.parent||"-")}</td>
-
-<td>${statusBadge(item.status)}</td>
-
-<td>${escapeHTML(item.location||"-")}</td>
-
-<td>${escapeHTML(item.checkDate||"-")}</td>
-
-<td>${escapeHTML(item.description||"-")}</td>
-
-<td>
-
-${
-    isAdmin()
-    ?
-    `
-    <button class="btn btn-warning"
-    onclick="editEquipment('${escapeAttribute(item.code)}')">
-    ویرایش
-    </button>
-
-    <button class="btn btn-danger"
-    onclick="deleteEquipment('${escapeAttribute(item.code)}')">
-    حذف
-    </button>
-    `
-    :
-    `
-    <span class="small">فقط مشاهده</span>
-    `
-}
-
-</td>
-
-`;
-
-return tr;
-
-}
-
-/* =========================================================MONTHLY MANAGEMENT========================================================= */
-
-document.getElementById("newMonthButton").addEventListener("click",()=>{
-
-if(!isAdmin()){
-
-    alert("مدیریت ماهانه فقط برای مدیر رسانه است.");
-    return;
-
-}
-
-const newMonth=
-    prompt(
-        "کد ماه جدید را وارد کنید:",
-        currentMonth
-    );
-
-if(!newMonth) return;
-
-if(!confirm(
-    "ماه جدید شروع شود؟\n"+
-    "اطلاعات ماه‌های قبلی حذف نمی‌شوند."
-)) return;
-
-currentMonth=newMonth.trim();
-
-localStorage.setItem(
-    "basair_current_month",
-    currentMonth
-);
-
-if(!months.some(x=>x.id===currentMonth)){
-
-    months.push({
-
-        id:currentMonth,
-
-        startedAt:
-            new Date().toLocaleDateString("fa-IR")
-
-    });
-
-    save("basair_months",months);
-
-}
-
-/*
-   وظایف ماه جدید از صفر شروع می‌شوند.
-   پروژه‌ها و گزارش‌های قبلی آرشیو می‌مانند.
-*/
-
-tasks=
-    tasks.filter(
-        x=>x.month===currentMonth
-    );
-
-save("basair_tasks",tasks);
-
-alert(
-    "ماه "+currentMonth+
-    " با موفقیت شروع شد."
-);
-
-renderAll();
-
-});
-
-function renderMonthly(){
-
-document.getElementById("currentMonthBox")
-.innerHTML=`
-
-<div class="project-card">
-
-<strong>ماه جاری: ${escapeHTML(currentMonth)}</strong>
-
-<p class="small">
-پروژه‌های این ماه:
-${projects.filter(x=>x.month===currentMonth).length}
-</p>
-
-<p class="small">
-گزارش‌های این ماه:
-${reports.filter(x=>x.month===currentMonth).length}
-</p>
-
-<p class="small">
-وظایف این ماه:
-${tasks.filter(x=>x.month===currentMonth).length}
-</p>
-
-</div>
-
-`;
-
-document.getElementById("monthsList")
-.innerHTML=
-    months.slice().reverse().map(m=>`
-
-    <div class="archive-item">
-
-    <strong>${escapeHTML(m.id)}</strong>
-
-    <div class="small">
-    شروع:
-    ${escapeHTML(m.startedAt)}
-    </div>
-
-    </div>
-
-    `).join("");
-
-}
-
-/* =========================================================DASHBOARD========================================================= */
-
-function renderDashboard(){
-
-const active=
-    projects.filter(
-        p=>p.status==="فعال"
-    ).length;
-
-const delayed=
-    projects.filter(
-        p=>p.status==="عقب‌مانده"
-    ).length;
-
-const pendingReports=
-    reports.filter(
-        r=>r.status!=="approved"
-    ).length;
-
-document.getElementById("dashProjects")
-.textContent=active;
-
-document.getElementById("dashDelayed")
-.textContent=delayed;
-
-document.getElementById("dashPeople")
-.textContent=
-    people.filter(x=>x.status==="فعال").length;
-
-document.getElementById("dashReports")
-.textContent=
-    isAdmin()
-    ?
-    pendingReports
-    :
-    reports.filter(
-        r=>r.department===currentUser.department &&
-           r.status!=="approved"
-    ).length;
-
-const departments={
-    "تولید":["فیلمبرداری","عکسبرداری","صوت"],
-    "پس‌تولید":["ادیت","گرافیک"],
-    "انتشار":["انتشار"]
-};
-
-["تولید","پس‌تولید","انتشار"]
-.forEach(group=>{
-
-    const ids={
-        "تولید":["prodActive","prodDelayed","prodDone"],
-        "پس‌تولید":["postActive","postDelayed","postDone"],
-        "انتشار":["pubActive","pubDelayed","pubDone"]
-    }[group];
-
-    const deps=departments[group];
-
-    const list=
-        projects.filter(
-            p=>deps.includes(
-                p.subDepartment ||
-                p.department
-            )
-        );
-
-    document.getElementById(ids[0])
-    .textContent=
-        list.filter(x=>x.status==="فعال").length;
-
-    document.getElementById(ids[1])
-    .textContent=
-        list.filter(x=>x.status==="عقب‌مانده").length;
-
-    document.getElementById(ids[2])
-    .textContent=
-        list.filter(x=>x.status==="تکمیل‌شده").length;
-
-});
-
-const perf=
-    document.getElementById("dashboardPerformance");
-
-const departmentsList=[
-    "فیلمبرداری",
-    "عکسبرداری",
-    "صوت",
-    "ادیت",
-    "گرافیک",
-    "انتشار"
-];
-
-perf.innerHTML=
-    departmentsList.map(dep=>{
-
-        const rs=
-            reports.filter(
-                r=>
-                    r.department===dep &&
-                    r.status==="approved"
-            );
-
-        const score=
-            rs.length
-            ?
-            Math.round(
-                rs.reduce(
-                    (s,r)=>s+calculateScore(r),
-                    0
-                )/rs.length
-            )
-            :
-            0;
-
-        const cls=
-            score>=80
-            ?
-            "badge-green"
-            :
-            score>=20
-            ?
-            "badge-yellow"
-            :
-            "badge-red";
-
-        return `
-
-        <div class="project-card">
-
-        <strong>${dep}</strong>
-
-        <span class="badge ${cls}">
-        ${score}٪
-        </span>
-
-        </div>
-
-        `;
-
-    }).join("");
-
-const alerts=[];
-
-reports
-.filter(r=>r.status!=="approved")
-.forEach(r=>{
-
-    if(r.issues){
-
-        alerts.push(
-            r.manager+
-            ": "+
-            r.issues
-        );
-
-    }
-
-});
-
-const alertBox=
-    document.getElementById("dashboardAlerts");
-
-if(!alerts.length){
-
-    alertBox.innerHTML=
-        '<div class="empty">هشداری ثبت نشده است.</div>';
-
-}else{
-
-    alertBox.innerHTML=
-        alerts.map(a=>`
-
-        <div class="alert-item">
-        ⚠️ ${escapeHTML(a)}
-        </div>
-
-        `).join("");
-
-}
-
-}
-
-/* =========================================================BACKUP========================================================= */
-
-document.getElementById("exportButton").addEventListener("click",()=>{
-
-const data={
-
-    projects,
-    reports,
-    tasks,
-    archive,
-    people,
-    equipment,
-    months,
-    currentMonth
-
-};
-
-const blob=
-    new Blob(
-        [
-            JSON.stringify(
-                data,
-                null,
-                2
-            )
-        ],
-        {
-            type:"application/json"
-        }
-    );
-
-const url=
-    URL.createObjectURL(blob);
-
-const a=
-    document.createElement("a");
-
-a.href=url;
-
-a.download=
-    "basair-media-full-backup.json";
-
-a.click();
-
-URL.revokeObjectURL(url);
-
-});
-
-document.getElementById("importButton").addEventListener("click",()=>{
-
-if(!isAdmin()){
-
-    alert("بازیابی پشتیبان فقط برای مدیر رسانه است.");
-    return;
-
-}
-
-document.getElementById("importFile").click();
-
-});
-
-document.getElementById("importFile").addEventListener("change",event=>{
-
-const file=
-    event.target.files[0];
-
-if(!file) return;
-
-const reader=
-    new FileReader();
-
-reader.onload=e=>{
-
-    try{
-
-        const data=
-            JSON.parse(e.target.result);
-
-        if(!confirm(
-            "اطلاعات فعلی با پشتیبان جایگزین شود؟"
-        )) return;
-
-        projects=data.projects||[];
-        reports=data.reports||[];
-        tasks=data.tasks||[];
-        archive=data.archive||[];
-        people=data.people||[];
-        equipment=data.equipment||[];
-        months=data.months||months;
-        currentMonth=data.currentMonth||currentMonth;
-
-        save("basair_projects",projects);
-        save("basair_reports",reports);
-        save("basair_tasks",tasks);
-        save("basair_archive",archive);
-        save("basair_people",people);
-        save("basair_media_equipment",equipment);
-        save("basair_months",months);
-
-        localStorage.setItem(
-            "basair_current_month",
-            currentMonth
-        );
-
-        alert("پشتیبان با موفقیت بازیابی شد.");
-
-        renderAll();
-
-    }catch(e){
-
-        alert("فایل پشتیبان معتبر نیست.");
-
-    }
-
-};
-
-reader.readAsText(file);
-
-});
-
-/* =========================================================SEARCH EVENTS========================================================= */
-
-document.getElementById("projectSearch").addEventListener("input",renderProjects);
-
-document.getElementById("projectStatusFilter").addEventListener("change",renderProjects);
-
-document.getElementById("equipmentSearch").addEventListener("input",renderEquipment);
-
-document.getElementById("equipmentStatusFilter").addEventListener("change",renderEquipment);
-
-/* =========================================================HELPERS========================================================= */
-
-function escapeHTML(value){
-
-return String(value??"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
-function escapeAttribute(value){
-
-return String(value??"")
-.replace(/\\/g,"\\\\")
-.replace(/'/g,"\\'");
-
-}
-
-function statusBadge(status){
-
-let cls="badge-gray";
-
-if(
-    status==="سالم" ||
-    status==="تکمیل‌شده"
-){
-    cls="badge-green";
-}
-
-if(
-    status==="فعال" ||
-    status==="امانت داده شده"
-){
-    cls="badge-blue";
-}
-
-if(
-    status==="نیازمند بررسی" ||
-    status==="عقب‌مانده"
-){
-    cls="badge-yellow";
-}
-
-if(
-    status==="خراب" ||
-    status==="مفقود" ||
-    status==="نیازمند تعمیر"
-){
-    cls="badge-red";
-}
-
-return `
-<span class="badge ${cls}">
-${escapeHTML(status)}
-</span>
-`;
-
-}
-
-/* =========================================================RENDER ALL========================================================= */
-
-function renderAll(){
-
-renderDashboard();
+/* =========================
+   INIT
+========================= */
+
+function initialize(){
 renderProjects();
 renderReports();
-renderTasks();
 renderArchive();
+renderTasks();
 renderPerformance();
 renderPeople();
 renderEquipment();
-renderMonthly();
-
+renderNotifications();
+updateDashboard();
+updateMonthly();
 }
 
-/* =========================================================SESSION RESTORE========================================================= */
-
-(function restoreSession(){
-
-const saved=
-    sessionStorage.getItem(
-        "basair_current_user"
-    );
-
-if(!saved) return;
-
-try{
-
-    currentUser=
-        JSON.parse(saved);
-
-    document.getElementById("loginPage")
-    .classList.add("hidden");
-
-    document.getElementById("app")
-    .classList.remove("hidden");
-
-    document.getElementById("currentUserName")
-    .textContent=currentUser.name;
-
-    applyPermissions();
-
-    renderAll();
-
-}catch(e){
-
-    sessionStorage.removeItem(
-        "basair_current_user"
-    );
-
+function saveAll(){
+localStorage.setItem("basair_projects",JSON.stringify(projects));
+localStorage.setItem("basair_reports",JSON.stringify(reports));
+localStorage.setItem("basair_tasks",JSON.stringify(tasks));
+localStorage.setItem("basair_people",JSON.stringify(people));
+localStorage.setItem("basair_equipment",JSON.stringify(equipment));
+localStorage.setItem("basair_notifications",JSON.stringify(notifications));
+localStorage.setItem("basair_month",currentMonth);
 }
 
-})();
+function escapeHTML(v){
+return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+const pageNames={
+dashboard:"داشبورد",
+projects:"پروژه‌ها",
+reports:"گزارش هفتگی",
+archive:"آرشیو گزارش‌ها",
+tasks:"وظایف محول‌شده",
+performance:"ارزیابی عملکرد",
+people:"مدیریت نیروها",
+equipment:"تجهیزات",
+monthly:"مدیریت ماهانه",
+notifications:"اعلان‌ها"
+};
+
+function showPage(name,button){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+const page=document.getElementById("page-"+name);
+if(page)page.classList.add("active");
+document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+if(button)button.classList.add("active");
+document.getElementById("pageTopTitle").textContent=pageNames[name]||"";
+document.getElementById("sidebar").classList.remove("open");
+if(name==="dashboard")updateDashboard();
+}
+
+function toggleSidebar(){
+document.getElementById("sidebar").classList.toggle("open");
+}
+
+function closeModal(id){
+document.getElementById(id).classList.remove("show");
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function updateDashboard(){
+document.getElementById("dashProjects").textContent=projects.filter(p=>p.status==="فعال").length;
+document.getElementById("dashDelayed").textContent=projects.filter(p=>p.status==="عقب‌مانده").length;
+document.getElementById("dashDone").textContent=projects.filter(p=>p.status==="تکمیل‌شده").length;
+document.getElementById("dashPeople").textContent=people.filter(p=>p.status==="فعال").length;
+
+document.getElementById("prodActive").textContent=projects.filter(p=>p.dept==="تولید"&&p.status==="فعال").length;
+document.getElementById("prodDelayed").textContent=projects.filter(p=>p.dept==="تولید"&&p.status==="عقب‌مانده").length;
+document.getElementById("prodDone").textContent=projects.filter(p=>p.dept==="تولید"&&p.status==="تکمیل‌شده").length;
+
+const managers=[
+["فیلمبرداری","فیلمبرداری"],
+["عکسبرداری","عکسبرداری"],
+["صوت","صوت"],
+["ادیت","ادیت"],
+["گرافیک","گرافیک"],
+["انتشار","انتشار"]
+];
+
+document.getElementById("dashboardPerformance").innerHTML=managers.map(x=>{
+const arr=reports.filter(r=>r.dept===x[1]&&r.approved);
+const score=arr.length?Math.round(arr.reduce((a,b)=>a+b.score,0)/arr.length):0;
+const cls=score>=80?"green":score>=20?"yellow":"red";
+return `<div class="row" style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee">
+<span>${x[0]}</span><strong class="${cls}">${score}%</strong></div>`;
+}).join("");
+
+const alerts=[];
+reports.filter(r=>r.issues).forEach(r=>{
+if(r.approved)alerts.push(`${r.manager}: ${r.issues}`);
+});
+tasks.filter(t=>!t.done).forEach(t=>{
+alerts.push(`وظیفه باز: ${t.title} — ${t.manager}`);
+});
+document.getElementById("dashboardAlerts").innerHTML=alerts.length
+?alerts.slice(0,6).map(a=>`<div class="alert">⚠️ ${escapeHTML(a)}</div>`).join("")
+:`<div class="empty">هشداری ثبت نشده است.</div>`;
+}
+
+/* =========================
+   PROJECTS
+========================= */
+
+function renderProjects(){
+const q=(document.getElementById("projectSearch")?.value||"").toLowerCase();
+const st=document.getElementById("projectStatusFilter")?.value||"";
+let arr=projects.filter(p=>{
+if(currentUser && !isAdmin()){
+if(p.manager!==currentUser.role)return false;
+}
+return (!q||JSON.stringify(p).toLowerCase().includes(q))&&(!st||p.status===st);
+});
+document.getElementById("projectsBody").innerHTML=arr.length?arr.map(p=>`
+<tr>
+<td>${escapeHTML(p.name)}</td>
+<td>${escapeHTML(p.type)}</td>
+<td>${escapeHTML(p.dept)}</td>
+<td>${escapeHTML(p.manager)}</td>
+<td>${escapeHTML(p.start)}</td>
+<td>${escapeHTML(p.deadline)}</td>
+<td>${statusBadge(p.status)}</td>
+<td>${p.progress}%<div class="progress"><div style="width:${p.progress}%"></div></div></td>
+<td>
+<button class="btn btn-info" onclick="viewProject('${p.id}')">مشاهده</button>
+${isAdmin()?`<button class="btn btn-warning" onclick="editProject('${p.id}')">ویرایش</button>
+<button class="btn btn-danger" onclick="deleteProject('${p.id}')">حذف</button>`:""}
+</td>
+</tr>`).join(""):`<tr><td colspan="9" class="empty">پروژه‌ای وجود ندارد.</td></tr>`;
+}
+
+function statusBadge(s){
+let c=s==="فعال"?"green":s==="عقب‌مانده"?"red":s==="تکمیل‌شده"?"green":s==="متوقف‌شده"?"gray":"blue";
+return `<span class="badge badge-${c}">${escapeHTML(s)}</span>`;
+}
+
+function openProjectModal(){
+if(!isAdmin())return;
+editingProject=null;
+["pName","pType","pManager","pStart","pDeadline","pDesc"].forEach(id=>document.getElementById(id).value="");
+document.getElementById("pDept").value="تولید";
+document.getElementById("pStatus").value="فعال";
+document.getElementById("pProgress").value=0;
+document.getElementById("projectModalTitle").textContent="پروژه جدید";
+document.getElementById("projectModal").classList.add("show");
+}
+
+function saveProject(){
+const p={
+id:editingProject||Date.now().toString(),
+name:document.getElementById("pName").value.trim(),
+type:document.getElementById("pType").value.trim(),
+dept:document.getElementById("pDept").value,
+manager:document.getElementById("pManager").value.trim(),
+start:document.getElementById("pStart").value.trim(),
+deadline:document.getElementById("pDeadline").value.trim(),
+status:document.getElementById("pStatus").value,
+progress:Number(document.getElementById("pProgress").value)||0,
+desc:document.getElementById("pDesc").value.trim()
+};
+if(!p.name){alert("نام پروژه الزامی است.");return}
+const i=projects.findIndex(x=>x.id===p.id);
+if(i>=0)projects[i]=p;else projects.push(p);
+saveAll();renderProjects();updateDashboard();closeModal("projectModal");
+}
+
+function editProject(id){
+if(!isAdmin())return;
+const p=projects.find(x=>x.id===id);if(!p)return;
+editingProject=id;
+document.getElementById("pName").value=p.name;
+document.getElementById("pType").value=p.type;
+document.getElementById("pDept").value=p.dept;
+document.getElementById("pManager").value=p.manager;
+document.getElementById("pStart").value=p.start;
+document.getElementById("pDeadline").value=p.deadline;
+document.getElementById("pStatus").value=p.status;
+document.getElementById("pProgress").value=p.progress;
+document.getElementById("pDesc").value=p.desc||"";
+document.getElementById("projectModalTitle").textContent="ویرایش پروژه";
+document.getElementById("projectModal").classList.add("show");
+}
+
+function deleteProject(id){
+if(!isAdmin())return;
+if(confirm("پروژه حذف شود؟")){
+projects=projects.filter(p=>p.id!==id);saveAll();renderProjects();updateDashboard();
+}
+}
+
+function viewProject(id){
+const p=projects.find(x=>x.id===id);if(!p)return;
+alert(`پروژه: ${p.name}\n\nبخش: ${p.dept}\nمسئول: ${p.manager}\nوضعیت: ${p.status}\nپیشرفت: ${p.progress}%\nددلاین: ${p.deadline}\n\n${p.desc||"توضیحی ثبت نشده است."}`);
+}
+
+function filterProjects(status,dept){
+document.getElementById("projectStatusFilter").value=status;
+showPage("projects");
+renderProjects();
+}
+
+/* =========================
+   REPORTS
+========================= */
+
+function visibleReports(){
+if(isAdmin())return reports;
+return reports.filter(r=>r.manager===currentUser.role);
+}
+
+function calculateScore(planned,completed,quality,delayed){
+const p=Number(planned)||0;
+const c=Number(completed)||0;
+const q=Number(quality)||0;
+const d=Number(delayed)||0;
+const completion=p?Math.min(c/p,1):0;
+const noDelay=p?Math.max(0,1-d/p):1;
+return Math.round((completion*60)+((q/10)*30)+(noDelay*10));
+}
+
+function renderReports(){
+const arr=visibleReports();
+document.getElementById("reportsBody").innerHTML=arr.length?arr.map(r=>`
+<tr>
+<td>${escapeHTML(r.manager)}</td>
+<td>${escapeHTML(r.dept)}</td>
+<td>${escapeHTML(r.week)}</td>
+<td>${r.planned}</td>
+<td>${r.completed}</td>
+<td>${r.quality}/10</td>
+<td><strong>${r.score}%</strong></td>
+<td>${r.approved?'<span class="badge badge-green">تأیید شده</span>':'<span class="badge badge-yellow">در انتظار تأیید</span>'}</td>
+<td>
+<button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
+${isAdmin()?`<button class="btn btn-warning" onclick="editReport('${r.id}')">ویرایش</button>
+<button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>`:""}
+</td>
+</tr>`).join(""):`<tr><td colspan="9" class="empty">گزارشی ثبت نشده است.</td></tr>`;
+}
+
+function openReportModal(){
+editingReport=null;
+document.getElementById("rManager").value=currentUser.role;
+document.getElementById("rDept").value=currentUser.dept==="all"?"مدیریت رسانه":currentUser.dept;
+document.getElementById("rDate").value="";
+document.getElementById("rWeek").value="";
+document.getElementById("rPlanned").value=0;
+document.getElementById("rCompleted").value=0;
+document.getElementById("rDelayed").value=0;
+document.getElementById("rQuality").value=0;
+document.getElementById("rDoneList").value="";
+document.getElementById("rDelayReason").value="";
+document.getElementById("rIssues").value="";
+document.getElementById("rSuggestions").value="";
+document.getElementById("deleteReportBtn").style.display="none";
+document.getElementById("approveReportBtn").style.display="none";
+renderReportTasks([]);
+document.getElementById("reportModalTitle").textContent="ثبت گزارش هفتگی";
+document.getElementById("reportModal").classList.add("show");
+}
+
+function renderReportTasks(selected){
+const manager=currentUser.role;
+const arr=tasks.filter(t=>t.manager===manager);
+document.getElementById("reportTasks").innerHTML=arr.length?arr.map(t=>`
+<label class="task-row ${selected.includes(t.id)&&t.done?"done":""}">
+<input type="checkbox" data-task="${t.id}" ${selected.includes(t.id)&&t.done?"checked":""}>
+<span>${escapeHTML(t.title)} — ددلاین: ${escapeHTML(t.deadline||"-")}</span>
+</label>`).join(""):`<div class="empty">وظیفه‌ای برای این مدیر ثبت نشده است.</div>`;
+}
+
+function openReport(id){
+const r=reports.find(x=>x.id===id);if(!r)return;
+if(!isAdmin()&&r.manager!==currentUser.role){
+alert("دسترسی ندارید.");return;
+}
+editingReport=id;
+document.getElementById("rManager").value=r.manager;
+document.getElementById("rDept").value=r.dept;
+document.getElementById("rDate").value=r.date;
+document.getElementById("rWeek").value=r.week;
+document.getElementById("rPlanned").value=r.planned;
+document.getElementById("rCompleted").value=r.completed;
+document.getElementById("rDelayed").value=r.delayed;
+document.getElementById("rQuality").value=r.quality;
+document.getElementById("rDoneList").value=r.doneList||"";
+document.getElementById("rDelayReason").value=r.delayReason||"";
+document.getElementById("rIssues").value=r.issues||"";
+document.getElementById("rSuggestions").value=r.suggestions||"";
+renderReportTasks(r.taskIds||[]);
+document.getElementById("deleteReportBtn").style.display=isAdmin()?"":"none";
+document.getElementById("approveReportBtn").style.display=isAdmin()&&!r.approved?"":"none";
+document.getElementById("reportModalTitle").textContent="مشاهده / ویرایش گزارش";
+document.getElementById("reportModal").classList.add("show");
+}
+
+function editReport(id){
+if(!isAdmin())return;
+openReport(id);
+}
+
+function saveReport(){
+const manager=document.getElementById("rManager").value;
+const dept=document.getElementById("rDept").value;
+const taskIds=[...document.querySelectorAll("#reportTasks input[data-task]:checked")].map(x=>x.dataset.task);
+const r={
+id:editingReport||Date.now().toString(),
+manager,
+dept,
+date:document.getElementById("rDate").value,
+week:document.getElementById("rWeek").value,
+planned:Number(document.getElementById("rPlanned").value)||0,
+completed:Number(document.getElementById("rCompleted").value)||0,
+delayed:Number(document.getElementById("rDelayed").value)||0,
+quality:Number(document.getElementById("rQuality").value)||0,
+doneList:document.getElementById("rDoneList").value,
+delayReason:document.getElementById("rDelayReason").value,
+issues:document.getElementById("rIssues").value,
+suggestions:document.getElementById("rSuggestions").value,
+taskIds,
+approved:editingReport?(reports.find(x=>x.id===editingReport)?.approved||false):false
+};
+r.score=calculateScore(r.planned,r.completed,r.quality,r.delayed);
+
+if(editingReport){
+const i=reports.findIndex(x=>x.id===editingReport);
+if(i>=0)reports[i]={...reports[i],...r};
+}else reports.push(r);
+
+saveAll();renderReports();renderArchive();renderPerformance();updateDashboard();closeModal("reportModal");
+}
+
+function approveReport(){
+if(!isAdmin()||!editingReport)return;
+const r=reports.find(x=>x.id===editingReport);if(!r)return;
+r.approved=true;
+r.approvedBy=currentUser.role;
+r.approvedDate=new Date().toLocaleDateString("fa-IR");
+saveAll();
+renderReports();renderArchive();renderPerformance();updateDashboard();
+closeModal("reportModal");
+alert("گزارش تأیید و در آرشیو ثبت شد.");
+}
+
+function deleteReport(){
+if(!isAdmin()||!editingReport)return;
+removeReport(editingReport);
+closeModal("reportModal");
+}
+
+function removeReport(id){
+if(!isAdmin())return;
+if(confirm("این گزارش حذف شود؟")){
+reports=reports.filter(r=>r.id!==id);
+saveAll();renderReports();renderArchive();renderPerformance();updateDashboard();
+}
+}
+
+function exportReports(){
+if(!isAdmin())return;
+const data=reports.filter(r=>r.approved);
+downloadJSON(data,"basair-weekly-reports-archive.json");
+}
+
+/* =========================
+   ARCHIVE
+========================= */
+
+function renderArchive(){
+const arr=reports.filter(r=>r.approved);
+document.getElementById("archiveBody").innerHTML=arr.length?arr.map(r=>`
+<tr>
+<td>${escapeHTML(r.manager)}</td>
+<td>${escapeHTML(r.dept)}</td>
+<td>${escapeHTML(r.week)}</td>
+<td>${r.score}%</td>
+<td>${escapeHTML(r.approvedBy||"-")}</td>
+<td>${escapeHTML(r.approvedDate||"-")}</td>
+<td>
+<button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
+${isAdmin()?`<button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>`:""}
+</td>
+</tr>`).join(""):`<tr><td colspan="7" class="empty">آرشیوی وجود ندارد.</td></tr>`;
+}
+
+/* =========================
+   TASKS
+========================= */
+
+function renderTasks(){
+const arr=isAdmin()?tasks:tasks.filter(t=>t.manager===currentUser.role);
+document.getElementById("tasksList").innerHTML=arr.length?arr.map(t=>`
+<div class="task-row ${t.done?"done":""}">
+<input type="checkbox" ${t.done?"checked":""} ${isAdmin()?"":"disabled"} onchange="toggleTask('${t.id}',this.checked)">
+<span><strong>${escapeHTML(t.title)}</strong> — ${escapeHTML(t.manager)} — ددلاین: ${escapeHTML(t.deadline||"-")}
+<br><small>${escapeHTML(t.desc||"")}</small></span>
+${isAdmin()?`<button class="btn btn-danger" onclick="deleteTask('${t.id}')">حذف</button>`:""}
+</div>`).join(""):`<div class="empty">وظیفه‌ای ثبت نشده است.</div>`;
+}
+
+function openTaskModal(){
+if(!isAdmin())return;
+document.getElementById("tTitle").value="";
+document.getElementById("tDeadline").value="";
+document.getElementById("tDesc").value="";
+const managers=[
+"مدیر فیلمبرداری","مدیر عکسبرداری","مدیر صوت",
+"مدیر ادیت","مدیر گرافیک","مدیر انتشار"
+];
+document.getElementById("tManager").innerHTML=managers.map(x=>`<option>${x}</option>`).join("");
+document.getElementById("taskModal").classList.add("show");
+}
+
+function saveTask(){
+if(!isAdmin())return;
+const title=document.getElementById("tTitle").value.trim();
+if(!title){alert("عنوان وظیفه را وارد کنید.");return}
+tasks.push({
+id:Date.now().toString(),
+title,
+manager:document.getElementById("tManager").value,
+deadline:document.getElementById("tDeadline").value,
+desc:document.getElementById("tDesc").value,
+done:false
+});
+saveAll();renderTasks();updateDashboard();closeModal("taskModal");
+}
+
+function toggleTask(id,done){
+if(!isAdmin())return;
+const t=tasks.find(x=>x.id===id);if(t)t.done=done;
+saveAll();renderTasks();updateDashboard();
+}
+
+function deleteTask(id){
+if(!isAdmin())return;
+if(confirm("وظیفه حذف شود؟")){
+tasks=tasks.filter(t=>t.id!==id);
+saveAll();renderTasks();updateDashboard();
+}
+}
+
+/* =========================
+   PERFORMANCE
+========================= */
+
+function renderPerformance(){
+const managers=[
+["مدیر فیلمبرداری","فیلمبرداری"],
+["مدیر عکسبرداری","عکسبرداری"],
+["مدیر صوت","صوت"],
+["مدیر ادیت","ادیت"],
+["مدیر گرافیک","گرافیک"],
+["مدیر انتشار","انتشار"]
+];
+document.getElementById("performanceBody").innerHTML=managers.map(m=>{
+const arr=reports.filter(r=>r.manager===m[0]&&r.approved);
+const score=arr.length?Math.round(arr.reduce((a,b)=>a+b.score,0)/arr.length):0;
+const cls=score>=80?"green":score>=20?"yellow":"red";
+return `<tr><td>${m[0]}</td><td>${m[1]}</td><td>${arr.length}</td><td><strong class="${cls}">${score}%</strong></td><td>${score>=80?"🟢":score>=20?"🟡":"🔴"}</td></tr>`;
+}).join("");
+}
+
+/* =========================
+   PEOPLE
+========================= */
+
+function renderPeople(){
+const arr=isAdmin()?people:people.filter(p=>p.dept===currentUser.dept);
+document.getElementById("peopleBody").innerHTML=arr.length?arr.map((p,i)=>`
+<tr>
+<td>${escapeHTML(p.name)}</td>
+<td>${escapeHTML(p.role)}</td>
+<td>${escapeHTML(p.dept)}</td>
+<td>${escapeHTML(p.status)}</td>
+<td>${escapeHTML(p.skills)}</td>
+<td>${isAdmin()?`<button class="btn btn-danger" onclick="deletePerson(${i})">حذف</button>`:"-"}</td>
+</tr>`).join(""):`<tr><td colspan="6" class="empty">نیرویی ثبت نشده است.</td></tr>`;
+}
+
+function openPersonModal(){
+if(!isAdmin())return;
+["personName","personRole","personDept","personSkills"].forEach(id=>document.getElementById(id).value="");
+document.getElementById("personStatus").value="فعال";
+document.getElementById("personModal").classList.add("show");
+}
+
+function savePerson(){
+if(!isAdmin())return;
+const name=document.getElementById("personName").value.trim();
+if(!name){alert("نام الزامی است.");return}
+people.push({
+name,
+role:document.getElementById("personRole").value,
+dept:document.getElementById("personDept").value,
+status:document.getElementById("personStatus").value,
+skills:document.getElementById("personSkills").value
+});
+saveAll();renderPeople();updateDashboard();closeModal("personModal");
+}
+
+function deletePerson(i){
+if(!isAdmin())return;
+if(confirm("این نیرو حذف شود؟")){people.splice(i,1);saveAll();renderPeople();updateDashboard();}
+}
+
+/* =========================
+   EQUIPMENT
+========================= */
+
+function renderEquipment(){
+const q=(document.getElementById("eqSearch")?.value||"").toLowerCase();
+const st=document.getElementById("eqStatus")?.value||"";
+const mains=equipment.filter(x=>x.type==="main");
+let html="";
+mains.forEach(m=>{
+const children=equipment.filter(x=>x.parent===m.code);
+const match=(x)=>(!q||JSON.stringify(x).toLowerCase().includes(q))&&(!st||x.status===st);
+if(match(m))html+=equipmentRow(m);
+children.forEach(c=>{if(match(c))html+=equipmentRow(c)});
+});
+document.getElementById("equipmentBody").innerHTML=html||`<tr><td colspan="9" class="empty">موردی پیدا نشد.</td></tr>`;
+document.getElementById("eqMain").textContent=equipment.filter(x=>x.type==="main").length;
+document.getElementById("eqSub").textContent=equipment.filter(x=>x.type==="sub").length;
+document.getElementById("eqAudio").textContent=equipment.filter(x=>x.category==="صوت").length;
+document.getElementById("eqProblem").textContent=equipment.filter(x=>x.status!=="سالم").length;
+}
+
+function equipmentRow(e){
+return `<tr class="${e.type==="main"?"main-equipment":"sub-equipment"}">
+<td>${e.code}</td>
+<td>${e.type==="sub"?"↳ ":""}${escapeHTML(e.name)}</td>
+<td>${escapeHTML(e.category)}</td>
+<td>${escapeHTML(e.parent||"-")}</td>
+<td>${statusBadge(e.status)}</td>
+<td>${escapeHTML(e.location||"-")}</td>
+<td>${escapeHTML(e.checkDate||"-")}</td>
+<td>${escapeHTML(e.description||"-")}</td>
+<td>
+${isAdmin()?`<button class="btn btn-warning" onclick="editEquipment('${e.code}')">ویرایش</button>
+<button class="btn btn-danger" onclick="deleteEquipment('${e.code}')">حذف</button>`:""}
+</td>
+</tr>`;
+}
+
+function openEquipmentModal(code=null){
+if(!isAdmin())return;
+editingEquipment=code;
+const parent=document.getElementById("eParent");
+parent.innerHTML='<option value="">بدون وابستگی</option>'+equipment.filter(x=>x.type==="main").map(x=>`<option value="${x.code}">${x.code} — ${escapeHTML(x.name)}</option>`).join("");
+if(code){
+const e=equipment.find(x=>x.code===code);if(!e)return;
+document.getElementById("eCode").value=e.code;
+document.getElementById("eType").value=e.type;
+document.getElementById("eName").value=e.name;
+document.getElementById("eCategory").value=e.category;
+document.getElementById("eParent").value=e.parent;
+document.getElementById("eStatus").value=e.status;
+document.getElementById("eLocation").value=e.location||"";
+document.getElementById("eCheck").value=e.checkDate||"";
+document.getElementById("eLoanTo").value=e.loanTo||"";
+document.getElementById("eLoanDate").value=e.loanDate||"";
+document.getElementById("eReturnDate").value=e.returnDate||"";
+document.getElementById("eDesc").value=e.description||"";
+}else{
+["eCode","eName","eLocation","eCheck","eLoanTo","eLoanDate","eReturnDate","eDesc"].forEach(id=>document.getElementById(id).value="");
+document.getElementById("eType").value="main";
+document.getElementById("eCategory").value="تصویر";
+document.getElementById("eParent").value="";
+document.getElementById("eStatus").value="سالم";
+}
+document.getElementById("equipmentModal").classList.add("show");
+}
+
+function editEquipment(code){openEquipmentModal(code)}
+
+function saveEquipment(){
+if(!isAdmin())return;
+const e={
+code:document.getElementById("eCode").value.trim().toUpperCase(),
+type:document.getElementById("eType").value,
+name:document.getElementById("eName").value.trim(),
+category:document.getElementById("eCategory").value,
+parent:document.getElementById("eParent").value,
+status:document.getElementById("eStatus").value,
+location:document.getElementById("eLocation").value,
+checkDate:document.getElementById("eCheck").value,
+loanTo:document.getElementById("eLoanTo").value,
+loanDate:document.getElementById("eLoanDate").value,
+returnDate:document.getElementById("eReturnDate").value,
+description:document.getElementById("eDesc").value
+};
+if(!e.code||!e.name){alert("کد و نام الزامی است.");return}
+if(e.type==="sub"&&!e.parent){alert("برای زیرمجموعه باید وابستگی مشخص شود.");return}
+const duplicate=equipment.find(x=>x.code===e.code&&x.code!==editingEquipment);
+if(duplicate){alert("این کد قبلاً استفاده شده است.");return}
+if(editingEquipment){
+const i=equipment.findIndex(x=>x.code===editingEquipment);
+if(i>=0)equipment[i]=e;
+}else equipment.push(e);
+saveAll();renderEquipment();closeModal("equipmentModal");
+}
+
+function deleteEquipment(code){
+if(!isAdmin())return;
+const children=equipment.filter(x=>x.parent===code);
+if(confirm(`تجهیز حذف شود؟${children.length?`\n${children.length} زیرمجموعه نیز حذف می‌شود.`:""}`)){
+equipment=equipment.filter(x=>x.code!==code&&x.parent!==code);
+saveAll();renderEquipment();
+}
+}
+
+/* =========================
+   MONTH
+========================= */
+
+function updateMonthly(){
+document.getElementById("currentMonth").textContent=currentMonth;
+document.getElementById("monthInfo").textContent=`چرخه فعال سامانه: ${currentMonth}`;
+}
+
+function startNewMonth(){
+if(!isAdmin())return;
+if(!confirm("ماه جدید شروع شود؟ گزارش‌های آرشیو و پروژه‌ها حذف نخواهند شد."))return;
+const m=prompt("ماه جدید را وارد کنید:",currentMonth);
+if(!m)return;
+currentMonth=m;
+tasks=tasks.map(t=>({...t,done:false}));
+saveAll();updateMonthly();renderTasks();alert("ماه جدید با موفقیت آغاز شد.");
+}
+
+/* =========================
+   NOTIFICATIONS
+========================= */
+
+function renderNotifications(){
+const list=[];
+projects.filter(p=>p.status==="عقب‌مانده").forEach(p=>list.push(`پروژه «${p.name}» عقب‌مانده است.`));
+tasks.filter(t=>!t.done).forEach(t=>list.push(`وظیفه «${t.title}» هنوز انجام نشده است.`));
+reports.filter(r=>!r.approved).forEach(r=>list.push(`گزارش ${r.manager} برای ${r.week} در انتظار تأیید است.`));
+document.getElementById("notificationsList").innerHTML=list.length
+?list.map(x=>`<div class="alert">🔔 ${escapeHTML(x)}</div>`).join("")
+:`<div class="empty">اعلانی وجود ندارد.</div>`;
+}
+
+/* =========================
+   DOWNLOAD
+========================= */
+
+function downloadJSON(data,name){
+const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");
+a.href=url;
+a.download=name;
+a.click();
+URL.revokeObjectURL(url);
+}
+
+/* =========================
+   START
+========================= */
+
+document.querySelectorAll(".modal").forEach(m=>{
+m.addEventListener("click",e=>{
+if(e.target===m)m.classList.remove("show");
+});
+});
+
+checkSession();
 
 </script>
 
