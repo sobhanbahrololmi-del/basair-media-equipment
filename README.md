@@ -1,1 +1,0 @@
-# basair-media-equipment
