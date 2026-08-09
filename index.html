@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<viewport>مدیریت تجهیزات واحد رساانه مجموعه بصائر</title>
+<title>مدیریت تجهیزات واحد رسانه مجموعه بصائر</title>
 
 <style>
-
 *{
     box-sizing:border-box;
 }
@@ -25,8 +23,6 @@ body{
     max-width:1500px;
     margin:auto;
 }
-
-/* ================= HEADER ================= */
 
 .header{
     background:#2c3e50;
@@ -47,8 +43,6 @@ body{
     font-size:14px;
     opacity:.9;
 }
-
-/* ================= DASHBOARD ================= */
 
 .dashboard{
     display:grid;
@@ -75,8 +69,6 @@ body{
     color:#666;
     font-size:13px;
 }
-
-/* ================= CONTROLS ================= */
 
 .panel{
     background:#fff;
@@ -135,8 +127,6 @@ button{
     background:#7f8c8d;
     color:white;
 }
-
-/* ================= TABLE ================= */
 
 .table-container{
     overflow-x:auto;
@@ -253,8 +243,6 @@ th{
     color:#777;
 }
 
-/* ================= MODAL ================= */
-
 .modal{
     display:none;
     position:fixed;
@@ -333,8 +321,6 @@ th{
     margin-top:0;
 }
 
-/* ================= FOOTER ================= */
-
 .footer{
     margin-top:20px;
     text-align:center;
@@ -342,47 +328,32 @@ th{
     font-size:12px;
 }
 
-/* ================= MOBILE ================= */
-
 @media(max-width:900px){
-
     body{
         padding:10px;
     }
-
     .dashboard{
         grid-template-columns:repeat(2,1fr);
     }
-
     .controls{
         grid-template-columns:1fr 1fr;
     }
-
     .search-box{
         grid-column:1/-1;
     }
-
     .form-grid{
         grid-template-columns:1fr;
     }
-
     .form-group.full{
         grid-column:auto;
     }
-
 }
 
-/* =====================================================
-   PRINT MODE
-===================================================== */
-
 @media print{
-
     @page{
         size:A4 landscape;
         margin:8mm;
     }
-
     html,
     body{
         width:100%;
@@ -391,16 +362,12 @@ th{
         background:#fff !important;
         font-family:Tahoma,Arial,sans-serif;
     }
-
     .container{
         width:100% !important;
         max-width:none !important;
         margin:0 !important;
         padding:0 !important;
     }
-
-    /* HEADER */
-
     .header{
         background:#fff !important;
         color:#000 !important;
@@ -411,19 +378,14 @@ th{
         text-align:center;
         box-shadow:none;
     }
-
     .header h1{
         font-size:16px;
         margin:0 0 4px 0;
     }
-
     .header p{
         font-size:9px;
         margin:0;
     }
-
-    /* HIDE DASHBOARD AND CONTROLS */
-
     .dashboard,
     .panel,
     .actions,
@@ -432,9 +394,6 @@ th{
     .modal{
         display:none !important;
     }
-
-    /* TABLE */
-
     .table-container{
         display:block !important;
         width:100% !important;
@@ -443,7 +402,6 @@ th{
         border-radius:0 !important;
         background:#fff !important;
     }
-
     table{
         width:100% !important;
         min-width:0 !important;
@@ -452,60 +410,18 @@ th{
         border-collapse:collapse;
         font-size:8px;
     }
-
-    /* COLUMN WIDTHS */
-
-    th:nth-child(1),
-    td:nth-child(1){
-        width:7%;
-    }
-
-    th:nth-child(2),
-    td:nth-child(2){
-        width:17%;
-    }
-
-    th:nth-child(3),
-    td:nth-child(3){
-        width:8%;
-    }
-
-    th:nth-child(4),
-    td:nth-child(4){
-        width:9%;
-    }
-
-    th:nth-child(5),
-    td:nth-child(5){
-        width:9%;
-    }
-
-    th:nth-child(6),
-    td:nth-child(6){
-        width:13%;
-    }
-
-    th:nth-child(7),
-    td:nth-child(7){
-        width:10%;
-    }
-
-    th:nth-child(8),
-    td:nth-child(8){
-        width:27%;
-    }
-
-    th:nth-child(9),
-    td:nth-child(9){
-        display:none !important;
-    }
-
-    /* REPEAT TABLE HEADER */
-
+    th:nth-child(1), td:nth-child(1){ width:7%; }
+    th:nth-child(2), td:nth-child(2){ width:17%; }
+    th:nth-child(3), td:nth-child(3){ width:8%; }
+    th:nth-child(4), td:nth-child(4){ width:9%; }
+    th:nth-child(5), td:nth-child(5){ width:9%; }
+    th:nth-child(6), td:nth-child(6){ width:13%; }
+    th:nth-child(7), td:nth-child(7){ width:10%; }
+    th:nth-child(8), td:nth-child(8){ width:27%; }
+    th:nth-child(9), td:nth-child(9){ display:none !important; }
     thead{
         display:table-header-group;
     }
-
     th{
         background:#2c3e50 !important;
         color:#fff !important;
@@ -516,7 +432,6 @@ th{
         white-space:normal;
         word-wrap:break-word;
     }
-
     td{
         padding:5px 3px;
         font-size:7.5px;
@@ -526,29 +441,17 @@ th{
         white-space:normal;
         overflow-wrap:anywhere;
     }
-
-    /* PREVENT ROW SPLIT */
-
     tr{
         page-break-inside:avoid !important;
         break-inside:avoid !important;
     }
-
-    /* MAIN ITEMS */
-
     tbody tr.parent{
         background:#e8edf0 !important;
         font-weight:bold;
     }
-
-    /* SUB ITEMS */
-
     tbody tr.child{
         background:#fff !important;
     }
-
-    /* DESCRIPTION */
-
     .description-cell{
         min-width:0 !important;
         width:27% !important;
@@ -557,17 +460,11 @@ th{
         vertical-align:top;
         padding:5px !important;
     }
-
-    /* LOCATION */
-
     .location-cell{
         min-width:0 !important;
         height:45px;
         vertical-align:top;
     }
-
-    /* PRINT IN BLACK */
-
     .category-image,
     .category-audio,
     .category-other,
@@ -579,101 +476,53 @@ th{
     .status-loan{
         color:#000 !important;
     }
-
     #noResult{
         display:none !important;
     }
-
 }
-
-
-/* =====================================================
-   DATA
-===================================================== */
-
 </style>
 </head>
 
 <body>
-
 <div class="container">
-
 <div class="header">
-
     <h1>لیست تجهیزات واحد رسانه مجموعه بصائر</h1>
-
-    <p>
-        سیستم مدیریت، کنترل و ثبت تجهیزات
-    </p>
-
+    <p>سیستم مدیریت، کنترل و ثبت تجهیزات</p>
 </div>
 
-
-<!-- DASHBOARD -->
-
 <div class="dashboard">
-
     <div class="stat-card">
         <div class="number" id="totalMain">0</div>
         <div class="label">تجهیزات اصلی</div>
     </div>
-
     <div class="stat-card">
         <div class="number" id="totalSub">0</div>
         <div class="label">زیرمجموعه‌ها</div>
     </div>
-
     <div class="stat-card">
         <div class="number" id="totalAudio">0</div>
         <div class="label">تجهیزات صوت</div>
     </div>
-
     <div class="stat-card">
         <div class="number" id="totalImage">0</div>
         <div class="label">تجهیزات تصویر</div>
     </div>
-
     <div class="stat-card">
         <div class="number" id="totalProblem">0</div>
         <div class="label">نیازمند پیگیری</div>
     </div>
-
 </div>
 
-
-<!-- SEARCH -->
-
 <div class="panel">
-
     <div class="controls">
-
-        <input
-            id="searchBox"
-            class="search-box"
-            placeholder="جست‌وجو بر اساس کد، نام، دسته، وضعیت یا وابستگی..."
-            oninput="renderTable()"
-        >
-
-        <select
-            id="categoryFilter"
-            class="filter-select"
-            onchange="renderTable()"
-        >
-
+        <input id="searchBox" class="search-box" placeholder="جست‌وجو بر اساس کد، نام، دسته، وضعیت یا وابستگی..." oninput="renderTable()">
+        <select id="categoryFilter" class="filter-select" onchange="renderTable()">
             <option value="">همه دسته‌ها</option>
             <option value="صوت">صوت</option>
             <option value="تصویر">تصویر</option>
             <option value="سایر">سایر</option>
-
         </select>
-
-
-        <select
-            id="statusFilter"
-            class="filter-select"
-            onchange="renderTable()"
-        >
-
+        <select id="statusFilter" class="filter-select" onchange="renderTable()">
             <option value="">همه وضعیت‌ها</option>
             <option value="سالم">سالم</option>
             <option value="نیازمند بررسی">نیازمند بررسی</option>
@@ -681,1673 +530,458 @@ th{
             <option value="خراب">خراب</option>
             <option value="مفقود">مفقود</option>
             <option value="امانت داده شده">امانت داده شده</option>
-
         </select>
-
-
-        <button
-            class="btn-success"
-            onclick="openAddModal()"
-        >
-            ➕ افزودن
-        </button>
-
-
-        <button
-            class="btn-primary"
-            onclick="window.print()"
-        >
-            🖨 چاپ
-        </button>
-
-
-        <button
-            class="btn-secondary"
-            onclick="resetFilters()"
-        >
-            پاک کردن
-        </button>
-
+        <button class="btn-success" onclick="openAddModal()">➕ افزودن</button>
+        <button class="btn-primary" onclick="window.print()">🖨 چاپ</button>
+        <button class="btn-secondary" onclick="resetFilters()">پاک کردن</button>
     </div>
-
 </div>
-
-
-<!-- BACKUP -->
 
 <div class="panel">
-
-    <button
-        class="btn-primary"
-        onclick="exportData()"
-    >
-        📤 پشتیبان‌گیری
-    </button>
-
-
-    <button
-        class="btn-secondary"
-        onclick="document.getElementById('importFile').click()"
-    >
-        📥 بازیابی پشتیبان
-    </button>
-
-
-    <input
-        type="file"
-        id="importFile"
-        accept=".json"
-        style="display:none"
-        onchange="importData(event)"
-    >
-
+    <button class="btn-primary" onclick="exportData()">📤 پشتیبان‌گیری</button>
+    <button class="btn-secondary" onclick="document.getElementById('importFile').click()">📥 بازیابی پشتیبان</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
 </div>
-
-
-<!-- EQUIPMENT TABLE -->
 
 <div class="table-container">
-
 <table>
-
 <thead>
-
 <tr>
-
     <th>کد</th>
-
     <th>نام تجهیز</th>
-
     <th>دسته</th>
-
     <th>وابسته به</th>
-
     <th>وضعیت</th>
-
     <th>محل نگهداری</th>
-
     <th>آخرین بررسی</th>
-
     <th>توضیحات</th>
-
     <th>عملیات</th>
-
 </tr>
-
 </thead>
-
-
 <tbody id="equipmentBody"></tbody>
-
 </table>
-
-
-<div id="noResult" class="no-result">
-    موردی پیدا نشد.
+<div id="noResult" class="no-result">موردی پیدا نشد.</div>
 </div>
 
+<div class="footer">واحد رسانه مجموعه بصائر</div>
 </div>
 
-
-<div class="footer">
-    واحد رسانه مجموعه بصائر
-</div>
-
-</div>
-
-
-<!-- MODAL -->
-
-<div
-    class="modal"
-    id="equipmentModal"
->
-
+<div class="modal" id="equipmentModal">
 <div class="modal-content">
-
-<h2 id="modalTitle">
-    افزودن تجهیز
-</h2>
-
-
+<h2 id="modalTitle">افزودن تجهیز</h2>
 <div class="form-grid">
-
-
 <div class="form-group">
-
 <label>کد</label>
-
-<input
-    id="formCode"
-    placeholder="M033 یا S012"
->
-
+<input id="formCode" placeholder="M033 یا S012">
 </div>
-
-
 <div class="form-group">
-
 <label>نوع</label>
-
 <select id="formType">
-
-<option value="main">
-    تجهیز اصلی M
-</option>
-
-<option value="sub">
-    زیرمجموعه S
-</option>
-
+<option value="main">تجهیز اصلی M</option>
+<option value="sub">زیرمجموعه S</option>
 </select>
-
 </div>
-
-
 <div class="form-group">
-
 <label>نام تجهیز</label>
-
 <input id="formName">
-
 </div>
-
-
 <div class="form-group">
-
 <label>دسته</label>
-
 <select id="formCategory">
-
-<option value="تصویر">
-    تصویر
-</option>
-
-<option value="صوت">
-    صوت
-</option>
-
-<option value="سایر">
-    سایر
-</option>
-
+<option value="تصویر">تصویر</option>
+<option value="صوت">صوت</option>
+<option value="سایر">سایر</option>
 </select>
-
 </div>
-
-
 <div class="form-group">
-
 <label>وابسته به</label>
-
 <select id="formParent">
-
-<option value="">
-    بدون وابستگی
-</option>
-
+<option value="">بدون وابستگی</option>
 </select>
-
 </div>
-
-
 <div class="form-group">
-
 <label>وضعیت</label>
-
 <select id="formStatus">
-
-<option value="سالم">
-    سالم
-</option>
-
-<option value="نیازمند بررسی">
-    نیازمند بررسی
-</option>
-
-<option value="نیازمند تعمیر">
-    نیازمند تعمیر
-</option>
-
-<option value="خراب">
-    خراب
-</option>
-
-<option value="مفقود">
-    مفقود
-</option>
-
-<option value="امانت داده شده">
-    امانت داده شده
-</option>
-
+<option value="سالم">سالم</option>
+<option value="نیازمند بررسی">نیازمند بررسی</option>
+<option value="نیازمند تعمیر">نیازمند تعمیر</option>
+<option value="خراب">خراب</option>
+<option value="مفقود">مفقود</option>
+<option value="امانت داده شده">امانت داده شده</option>
 </select>
-
 </div>
-
-
 <div class="form-group">
-
 <label>محل نگهداری</label>
-
 <input id="formLocation">
-
 </div>
-
-
 <div class="form-group">
-
 <label>آخرین بررسی</label>
-
 <input id="formCheckDate">
-
 </div>
-
-
 <div class="form-group full">
-
 <label>توضیحات</label>
-
 <textarea id="formDescription"></textarea>
-
 </div>
-
-
 <div class="form-group full">
-
 <div class="loan-box">
-
-<h4>
-    اطلاعات امانت
-</h4>
-
-
+<h4>اطلاعات امانت</h4>
 <div class="form-grid">
-
-
 <div class="form-group">
-
 <label>تحویل به</label>
-
 <input id="formLoanTo">
-
 </div>
-
-
 <div class="form-group">
-
 <label>تاریخ تحویل</label>
-
 <input id="formLoanDate">
-
 </div>
-
-
 <div class="form-group">
-
 <label>تاریخ بازگشت</label>
-
 <input id="formReturnDate">
-
 </div>
-
-
 </div>
-
 </div>
-
 </div>
-
-
 </div>
-
-
 <div class="modal-buttons">
-
-<button
-    class="btn-secondary"
-    onclick="closeModal()"
->
-    انصراف
-</button>
-
-
-<button
-    class="btn-success"
-    onclick="saveEquipment()"
->
-    ذخیره
-</button>
-
+<button class="btn-secondary" onclick="closeModal()">انصراف</button>
+<button class="btn-success" onclick="saveEquipment()">ذخیره</button>
 </div>
-
-
 </div>
-
 </div>
-
 
 <script>
-
-/* =====================================================
-   DEFAULT EQUIPMENT
-===================================================== */
-
 const defaultEquipment = [
-
 {code:"M001",type:"main",name:"پروژکتور کوچک 1",category:"تصویر",parent:"",status:"سالم"},
 {code:"S001",type:"sub",name:"آداپتور",category:"تصویر",parent:"M001",status:"سالم"},
 {code:"S002",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M001",status:"سالم"},
-
 {code:"M002",type:"main",name:"پروژکتور کوچک 2",category:"تصویر",parent:"",status:"سالم"},
 {code:"S003",type:"sub",name:"آداپتور",category:"تصویر",parent:"M002",status:"سالم"},
 {code:"S004",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M002",status:"سالم"},
-
 {code:"M003",type:"main",name:"نور اصلی 1",category:"تصویر",parent:"",status:"سالم"},
 {code:"S005",type:"sub",name:"کابل پاور",category:"تصویر",parent:"M003",status:"سالم"},
-
 {code:"M004",type:"main",name:"نور اصلی 2",category:"تصویر",parent:"",status:"سالم"},
 {code:"S006",type:"sub",name:"کابل پاور",category:"تصویر",parent:"M004",status:"سالم"},
-
 {code:"M005",type:"main",name:"سافت باکس 1",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M006",type:"main",name:"سافت باکس 2",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M007",type:"main",name:"سه پایه پروژکتور",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M008",type:"main",name:"سه پایه نور",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M009",type:"main",name:"سه راهی 4",category:"سایر",parent:"",status:"سالم"},
-
 {code:"M010",type:"main",name:"رزرو",category:"سایر",parent:"",status:"سالم"},
-
 {code:"M011",type:"main",name:"ویدیو پروژکتور",category:"تصویر",parent:"",status:"سالم"},
 {code:"S007",type:"sub",name:"کابل پاور و کنترل",category:"تصویر",parent:"M011",status:"سالم"},
-
 {code:"M012",type:"main",name:"سه راهی 1",category:"سایر",parent:"",status:"سالم"},
-
 {code:"M013",type:"main",name:"سه راهی 2",category:"سایر",parent:"",status:"سالم"},
-
 {code:"M014",type:"main",name:"سه راهی 3",category:"سایر",parent:"",status:"سالم"},
-
 {code:"M015",type:"main",name:"DVD 1",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M016",type:"main",name:"آنتن",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M017",type:"main",name:"بسته AUX",category:"صوت",parent:"",status:"سالم"},
 {code:"S008",type:"sub",name:"کابل AUX بلند",category:"صوت",parent:"M017",status:"سالم"},
 {code:"S009",type:"sub",name:"کابل دو سر تبدیل",category:"صوت",parent:"M017",status:"سالم"},
-
 {code:"M018",type:"main",name:"بسته HDMI",category:"تصویر",parent:"",status:"سالم"},
 {code:"S010",type:"sub",name:"HDMI 2 متری",category:"تصویر",parent:"M018",status:"سالم"},
 {code:"S011",type:"sub",name:"HDMI 10 متری",category:"تصویر",parent:"M018",status:"سالم"},
-
 {code:"M019",type:"main",name:"DJI",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M020",type:"main",name:"میکروفون یقه‌ای",category:"صوت",parent:"",status:"سالم"},
-
 {code:"M021",type:"main",name:"DVD 2",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M022",type:"main",name:"فلش 128",category:"سایر",parent:"",status:"سالم"},
-
 {code:"M023",type:"main",name:"SD کارت 128",category:"سایر",parent:"",status:"سالم"},
-
 {code:"M024",type:"main",name:"سه پایه دوربین",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M025",type:"main",name:"دوربین Sony A7 III",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M026",type:"main",name:"کیف دوربین",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M027",type:"main",name:"سه راهی 5",category:"سایر",parent:"",status:"سالم"},
-
 {code:"M028",type:"main",name:"سه راهی 6",category:"سایر",parent:"",status:"سالم"},
-
 {code:"M029",type:"main",name:"پرده پروژکتور",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M030",type:"main",name:"تبدیل AV به VGA",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M031",type:"main",name:"تبدیل VGA به HDMI",category:"تصویر",parent:"",status:"سالم"},
-
 {code:"M032",type:"main",name:"فلش 32 گیگ",category:"سایر",parent:"",status:"سالم"}
-
 ];
 
-
-/* =====================================================
-   LOAD DATA
-===================================================== */
-
 let equipment = loadEquipment();
-
 let editingCode = null;
 
-
 function loadEquipment(){
-
-    const saved =
-        localStorage.getItem(
-            "basair_media_equipment"
-        );
-
-
-    if(!saved){
-
-        return prepareData(
-            defaultEquipment
-        );
-
-    }
-
-
+    const saved = localStorage.getItem("basair_media_equipment");
+    if(!saved) return prepareData(defaultEquipment);
     try{
-
-        const parsed =
-            JSON.parse(saved);
-
-
-        if(
-            !Array.isArray(parsed) ||
-            parsed.length === 0
-        ){
-
-            return prepareData(
-                defaultEquipment
-            );
-
-        }
-
-
+        const parsed = JSON.parse(saved);
+        if(!Array.isArray(parsed) || parsed.length === 0) return prepareData(defaultEquipment);
         return prepareData(parsed);
-
+    } catch(e){
+        return prepareData(defaultEquipment);
     }
-
-    catch(e){
-
-        return prepareData(
-            defaultEquipment
-        );
-
-    }
-
 }
-
-
-/* =====================================================
-   PREPARE DATA
-===================================================== */
 
 function prepareData(data){
-
     return data.map(item => ({
-
         code:item.code || "",
-
         type:item.type || "main",
-
         name:item.name || "",
-
         category:item.category || "سایر",
-
         parent:item.parent || "",
-
         status:item.status || "سالم",
-
         location:item.location || "",
-
         checkDate:item.checkDate || "",
-
         description:item.description || "",
-
         loanTo:item.loanTo || "",
-
         loanDate:item.loanDate || "",
-
         returnDate:item.returnDate || ""
-
     }));
-
 }
-
-
-/* =====================================================
-   SAVE DATA
-===================================================== */
 
 function saveData(){
-
-    localStorage.setItem(
-        "basair_media_equipment",
-        JSON.stringify(equipment)
-    );
-
+    localStorage.setItem("basair_media_equipment", JSON.stringify(equipment));
 }
-
-
-/* =====================================================
-   RENDER TABLE
-===================================================== */
 
 function renderTable(){
-
-    const body =
-        document.getElementById(
-            "equipmentBody"
-        );
-
-
-    body.innerHTML="";
-
-
-    const search =
-        document.getElementById(
-            "searchBox"
-        ).value
-        .toLowerCase()
-        .trim();
-
-
-    const category =
-        document.getElementById(
-            "categoryFilter"
-        ).value;
-
-
-    const status =
-        document.getElementById(
-            "statusFilter"
-        ).value;
-
-
-    const mains =
-        equipment.filter(
-            x => x.type === "main"
-        );
-
-
-    let shown=0;
-
-
+    const body = document.getElementById("equipmentBody");
+    body.innerHTML = "";
+    const search = document.getElementById("searchBox").value.toLowerCase().trim();
+    const category = document.getElementById("categoryFilter").value;
+    const status = document.getElementById("statusFilter").value;
+    const mains = equipment.filter(x => x.type === "main");
+    let shown = 0;
+    
     mains.forEach(main => {
-
-
-        const children =
-            equipment.filter(
-                x =>
-                x.type === "sub" &&
-                x.parent === main.code
-            );
-
-
-        const mainText = (
-
-            main.code + " " +
-            main.name + " " +
-            main.category + " " +
-            main.status + " " +
-            main.location + " " +
-            main.description
-
-        ).toLowerCase();
-
-
-        const mainMatches =
-
-            (!search ||
-             mainText.includes(search))
-
-            &&
-
-            (!category ||
-             main.category === category)
-
-            &&
-
-            (!status ||
-             main.status === status);
-
-
-        const matchingChildren =
-            children.filter(child => {
-
-                const text = (
-
-                    child.code + " " +
-                    child.name + " " +
-                    child.category + " " +
-                    child.parent + " " +
-                    child.status + " " +
-                    child.location + " " +
-                    child.description
-
-                ).toLowerCase();
-
-
-                return
-
-                    (!search ||
-                     text.includes(search))
-
-                    &&
-
-                    (!category ||
-                     child.category === category)
-
-                    &&
-
-                    (!status ||
-                     child.status === status);
-
-            });
-
-
-        if(
-            !mainMatches &&
-            matchingChildren.length === 0
-        ){
-
-            return;
-
-        }
-
-
-        if(mainMatches){
-
-            body.appendChild(
-                createRow(main)
-            );
-
-            shown++;
-
-        }
-
-
-        children.forEach(child => {
-
-            const text = (
-
-                child.code + " " +
-                child.name + " " +
-                child.category + " " +
-                child.parent + " " +
-                child.status + " " +
-                child.location + " " +
-                child.description
-
-            ).toLowerCase();
-
-
-            const matches =
-
-                (!search ||
-                 text.includes(search))
-
-                &&
-
-                (!category ||
-                 child.category === category)
-
-                &&
-
-                (!status ||
-                 child.status === status);
-
-
-            if(matches){
-
-                body.appendChild(
-                    createRow(child)
-                );
-
-                shown++;
-
-            }
-
+        const children = equipment.filter(x => x.type === "sub" && x.parent === main.code);
+        const mainText = (main.code + " " + main.name + " " + main.category + " " + main.status + " " + main.location + " " + main.description).toLowerCase();
+        const mainMatches = (!search || mainText.includes(search)) && (!category || main.category === category) && (!status || main.status === status);
+        const matchingChildren = children.filter(child => {
+            const text = (child.code + " " + child.name + " " + child.category + " " + child.parent + " " + child.status + " " + child.location + " " + child.description).toLowerCase();
+            return (!search || text.includes(search)) && (!category || child.category === category) && (!status || child.status === status);
         });
-
+        
+        if(!mainMatches && matchingChildren.length === 0) return;
+        
+        if(mainMatches){
+            body.appendChild(createRow(main));
+            shown++;
+        }
+        
+        children.forEach(child => {
+            const text = (child.code + " " + child.name + " " + child.category + " " + child.parent + " " + child.status + " " + child.location + " " + child.description).toLowerCase();
+            const matches = (!search || text.includes(search)) && (!category || child.category === category) && (!status || child.status === status);
+            if(matches){
+                body.appendChild(createRow(child));
+                shown++;
+            }
+        });
     });
-
-
-    document.getElementById(
-        "noResult"
-    ).style.display =
-        shown === 0
-        ? "block"
-        : "none";
-
-
+    
+    document.getElementById("noResult").style.display = shown === 0 ? "block" : "none";
     updateDashboard();
-
 }
-
-
-/* =====================================================
-   CREATE ROW
-===================================================== */
 
 function createRow(item){
-
-    const tr =
-        document.createElement("tr");
-
-
-    tr.className =
-        item.type === "main"
-        ? "parent"
-        : "child";
-
-
+    const tr = document.createElement("tr");
+    tr.className = item.type === "main" ? "parent" : "child";
     tr.innerHTML = `
-
-        <td>
-            ${escapeHTML(item.code)}
-        </td>
-
-        <td>
-            ${
-                item.type === "sub"
-                ? "↳ "
-                : ""
-            }
-
-            ${escapeHTML(item.name)}
-        </td>
-
-        <td class="${categoryClass(item.category)}">
-
-            ${escapeHTML(item.category)}
-
-        </td>
-
-        <td>
-
-            ${
-                item.parent
-                ? escapeHTML(item.parent)
-                : "-"
-            }
-
-        </td>
-
-        <td class="${statusClass(item.status)}">
-
-            ${escapeHTML(item.status)}
-
-        </td>
-
-        <td class="location-cell">
-
-            ${escapeHTML(item.location)}
-
-        </td>
-
-        <td>
-
-            ${escapeHTML(item.checkDate)}
-
-        </td>
-
-        <td class="description-cell">
-
-            ${escapeHTML(item.description)}
-
-        </td>
-
+        <td>${escapeHTML(item.code)}</td>
+        <td>${item.type === "sub" ? "↳ " : ""}${escapeHTML(item.name)}</td>
+        <td class="${categoryClass(item.category)}">${escapeHTML(item.category)}</td>
+        <td>${item.parent ? escapeHTML(item.parent) : "-"}</td>
+        <td class="${statusClass(item.status)}">${escapeHTML(item.status)}</td>
+        <td class="location-cell">${escapeHTML(item.location)}</td>
+        <td>${escapeHTML(item.checkDate)}</td>
+        <td class="description-cell">${escapeHTML(item.description)}</td>
         <td class="actions">
-
-            <button
-                class="btn-warning small-btn"
-                onclick="editEquipment('${item.code}')"
-            >
-                ویرایش
-            </button>
-
-            <button
-                class="btn-danger small-btn"
-                onclick="deleteEquipment('${item.code}')"
-            >
-                حذف
-            </button>
-
+            <button class="btn-warning small-btn" onclick="editEquipment('${item.code}')">ویرایش</button>
+            <button class="btn-danger small-btn" onclick="deleteEquipment('${item.code}')">حذف</button>
         </td>
-
     `;
-
-
     return tr;
-
 }
-
-
-/* =====================================================
-   DASHBOARD
-===================================================== */
 
 function updateDashboard(){
-
-    const mainCount =
-        equipment.filter(
-            x => x.type === "main"
-        ).length;
-
-
-    const subCount =
-        equipment.filter(
-            x => x.type === "sub"
-        ).length;
-
-
-    const audioCount =
-        equipment.filter(
-            x => x.category === "صوت"
-        ).length;
-
-
-    const imageCount =
-        equipment.filter(
-            x => x.category === "تصویر"
-        ).length;
-
-
-    const problemCount =
-        equipment.filter(
-            x => x.status !== "سالم"
-        ).length;
-
-
-    document.getElementById(
-        "totalMain"
-    ).textContent =
-        mainCount;
-
-
-    document.getElementById(
-        "totalSub"
-    ).textContent =
-        subCount;
-
-
-    document.getElementById(
-        "totalAudio"
-    ).textContent =
-        audioCount;
-
-
-    document.getElementById(
-        "totalImage"
-    ).textContent =
-        imageCount;
-
-
-    document.getElementById(
-        "totalProblem"
-    ).textContent =
-        problemCount;
-
+    document.getElementById("totalMain").textContent = equipment.filter(x => x.type === "main").length;
+    document.getElementById("totalSub").textContent = equipment.filter(x => x.type === "sub").length;
+    document.getElementById("totalAudio").textContent = equipment.filter(x => x.category === "صوت").length;
+    document.getElementById("totalImage").textContent = equipment.filter(x => x.category === "تصویر").length;
+    document.getElementById("totalProblem").textContent = equipment.filter(x => x.status !== "سالم").length;
 }
-
-
-/* =====================================================
-   CATEGORY
-===================================================== */
 
 function categoryClass(category){
-
-    if(category === "صوت")
-        return "category-audio";
-
-
-    if(category === "تصویر")
-        return "category-image";
-
-
+    if(category === "صوت") return "category-audio";
+    if(category === "تصویر") return "category-image";
     return "category-other";
-
 }
-
-
-/* =====================================================
-   STATUS
-===================================================== */
 
 function statusClass(status){
-
-    if(status === "سالم")
-        return "status-salim";
-
-
-    if(status === "نیازمند بررسی")
-        return "status-check";
-
-
-    if(status === "نیازمند تعمیر")
-        return "status-repair";
-
-
-    if(status === "خراب")
-        return "status-broken";
-
-
-    if(status === "مفقود")
-        return "status-lost";
-
-
-    if(status === "امانت داده شده")
-        return "status-loan";
-
-
+    if(status === "سالم") return "status-salim";
+    if(status === "نیازمند بررسی") return "status-check";
+    if(status === "نیازمند تعمیر") return "status-repair";
+    if(status === "خراب") return "status-broken";
+    if(status === "مفقود") return "status-lost";
+    if(status === "امانت داده شده") return "status-loan";
     return "";
-
 }
-
-
-/* =====================================================
-   MODAL
-===================================================== */
 
 function openAddModal(){
-
-    editingCode=null;
-
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        "افزودن تجهیز";
-
-
+    editingCode = null;
+    document.getElementById("modalTitle").textContent = "افزودن تجهیز";
     clearForm();
-
     updateParentOptions();
-
-
-    document.getElementById(
-        "equipmentModal"
-    ).style.display =
-        "flex";
-
+    document.getElementById("equipmentModal").style.display = "flex";
 }
-
 
 function closeModal(){
-
-    document.getElementById(
-        "equipmentModal"
-    ).style.display =
-        "none";
-
+    document.getElementById("equipmentModal").style.display = "none";
 }
-
-
-/* =====================================================
-   CLEAR FORM
-===================================================== */
 
 function clearForm(){
-
-    document.getElementById(
-        "formCode"
-    ).value="";
-
-
-    document.getElementById(
-        "formType"
-    ).value="main";
-
-
-    document.getElementById(
-        "formName"
-    ).value="";
-
-
-    document.getElementById(
-        "formCategory"
-    ).value="تصویر";
-
-
-    document.getElementById(
-        "formParent"
-    ).value="";
-
-
-    document.getElementById(
-        "formStatus"
-    ).value="سالم";
-
-
-    document.getElementById(
-        "formLocation"
-    ).value="";
-
-
-    document.getElementById(
-        "formCheckDate"
-    ).value="";
-
-
-    document.getElementById(
-        "formDescription"
-    ).value="";
-
-
-    document.getElementById(
-        "formLoanTo"
-    ).value="";
-
-
-    document.getElementById(
-        "formLoanDate"
-    ).value="";
-
-
-    document.getElementById(
-        "formReturnDate"
-    ).value="";
-
+    document.getElementById("formCode").value = "";
+    document.getElementById("formType").value = "main";
+    document.getElementById("formName").value = "";
+    document.getElementById("formCategory").value = "تصویر";
+    document.getElementById("formParent").value = "";
+    document.getElementById("formStatus").value = "سالم";
+    document.getElementById("formLocation").value = "";
+    document.getElementById("formCheckDate").value = "";
+    document.getElementById("formDescription").value = "";
+    document.getElementById("formLoanTo").value = "";
+    document.getElementById("formLoanDate").value = "";
+    document.getElementById("formReturnDate").value = "";
 }
-
-
-/* =====================================================
-   PARENT OPTIONS
-===================================================== */
 
 function updateParentOptions(){
-
-    const select =
-        document.getElementById(
-            "formParent"
-        );
-
-
-    select.innerHTML =
-        `<option value="">
-            بدون وابستگی
-        </option>`;
-
-
-    equipment
-        .filter(
-            x => x.type === "main"
-        )
-        .forEach(item => {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                item.code;
-
-
-            option.textContent =
-                item.code +
-                " — " +
-                item.name;
-
-
-            select.appendChild(
-                option
-            );
-
-        });
-
+    const select = document.getElementById("formParent");
+    select.innerHTML = `<option value="">بدون وابستگی</option>`;
+    equipment.filter(x => x.type === "main").forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.code;
+        option.textContent = item.code + " — " + item.name;
+        select.appendChild(option);
+    });
 }
-
-
-/* =====================================================
-   EDIT
-===================================================== */
 
 function editEquipment(code){
-
-    const item =
-        equipment.find(
-            x => x.code === code
-        );
-
-
-    if(!item)
-        return;
-
-
-    editingCode=code;
-
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        "ویرایش تجهیز";
-
-
+    const item = equipment.find(x => x.code === code);
+    if(!item) return;
+    editingCode = code;
+    document.getElementById("modalTitle").textContent = "ویرایش تجهیز";
     updateParentOptions();
-
-
-    document.getElementById(
-        "formCode"
-    ).value =
-        item.code;
-
-
-    document.getElementById(
-        "formType"
-    ).value =
-        item.type;
-
-
-    document.getElementById(
-        "formName"
-    ).value =
-        item.name;
-
-
-    document.getElementById(
-        "formCategory"
-    ).value =
-        item.category;
-
-
-    document.getElementById(
-        "formParent"
-    ).value =
-        item.parent;
-
-
-    document.getElementById(
-        "formStatus"
-    ).value =
-        item.status;
-
-
-    document.getElementById(
-        "formLocation"
-    ).value =
-        item.location;
-
-
-    document.getElementById(
-        "formCheckDate"
-    ).value =
-        item.checkDate;
-
-
-    document.getElementById(
-        "formDescription"
-    ).value =
-        item.description;
-
-
-    document.getElementById(
-        "formLoanTo"
-    ).value =
-        item.loanTo;
-
-
-    document.getElementById(
-        "formLoanDate"
-    ).value =
-        item.loanDate;
-
-
-    document.getElementById(
-        "formReturnDate"
-    ).value =
-        item.returnDate;
-
-
-    document.getElementById(
-        "equipmentModal"
-    ).style.display =
-        "flex";
-
+    document.getElementById("formCode").value = item.code;
+    document.getElementById("formType").value = item.type;
+    document.getElementById("formName").value = item.name;
+    document.getElementById("formCategory").value = item.category;
+    document.getElementById("formParent").value = item.parent;
+    document.getElementById("formStatus").value = item.status;
+    document.getElementById("formLocation").value = item.location;
+    document.getElementById("formCheckDate").value = item.checkDate;
+    document.getElementById("formDescription").value = item.description;
+    document.getElementById("formLoanTo").value = item.loanTo;
+    document.getElementById("formLoanDate").value = item.loanDate;
+    document.getElementById("formReturnDate").value = item.returnDate;
+    document.getElementById("equipmentModal").style.display = "flex";
 }
-
-
-/* =====================================================
-   SAVE EQUIPMENT
-===================================================== */
 
 function saveEquipment(){
-
-    const code =
-        document.getElementById(
-            "formCode"
-        ).value
-        .trim()
-        .toUpperCase();
-
-
-    const type =
-        document.getElementById(
-            "formType"
-        ).value;
-
-
-    const name =
-        document.getElementById(
-            "formName"
-        ).value
-        .trim();
-
-
-    const category =
-        document.getElementById(
-            "formCategory"
-        ).value;
-
-
-    const parent =
-        document.getElementById(
-            "formParent"
-        ).value;
-
-
-    const status =
-        document.getElementById(
-            "formStatus"
-        ).value;
-
-
-    const location =
-        document.getElementById(
-            "formLocation"
-        ).value
-        .trim();
-
-
-    const checkDate =
-        document.getElementById(
-            "formCheckDate"
-        ).value
-        .trim();
-
-
-    const description =
-        document.getElementById(
-            "formDescription"
-        ).value
-        .trim();
-
-
-    const loanTo =
-        document.getElementById(
-            "formLoanTo"
-        ).value
-        .trim();
-
-
-    const loanDate =
-        document.getElementById(
-            "formLoanDate"
-        ).value
-        .trim();
-
-
-    const returnDate =
-        document.getElementById(
-            "formReturnDate"
-        ).value
-        .trim();
-
-
+    const code = document.getElementById("formCode").value.trim().toUpperCase();
+    const type = document.getElementById("formType").value;
+    const name = document.getElementById("formName").value.trim();
+    const category = document.getElementById("formCategory").value;
+    const parent = document.getElementById("formParent").value;
+    const status = document.getElementById("formStatus").value;
+    const location = document.getElementById("formLocation").value.trim();
+    const checkDate = document.getElementById("formCheckDate").value.trim();
+    const description = document.getElementById("formDescription").value.trim();
+    const loanTo = document.getElementById("formLoanTo").value.trim();
+    const loanDate = document.getElementById("formLoanDate").value.trim();
+    const returnDate = document.getElementById("formReturnDate").value.trim();
+    
     if(!code || !name){
-
-        alert(
-            "کد و نام تجهیز الزامی است."
-        );
-
+        alert("کد و نام تجهیز الزامی است.");
         return;
-
     }
-
-
-    if(
-        type === "sub" &&
-        !parent
-    ){
-
-        alert(
-            "برای زیرمجموعه باید تجهیز اصلی مشخص شود."
-        );
-
+    if(type === "sub" && !parent){
+        alert("برای زیرمجموعه باید تجهیز اصلی مشخص شود.");
         return;
-
     }
-
-
-    if(
-        type === "main" &&
-        parent
-    ){
-
-        alert(
-            "تجهیز اصلی نباید وابسته باشد."
-        );
-
+    if(type === "main" && parent){
+        alert("تجهیز اصلی نباید وابسته باشد.");
         return;
-
     }
-
-
-    const duplicate =
-        equipment.find(
-            x =>
-            x.code === code &&
-            x.code !== editingCode
-        );
-
-
+    
+    const duplicate = equipment.find(x => x.code === code && x.code !== editingCode);
     if(duplicate){
-
-        alert(
-            "این کد قبلاً استفاده شده است."
-        );
-
+        alert("این کد قبلاً استفاده شده است.");
         return;
-
     }
-
-
-    const item={
-
-        code,
-        type,
-        name,
-        category,
-        parent,
-        status,
-        location,
-        checkDate,
-        description,
-        loanTo,
-        loanDate,
-        returnDate
-
-    };
-
-
+    
+    const item = { code, type, name, category, parent, status, location, checkDate, description, loanTo, loanDate, returnDate };
+    
     if(editingCode){
-
-        const index =
-            equipment.findIndex(
-                x =>
-                x.code === editingCode
-            );
-
-
-        if(index !== -1){
-
-            equipment[index]=item;
-
-        }
-
-    }
-
-    else{
-
+        const index = equipment.findIndex(x => x.code === editingCode);
+        if(index !== -1) equipment[index] = item;
+    } else {
         equipment.push(item);
-
     }
-
-
+    
     saveData();
-
     renderTable();
-
     closeModal();
-
 }
-
-
-/* =====================================================
-   DELETE
-===================================================== */
 
 function deleteEquipment(code){
-
-    const item =
-        equipment.find(
-            x =>
-            x.code === code
-        );
-
-
-    if(!item)
-        return;
-
-
-    const children =
-        equipment.filter(
-            x =>
-            x.parent === code
-        );
-
-
-    let message =
-        "آیا از حذف «" +
-        item.name +
-        "» مطمئن هستید؟";
-
-
-    if(children.length){
-
-        message +=
-            "\n\n" +
-            children.length +
-            " زیرمجموعه نیز حذف خواهد شد.";
-
-    }
-
-
-    if(!confirm(message))
-        return;
-
-
-    equipment =
-        equipment.filter(
-            x =>
-            x.code !== code &&
-            x.parent !== code
-        );
-
-
+    const item = equipment.find(x => x.code === code);
+    if(!item) return;
+    const children = equipment.filter(x => x.parent === code);
+    let message = "آیا از حذف «" + item.name + "» مطمئن هستید؟";
+    if(children.length) message += "\n\n" + children.length + " زیرمجموعه نیز حذف خواهد شد.";
+    if(!confirm(message)) return;
+    equipment = equipment.filter(x => x.code !== code && x.parent !== code);
     saveData();
-
     renderTable();
-
 }
-
-
-/* =====================================================
-   RESET FILTERS
-===================================================== */
 
 function resetFilters(){
-
-    document.getElementById(
-        "searchBox"
-    ).value="";
-
-
-    document.getElementById(
-        "categoryFilter"
-    ).value="";
-
-
-    document.getElementById(
-        "statusFilter"
-    ).value="";
-
-
+    document.getElementById("searchBox").value = "";
+    document.getElementById("categoryFilter").value = "";
+    document.getElementById("statusFilter").value = "";
     renderTable();
-
 }
-
-
-/* =====================================================
-   EXPORT
-===================================================== */
 
 function exportData(){
-
-    const blob =
-        new Blob(
-            [
-                JSON.stringify(
-                    equipment,
-                    null,
-                    2
-                )
-            ],
-            {
-                type:"application/json"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(blob);
-
-
-    const a =
-        document.createElement("a");
-
-
-    a.href=url;
-
-
-    a.download =
-        "basair-media-equipment-backup.json";
-
-
+    const blob = new Blob([JSON.stringify(equipment, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "basair-media-equipment-backup.json";
     a.click();
-
-
     URL.revokeObjectURL(url);
-
 }
-
-
-/* =====================================================
-   IMPORT
-===================================================== */
 
 function importData(event){
-
-    const file =
-        event.target.files[0];
-
-
-    if(!file)
-        return;
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload =
-        function(e){
-
-            try{
-
-                const data =
-                    JSON.parse(
-                        e.target.result
-                    );
-
-
-                if(!Array.isArray(data))
-                    throw new Error();
-
-
-                if(
-                    !confirm(
-                        "اطلاعات فعلی با این فایل جایگزین شود؟"
-                    )
-                )
-                    return;
-
-
-                equipment =
-                    prepareData(data);
-
-
-                saveData();
-
-                renderTable();
-
-
-                alert(
-                    "اطلاعات با موفقیت بازیابی شد."
-                );
-
-            }
-
-            catch{
-
-                alert(
-                    "فایل پشتیبان معتبر نیست."
-                );
-
-            }
-
-        };
-
-
+    const file = event.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e){
+        try{
+            const data = JSON.parse(e.target.result);
+            if(!Array.isArray(data)) throw new Error();
+            if(!confirm("اطلاعات فعلی با این فایل جایگزین شود؟")) return;
+            equipment = prepareData(data);
+            saveData();
+            renderTable();
+            alert("اطلاعات با موفقیت بازیابی شد.");
+        } catch{
+            alert("فایل پشتیبان معتبر نیست.");
+        }
+    };
     reader.readAsText(file);
-
 }
-
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
 
 function escapeHTML(value){
-
-    return String(value || "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
+    return String(value || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
 
-
-/* =====================================================
-   CLOSE MODAL
-===================================================== */
-
-window.onclick =
-function(event){
-
-    const modal =
-        document.getElementById(
-            "equipmentModal"
-        );
-
-
-    if(
-        event.target === modal
-    ){
-
-        closeModal();
-
-    }
-
+window.onclick = function(event){
+    const modal = document.getElementById("equipmentModal");
+    if(event.target === modal) closeModal();
 };
 
-
-/* =====================================================
-   START
-===================================================== */
-
+// اجرای اولیه
 saveData();
-
 renderTable();
-
 </script>
 
 </body>
