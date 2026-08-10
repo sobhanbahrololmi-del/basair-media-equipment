@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -7,6 +6,7 @@
 <title>سامانه مدیریت رسانه بصائر</title>
 
 <style>
+/* ... (همه استایل‌های قبلی به همان شکل) ... */
 *{box-sizing:border-box}
 
 :root{
@@ -415,6 +415,7 @@ button{
     border-radius:8px;
     color:#fff;
     font-size:11px;
+    border:none;
 }
 
 .btn-primary{background:var(--primary)}
@@ -914,6 +915,7 @@ tr:nth-child(even){
     background:#edf0f2;
     color:#333;
     font-size:22px;
+    border:none;
 }
 
 .close-btn:hover{
@@ -1620,7 +1622,7 @@ tr:nth-child(even){
 </section>
 
 <!-- =========================
-     ARCHIVE
+     ARCHIVE (با دکمه Import/Export)
 ========================= -->
 
 <section id="page-archive" class="page">
@@ -1634,12 +1636,15 @@ tr:nth-child(even){
         </p>
     </div>
 
-    <button
-        class="btn btn-primary admin-only"
-        onclick="exportReports()"
-    >
-        📤 خروجی آرشیو
-    </button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-primary admin-only" onclick="exportReports()">
+            📤 خروجی آرشیو
+        </button>
+        <button class="btn btn-success admin-only" onclick="document.getElementById('importFileInput').click()">
+            📥 وارد کردن گزارش
+        </button>
+        <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="importReports(event)">
+    </div>
 
 </div>
 
@@ -2040,11 +2045,7 @@ tr:nth-child(even){
 پروژه جدید
 </h3>
 
-<buttonclass="close-btn"onclick="closeModal('projectModal')"
-
-
-
-×</button>
+<button class="close-btn" onclick="closeModal('projectModal')">×</button>
 
 </div>
 
@@ -2057,10 +2058,7 @@ tr:nth-child(even){
 
 <div class="form-group">
 <label>نوع پروژه</label>
-<input
-id="pType"
-placeholder="مستند / رویداد / پادکست..."
->
+<input id="pType" placeholder="مستند / رویداد / پادکست...">
 </div>
 
 <div class="form-group">
@@ -2099,13 +2097,7 @@ placeholder="مستند / رویداد / پادکست..."
 
 <div class="form-group">
 <label>درصد پیشرفت</label>
-<input
-id="pProgress"
-type="number"
-min="0"
-max="100"
-value="0"
->
+<input id="pProgress" type="number" min="0" max="100" value="0">
 </div>
 
 <div class="form-group full">
@@ -2117,17 +2109,8 @@ value="0"
 
 <div class="modal-actions">
 
-<buttonclass="btn btn-gray"onclick="closeModal('projectModal')"
-
-
-
-انصراف</button>
-
-<buttonclass="btn btn-success"onclick="saveProject()"
-
-
-
-ذخیره پروژه</button>
+<button class="btn btn-gray" onclick="closeModal('projectModal')">انصراف</button>
+<button class="btn btn-success" onclick="saveProject()">ذخیره پروژه</button>
 
 </div>
 
@@ -2144,15 +2127,9 @@ value="0"
 
 <div class="modal-head">
 
-<h3>
-وظیفه جدید
-</h3>
+<h3>وظیفه جدید</h3>
 
-<buttonclass="close-btn"onclick="closeModal('taskModal')"
-
-
-
-×</button>
+<button class="close-btn" onclick="closeModal('taskModal')">×</button>
 
 </div>
 
@@ -2200,17 +2177,8 @@ value="0"
 
 <div class="modal-actions">
 
-<buttonclass="btn btn-gray"onclick="closeModal('taskModal')"
-
-
-
-انصراف</button>
-
-<buttonclass="btn btn-success"onclick="saveTask()"
-
-
-
-ثبت وظیفه</button>
+<button class="btn btn-gray" onclick="closeModal('taskModal')">انصراف</button>
+<button class="btn btn-success" onclick="saveTask()">ثبت وظیفه</button>
 
 </div>
 
@@ -2227,15 +2195,9 @@ value="0"
 
 <div class="modal-head">
 
-<h3 id="reportModalTitle">
-گزارش هفتگی
-</h3>
+<h3 id="reportModalTitle">گزارش هفتگی</h3>
 
-<buttonclass="close-btn"onclick="closeModal('reportModal')"
-
-
-
-×</button>
+<button class="close-btn" onclick="closeModal('reportModal')">×</button>
 
 </div>
 
@@ -2253,12 +2215,12 @@ value="0"
 
 <div class="form-group">
 <label>تاریخ گزارش</label>
-<input id="rDate">
+<input id="rDate" type="date">
 </div>
 
 <div class="form-group">
 <label>هفته</label>
-<input id="rWeek" placeholder="هفته اول">
+<input id="rWeek" placeholder="هفته اول مهر 1405">
 </div>
 
 <div class="form-group">
@@ -2283,22 +2245,22 @@ value="0"
 
 <div class="form-group full">
 <label>کارهای انجام‌شده / خروجی‌ها</label>
-<textarea id="rDoneList"></textarea>
+<textarea id="rDoneList" placeholder="لیست کارهایی که این هفته انجام دادید..."></textarea>
 </div>
 
 <div class="form-group full">
 <label>علت تأخیرها</label>
-<textarea id="rDelayReason"></textarea>
+<textarea id="rDelayReason" placeholder="اگر تأخیری داشتید، علت را بنویسید..."></textarea>
 </div>
 
 <div class="form-group full">
 <label>مشکلات و موانع</label>
-<textarea id="rIssues"></textarea>
+<textarea id="rIssues" placeholder="چه مشکلاتی داشتید؟"></textarea>
 </div>
 
 <div class="form-group full">
 <label>پیشنهادها</label>
-<textarea id="rSuggestions"></textarea>
+<textarea id="rSuggestions" placeholder="پیشنهادات برای بهبود..."></textarea>
 </div>
 
 <div class="form-group full">
@@ -2319,29 +2281,10 @@ value="0"
 
 <div class="modal-actions">
 
-<buttonclass="btn btn-gray"onclick="closeModal('reportModal')"
-
-
-
-بستن</button>
-
-<buttonid="saveReportBtn"class="btn btn-success"onclick="saveReport()"
-
-
-
-ذخیره گزارش</button>
-
-<buttonid="approveReportBtn"class="btn btn-primary admin-only"onclick="approveReport()"style="display"
-
-
-
-✓ تأیید و آرشیو</button>
-
-<buttonid="deleteReportBtn"class="btn btn-danger admin-only"onclick="deleteReport()"style="display"
-
-
-
-حذف گزارش</button>
+<button class="btn btn-gray" onclick="closeModal('reportModal')">بستن</button>
+<button id="saveReportBtn" class="btn btn-success" onclick="saveReport()">ذخیره گزارش</button>
+<button id="approveReportBtn" class="btn btn-primary admin-only" onclick="approveReport()">✓ تأیید و آرشیو</button>
+<button id="deleteReportBtn" class="btn btn-danger admin-only" onclick="deleteReport()">حذف گزارش</button>
 
 </div>
 
@@ -2358,15 +2301,9 @@ value="0"
 
 <div class="modal-head">
 
-<h3>
-افزودن نیرو
-</h3>
+<h3>افزودن نیرو</h3>
 
-<buttonclass="close-btn"onclick="closeModal('personModal')"
-
-
-
-×</button>
+<button class="close-btn" onclick="closeModal('personModal')">×</button>
 
 </div>
 
@@ -2411,17 +2348,8 @@ value="0"
 
 <div class="modal-actions">
 
-<buttonclass="btn btn-gray"onclick="closeModal('personModal')"
-
-
-
-انصراف</button>
-
-<buttonclass="btn btn-success"onclick="savePerson()"
-
-
-
-ذخیره</button>
+<button class="btn btn-gray" onclick="closeModal('personModal')">انصراف</button>
+<button class="btn btn-success" onclick="savePerson()">ذخیره</button>
 
 </div>
 
@@ -2438,15 +2366,9 @@ value="0"
 
 <div class="modal-head">
 
-<h3>
-تجهیزات
-</h3>
+<h3>تجهیزات</h3>
 
-<buttonclass="close-btn"onclick="closeModal('equipmentModal')"
-
-
-
-×</button>
+<button class="close-btn" onclick="closeModal('equipmentModal')">×</button>
 
 </div>
 
@@ -2530,17 +2452,8 @@ value="0"
 
 <div class="modal-actions">
 
-<buttonclass="btn btn-gray"onclick="closeModal('equipmentModal')"
-
-
-
-انصراف</button>
-
-<buttonclass="btn btn-success"onclick="saveEquipment()"
-
-
-
-ذخیره</button>
+<button class="btn btn-gray" onclick="closeModal('equipmentModal')">انصراف</button>
+<button class="btn btn-success" onclick="saveEquipment()">ذخیره</button>
 
 </div>
 
@@ -2779,64 +2692,64 @@ let currentMonth=
    EQUIPMENT DEFAULT DATA
 ========================================================= */
 
-if(!Array.isArray(equipment)){
+if(!Array.isArray(equipment) || equipment.length === 0){
 
 equipment=[
 
-{code:"M001",type:"main",name:"پروژکتور کوچک 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"S001",type:"sub",name:"آداپتور",category:"تصویر",parent:"M001",status:"سالم",location:"",checkDate:""},
-{code:"S002",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M001",status:"سالم",location:"",checkDate:""},
+{code:"M001",type:"main",name:"پروژکتور کوچک 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"S001",type:"sub",name:"آداپتور",category:"تصویر",parent:"M001",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"S002",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M001",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
 
-{code:"M002",type:"main",name:"پروژکتور کوچک 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"S003",type:"sub",name:"آداپتور",category:"تصویر",parent:"M002",status:"سالم",location:"",checkDate:""},
-{code:"S004",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M002",status:"سالم",location:"",checkDate:""},
+{code:"M002",type:"main",name:"پروژکتور کوچک 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"S003",type:"sub",name:"آداپتور",category:"تصویر",parent:"M002",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"S004",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M002",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
 
-{code:"M003",type:"main",name:"نور اصلی 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"S005",type:"sub",name:"کابل پاور",category:"تصویر",parent:"M003",status:"سالم",location:"",checkDate:""},
+{code:"M003",type:"main",name:"نور اصلی 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"S005",type:"sub",name:"کابل پاور",category:"تصویر",parent:"M003",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
 
-{code:"M004",type:"main",name:"نور اصلی 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"S006",type:"sub",name:"کابل پاور",category:"تصویر",parent:"M004",status:"سالم",location:"",checkDate:""},
+{code:"M004",type:"main",name:"نور اصلی 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"S006",type:"sub",name:"کابل پاور",category:"تصویر",parent:"M004",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
 
-{code:"M005",type:"main",name:"سافت باکس 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M006",type:"main",name:"سافت باکس 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M007",type:"main",name:"سه پایه پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M008",type:"main",name:"سه پایه نور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M005",type:"main",name:"سافت باکس 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M006",type:"main",name:"سافت باکس 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M007",type:"main",name:"سه پایه پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M008",type:"main",name:"سه پایه نور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
 
-{code:"M009",type:"main",name:"سه راهی 4",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M010",type:"main",name:"رزرو",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M009",type:"main",name:"سه راهی 4",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M010",type:"main",name:"رزرو",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
 
-{code:"M011",type:"main",name:"ویدیو پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"S007",type:"sub",name:"کابل پاور و کنترل",category:"تصویر",parent:"M011",status:"سالم",location:"",checkDate:""},
+{code:"M011",type:"main",name:"ویدیو پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"S007",type:"sub",name:"کابل پاور و کنترل",category:"تصویر",parent:"M011",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
 
-{code:"M012",type:"main",name:"سه راهی 1",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M013",type:"main",name:"سه راهی 2",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M014",type:"main",name:"سه راهی 3",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M012",type:"main",name:"سه راهی 1",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M013",type:"main",name:"سه راهی 2",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M014",type:"main",name:"سه راهی 3",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
 
-{code:"M015",type:"main",name:"DVD 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M016",type:"main",name:"آنتن",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
+{code:"M015",type:"main",name:"DVD 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M016",type:"main",name:"آنتن",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
 
-{code:"M017",type:"main",name:"بسته AUX",category:"صوت",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"S008",type:"sub",name:"کابل AUX بلند",category:"صوت",parent:"M017",status:"سالم",location:"",checkDate:""},
-{code:"S009",type:"sub",name:"کابل دو سر تبدیل",category:"صوت",parent:"M017",status:"سالم",location:"",checkDate:""},
+{code:"M017",type:"main",name:"بسته AUX",category:"صوت",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"S008",type:"sub",name:"کابل AUX بلند",category:"صوت",parent:"M017",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"S009",type:"sub",name:"کابل دو سر تبدیل",category:"صوت",parent:"M017",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
 
-{code:"M018",type:"main",name:"بسته HDMI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"S010",type:"sub",name:"HDMI 2 متری",category:"تصویر",parent:"M018",status:"سالم",location:"",checkDate:""},
-{code:"S011",type:"sub",name:"HDMI 10 متری",category:"تصویر",parent:"M018",status:"سالم",location:"",checkDate:""},
+{code:"M018",type:"main",name:"بسته HDMI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"S010",type:"sub",name:"HDMI 2 متری",category:"تصویر",parent:"M018",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"S011",type:"sub",name:"HDMI 10 متری",category:"تصویر",parent:"M018",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
 
-{code:"M019",type:"main",name:"DJI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M020",type:"main",name:"میکروفون یقه‌ای",category:"صوت",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M021",type:"main",name:"DVD 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M022",type:"main",name:"فلش 128",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M023",type:"main",name:"SD کارت 128",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M024",type:"main",name:"سه پایه دوربین",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M025",type:"main",name:"دوربین Sony A7 III",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M026",type:"main",name:"کیف دوربین",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M027",type:"main",name:"سه راهی 5",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M028",type:"main",name:"سه راهی 6",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M029",type:"main",name:"پرده پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M030",type:"main",name:"تبدیل AV به VGA",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M031",type:"main",name:"تبدیل VGA به HDMI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:""},
-{code:"M032",type:"main",name:"فلش 32 گیگ",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:""}
+{code:"M019",type:"main",name:"DJI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M020",type:"main",name:"میکروفون یقه‌ای",category:"صوت",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M021",type:"main",name:"DVD 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M022",type:"main",name:"فلش 128",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M023",type:"main",name:"SD کارت 128",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M024",type:"main",name:"سه پایه دوربین",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M025",type:"main",name:"دوربین Sony A7 III",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M026",type:"main",name:"کیف دوربین",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M027",type:"main",name:"سه راهی 5",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M028",type:"main",name:"سه راهی 6",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M029",type:"main",name:"پرده پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M030",type:"main",name:"تبدیل AV به VGA",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M031",type:"main",name:"تبدیل VGA به HDMI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+{code:"M032",type:"main",name:"فلش 32 گیگ",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""}
 
 ];
 
@@ -5101,11 +5014,111 @@ function exportReports(){
 
     if(!isAdmin())return;
 
+    // فقط گزارش‌های تأیید شده صادر می‌شوند
+    const approvedReports = reports.filter(r=>r.approved);
+    
+    if(approvedReports.length === 0){
+        alert("هیچ گزارش تأیید شده‌ای برای خروجی وجود ندارد.");
+        return;
+    }
+
     downloadJSON(
-        reports.filter(r=>r.approved),
-        "basair-weekly-reports-archive.json"
+        approvedReports,
+        `basair-reports-archive-${currentMonth}.json`
     );
 
+}
+
+/* =========================================================
+   IMPORT REPORTS (جدید)
+========================================================= */
+
+function importReports(event){
+    if (!isAdmin()) {
+        alert("فقط مدیر اصلی می‌تواند گزارش وارد کند.");
+        return;
+    }
+
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+            
+            if (!Array.isArray(importedData)) {
+                alert("فرمت فایل صحیح نیست. لطفاً فایل JSON معتبر وارد کنید.");
+                return;
+            }
+
+            if (importedData.length === 0) {
+                alert("فایل خالی است.");
+                return;
+            }
+
+            let message = `📋 ${importedData.length} گزارش پیدا شد:\n\n`;
+            importedData.slice(0, 10).forEach((r, i) => {
+                message += `${i+1}. ${r.manager || 'نامشخص'} - ${r.week || 'هفته نامشخص'} (${r.score || 0}%)\n`;
+            });
+            if (importedData.length > 10) {
+                message += `\n... و ${importedData.length - 10} گزارش دیگر`;
+            }
+            
+            if (!confirm(`آیا این گزارش‌ها را وارد کنید؟\n\n${message}`)) {
+                return;
+            }
+
+            let addedCount = 0;
+            let skippedCount = 0;
+            
+            importedData.forEach(newReport => {
+                const exists = reports.some(r => r.id === newReport.id);
+                if (!exists) {
+                    const report = {
+                        id: newReport.id || uid(),
+                        manager: newReport.manager || "نامشخص",
+                        dept: newReport.dept || "",
+                        date: newReport.date || "",
+                        week: newReport.week || "",
+                        planned: Number(newReport.planned) || 0,
+                        completed: Number(newReport.completed) || 0,
+                        delayed: Number(newReport.delayed) || 0,
+                        quality: Number(newReport.quality) || 0,
+                        doneList: newReport.doneList || "",
+                        delayReason: newReport.delayReason || "",
+                        issues: newReport.issues || "",
+                        suggestions: newReport.suggestions || "",
+                        taskIds: Array.isArray(newReport.taskIds) ? newReport.taskIds : [],
+                        approved: !!newReport.approved,
+                        approvedBy: newReport.approvedBy || "",
+                        approvedDate: newReport.approvedDate || "",
+                        score: Number(newReport.score) || 0,
+                        month: newReport.month || currentMonth
+                    };
+                    reports.push(report);
+                    addedCount++;
+                } else {
+                    skippedCount++;
+                }
+            });
+
+            saveAll();
+            renderReports();
+            renderArchive();
+            renderPerformance();
+            updateDashboard();
+            renderNotifications();
+
+            alert(`✅ ${addedCount} گزارش با موفقیت وارد شد.\n${skippedCount} گزارش تکراری بودند و وارد نشدند.`);
+            
+            document.getElementById('importFileInput').value = '';
+
+        } catch (error) {
+            alert("❌ خطا در خواندن فایل: " + error.message);
+        }
+    };
+    reader.readAsText(file);
 }
 
 /* =========================================================
@@ -6148,12 +6161,6 @@ function startNewMonth(){
     const oldMonth=currentMonth;
 
     currentMonth=m.trim();
-
-    /*
-      وظایف وارد چرخه جدید می‌شوند.
-      وظایف Done به TODO برنمی‌گردند؛
-      فقط وظایف باز برای چرخه جدید نگه داشته می‌شوند.
-    */
 
     tasks=tasks.map(t=>({
 
