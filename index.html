@@ -6,7 +6,9 @@
 <title>سامانه مدیریت رسانه بصائر</title>
 
 <style>
-/* ... (همه استایل‌های قبلی به همان شکل) ... */
+/* ============================================================
+   ALL STYLES
+   ============================================================ */
 *{box-sizing:border-box}
 
 :root{
@@ -50,10 +52,7 @@ button{
     display:none!important;
 }
 
-/* =========================
-   LOGIN
-========================= */
-
+/* LOGIN */
 .login-page{
     min-height:100vh;
     display:flex;
@@ -150,10 +149,7 @@ button{
     font-size:12px;
 }
 
-/* =========================
-   APP / SIDEBAR
-========================= */
-
+/* APP / SIDEBAR */
 .app{
     display:none;
     min-height:100vh;
@@ -322,10 +318,7 @@ button{
     font-size:12px;
 }
 
-/* =========================
-   COMMON
-========================= */
-
+/* COMMON */
 .cards{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -521,10 +514,7 @@ tr:nth-child(even){
     border-right-color:var(--blue);
 }
 
-/* =========================
-   DASHBOARD
-========================= */
-
+/* DASHBOARD */
 .hero{
     background:
         linear-gradient(135deg,#263746,#34495e);
@@ -642,10 +632,7 @@ tr:nth-child(even){
     background:#34495e;
 }
 
-/* =========================
-   TASKS
-========================= */
-
+/* TASKS */
 .task-card{
     background:#fff;
     border:1px solid var(--border);
@@ -780,10 +767,7 @@ tr:nth-child(even){
     font-size:9px;
 }
 
-/* =========================
-   PROJECT STATUS
-========================= */
-
+/* PROJECT STATUS */
 .project-status{
     border:1px solid var(--border);
     border-radius:12px;
@@ -825,10 +809,7 @@ tr:nth-child(even){
     background:#27ae60;
 }
 
-/* =========================
-   FORMS / MODALS
-========================= */
-
+/* FORMS / MODALS */
 .form-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -959,10 +940,7 @@ tr:nth-child(even){
     height:17px;
 }
 
-/* =========================
-   EQUIPMENT
-========================= */
-
+/* EQUIPMENT */
 .equipment-table th{
     white-space:nowrap;
 }
@@ -987,10 +965,7 @@ tr:nth-child(even){
     margin-bottom:15px;
 }
 
-/* =========================
-   ARCHIVE
-========================= */
-
+/* ARCHIVE */
 .archive-filter{
     display:flex;
     flex-wrap:wrap;
@@ -998,10 +973,7 @@ tr:nth-child(even){
     margin-bottom:15px;
 }
 
-/* =========================
-   MONTHLY
-========================= */
-
+/* MONTHLY */
 .month-card{
     display:flex;
     align-items:center;
@@ -1019,10 +991,7 @@ tr:nth-child(even){
     font-weight:bold;
 }
 
-/* =========================
-   ACTIVITY
-========================= */
-
+/* ACTIVITY */
 .activity-item{
     display:flex;
     gap:10px;
@@ -1059,10 +1028,7 @@ tr:nth-child(even){
     font-size:9px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-
+/* RESPONSIVE */
 @media(max-width:1100px){
     .cards{
         grid-template-columns:repeat(2,1fr);
@@ -1304,7 +1270,7 @@ tr:nth-child(even){
 <div class="content">
 
 <!-- =========================
-     ADMIN / EMPLOYEE DASHBOARD
+     DASHBOARD
 ========================= -->
 
 <section id="page-dashboard" class="page active">
@@ -1622,7 +1588,7 @@ tr:nth-child(even){
 </section>
 
 <!-- =========================
-     ARCHIVE (با دکمه Import/Export)
+     ARCHIVE
 ========================= -->
 
 <section id="page-archive" class="page">
@@ -2077,12 +2043,12 @@ tr:nth-child(even){
 
 <div class="form-group">
 <label>تاریخ شروع</label>
-<input id="pStart">
+<input id="pStart" type="date">
 </div>
 
 <div class="form-group">
 <label>ددلاین</label>
-<input id="pDeadline">
+<input id="pDeadline" type="date">
 </div>
 
 <div class="form-group">
@@ -2110,7 +2076,7 @@ tr:nth-child(even){
 <div class="modal-actions">
 
 <button class="btn btn-gray" onclick="closeModal('projectModal')">انصراف</button>
-<button class="btn btn-success" onclick="saveProject()">ذخیره پروژه</button>
+<button class="btn btn-success" onclick="saveProject()">💾 ذخیره پروژه</button>
 
 </div>
 
@@ -2178,7 +2144,7 @@ tr:nth-child(even){
 <div class="modal-actions">
 
 <button class="btn btn-gray" onclick="closeModal('taskModal')">انصراف</button>
-<button class="btn btn-success" onclick="saveTask()">ثبت وظیفه</button>
+<button class="btn btn-success" onclick="saveTask()">💾 ثبت وظیفه</button>
 
 </div>
 
@@ -2282,9 +2248,9 @@ tr:nth-child(even){
 <div class="modal-actions">
 
 <button class="btn btn-gray" onclick="closeModal('reportModal')">بستن</button>
-<button id="saveReportBtn" class="btn btn-success" onclick="saveReport()">ذخیره گزارش</button>
+<button id="saveReportBtn" class="btn btn-success" onclick="saveReport()">💾 ذخیره گزارش</button>
 <button id="approveReportBtn" class="btn btn-primary admin-only" onclick="approveReport()">✓ تأیید و آرشیو</button>
-<button id="deleteReportBtn" class="btn btn-danger admin-only" onclick="deleteReport()">حذف گزارش</button>
+<button id="deleteReportBtn" class="btn btn-danger admin-only" onclick="deleteReport()">🗑 حذف گزارش</button>
 
 </div>
 
@@ -2349,7 +2315,7 @@ tr:nth-child(even){
 <div class="modal-actions">
 
 <button class="btn btn-gray" onclick="closeModal('personModal')">انصراف</button>
-<button class="btn btn-success" onclick="savePerson()">ذخیره</button>
+<button class="btn btn-success" onclick="savePerson()">💾 ذخیره</button>
 
 </div>
 
@@ -2376,12 +2342,12 @@ tr:nth-child(even){
 
 <div class="form-group">
 <label>کد</label>
-<input id="eCode">
+<input id="eCode" placeholder="مثال: M001">
 </div>
 
 <div class="form-group">
 <label>نوع</label>
-<select id="eType">
+<select id="eType" onchange="toggleEquipmentParent()">
 <option value="main">تجهیز اصلی M</option>
 <option value="sub">زیرمجموعه S</option>
 </select>
@@ -2389,7 +2355,7 @@ tr:nth-child(even){
 
 <div class="form-group">
 <label>نام تجهیز</label>
-<input id="eName">
+<input id="eName" placeholder="نام تجهیز را وارد کنید">
 </div>
 
 <div class="form-group">
@@ -2401,9 +2367,11 @@ tr:nth-child(even){
 </select>
 </div>
 
-<div class="form-group">
+<div class="form-group" id="parentGroup">
 <label>وابسته به</label>
-<select id="eParent"></select>
+<select id="eParent">
+<option value="">بدون وابستگی</option>
+</select>
 </div>
 
 <div class="form-group">
@@ -2420,32 +2388,32 @@ tr:nth-child(even){
 
 <div class="form-group">
 <label>محل نگهداری</label>
-<input id="eLocation">
+<input id="eLocation" placeholder="انبار، استودیو، ...">
 </div>
 
 <div class="form-group">
 <label>آخرین بررسی</label>
-<input id="eCheck">
+<input id="eCheck" type="date">
 </div>
 
 <div class="form-group">
 <label>تحویل به</label>
-<input id="eLoanTo">
+<input id="eLoanTo" placeholder="نام شخص">
 </div>
 
 <div class="form-group">
 <label>تاریخ تحویل</label>
-<input id="eLoanDate">
+<input id="eLoanDate" type="date">
 </div>
 
 <div class="form-group">
 <label>تاریخ بازگشت</label>
-<input id="eReturnDate">
+<input id="eReturnDate" type="date">
 </div>
 
 <div class="form-group full">
 <label>توضیحات</label>
-<textarea id="eDesc"></textarea>
+<textarea id="eDesc" placeholder="توضیحات اضافی..."></textarea>
 </div>
 
 </div>
@@ -2453,7 +2421,7 @@ tr:nth-child(even){
 <div class="modal-actions">
 
 <button class="btn btn-gray" onclick="closeModal('equipmentModal')">انصراف</button>
-<button class="btn btn-success" onclick="saveEquipment()">ذخیره</button>
+<button class="btn btn-success" onclick="saveEquipment()">💾 ذخیره تجهیز</button>
 
 </div>
 
@@ -2535,7 +2503,6 @@ function nowISO(){
 
 function faDate(date){
     if(!date)return "-";
-
     try{
         return new Date(date).toLocaleDateString("fa-IR");
     }catch{
@@ -2568,319 +2535,187 @@ function departmentFromManager(manager){
 ========================================================= */
 
 function login(){
-
-    const pass=document
-        .getElementById("loginPassword")
-        .value
-        .trim();
-
+    const pass=document.getElementById("loginPassword").value.trim();
     const error=document.getElementById("loginError");
 
     if(USERS[pass]){
-
         currentUser=USERS[pass];
-
-        sessionStorage.setItem(
-            "basair_user",
-            pass
-        );
-
+        sessionStorage.setItem("basair_user", pass);
         error.style.display="none";
-
         document.getElementById("loginPage").style.display="none";
         document.getElementById("app").style.display="block";
-
-        document.getElementById("currentRole").textContent=
-            currentUser.role;
-
-        document.getElementById("sidebarRole").textContent=
-            currentUser.role;
-
+        document.getElementById("currentRole").textContent=currentUser.role;
+        document.getElementById("sidebarRole").textContent=currentUser.role;
         applyPermissions();
         initialize();
-
-        logActivity(
-            "ورود به سامانه",
-            null
-        );
-
+        logActivity("ورود به سامانه", null);
     }else{
-
         error.style.display="block";
-
     }
 }
 
 function logout(){
-
     if(currentUser){
-        logActivity(
-            "خروج از سامانه",
-            null
-        );
+        logActivity("خروج از سامانه", null);
     }
-
     sessionStorage.removeItem("basair_user");
-
     currentUser=null;
-
     document.getElementById("app").style.display="none";
     document.getElementById("loginPage").style.display="flex";
-
     document.getElementById("loginPassword").value="";
 }
 
 function checkSession(){
-
     const pass=sessionStorage.getItem("basair_user");
-
     if(pass && USERS[pass]){
-
         currentUser=USERS[pass];
-
         document.getElementById("loginPage").style.display="none";
         document.getElementById("app").style.display="block";
-
-        document.getElementById("currentRole").textContent=
-            currentUser.role;
-
-        document.getElementById("sidebarRole").textContent=
-            currentUser.role;
-
+        document.getElementById("currentRole").textContent=currentUser.role;
+        document.getElementById("sidebarRole").textContent=currentUser.role;
         applyPermissions();
         initialize();
     }
 }
 
 function applyPermissions(){
-
     document.querySelectorAll(".admin-only").forEach(el=>{
         el.style.display=isAdmin()?"":"none";
     });
-
 }
 
 /* =========================================================
    DATA
 ========================================================= */
 
-let projects=
-    JSON.parse(localStorage.getItem("basair_projects")||"[]");
-
-let reports=
-    JSON.parse(localStorage.getItem("basair_reports")||"[]");
-
-let tasks=
-    JSON.parse(localStorage.getItem("basair_tasks")||"[]");
-
-let people=
-    JSON.parse(localStorage.getItem("basair_people")||"[]");
-
-let equipment=
-    JSON.parse(localStorage.getItem("basair_equipment")||"null");
-
-let notifications=
-    JSON.parse(localStorage.getItem("basair_notifications")||"[]");
-
-let activityLog=
-    JSON.parse(localStorage.getItem("basair_activity")||"[]");
-
-let currentMonth=
-    localStorage.getItem("basair_month")||"1405/07";
+let projects = JSON.parse(localStorage.getItem("basair_projects")||"[]");
+let reports = JSON.parse(localStorage.getItem("basair_reports")||"[]");
+let tasks = JSON.parse(localStorage.getItem("basair_tasks")||"[]");
+let people = JSON.parse(localStorage.getItem("basair_people")||"[]");
+let equipment = JSON.parse(localStorage.getItem("basair_equipment")||"null");
+let notifications = JSON.parse(localStorage.getItem("basair_notifications")||"[]");
+let activityLog = JSON.parse(localStorage.getItem("basair_activity")||"[]");
+let currentMonth = localStorage.getItem("basair_month")||"1405/07";
 
 /* =========================================================
    EQUIPMENT DEFAULT DATA
 ========================================================= */
 
 if(!Array.isArray(equipment) || equipment.length === 0){
-
-equipment=[
-
-{code:"M001",type:"main",name:"پروژکتور کوچک 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"S001",type:"sub",name:"آداپتور",category:"تصویر",parent:"M001",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"S002",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M001",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-
-{code:"M002",type:"main",name:"پروژکتور کوچک 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"S003",type:"sub",name:"آداپتور",category:"تصویر",parent:"M002",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"S004",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M002",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-
-{code:"M003",type:"main",name:"نور اصلی 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"S005",type:"sub",name:"کابل پاور",category:"تصویر",parent:"M003",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-
-{code:"M004",type:"main",name:"نور اصلی 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"S006",type:"sub",name:"کابل پاور",category:"تصویر",parent:"M004",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-
-{code:"M005",type:"main",name:"سافت باکس 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M006",type:"main",name:"سافت باکس 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M007",type:"main",name:"سه پایه پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M008",type:"main",name:"سه پایه نور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-
-{code:"M009",type:"main",name:"سه راهی 4",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M010",type:"main",name:"رزرو",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-
-{code:"M011",type:"main",name:"ویدیو پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"S007",type:"sub",name:"کابل پاور و کنترل",category:"تصویر",parent:"M011",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-
-{code:"M012",type:"main",name:"سه راهی 1",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M013",type:"main",name:"سه راهی 2",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M014",type:"main",name:"سه راهی 3",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-
-{code:"M015",type:"main",name:"DVD 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M016",type:"main",name:"آنتن",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-
-{code:"M017",type:"main",name:"بسته AUX",category:"صوت",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"S008",type:"sub",name:"کابل AUX بلند",category:"صوت",parent:"M017",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"S009",type:"sub",name:"کابل دو سر تبدیل",category:"صوت",parent:"M017",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-
-{code:"M018",type:"main",name:"بسته HDMI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"S010",type:"sub",name:"HDMI 2 متری",category:"تصویر",parent:"M018",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"S011",type:"sub",name:"HDMI 10 متری",category:"تصویر",parent:"M018",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-
-{code:"M019",type:"main",name:"DJI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M020",type:"main",name:"میکروفون یقه‌ای",category:"صوت",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M021",type:"main",name:"DVD 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M022",type:"main",name:"فلش 128",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M023",type:"main",name:"SD کارت 128",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M024",type:"main",name:"سه پایه دوربین",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M025",type:"main",name:"دوربین Sony A7 III",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M026",type:"main",name:"کیف دوربین",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M027",type:"main",name:"سه راهی 5",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M028",type:"main",name:"سه راهی 6",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M029",type:"main",name:"پرده پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M030",type:"main",name:"تبدیل AV به VGA",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M031",type:"main",name:"تبدیل VGA به HDMI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
-{code:"M032",type:"main",name:"فلش 32 گیگ",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""}
-
-];
-
-saveAll();
-
+    equipment = [
+        {code:"M001",type:"main",name:"پروژکتور کوچک 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"S001",type:"sub",name:"آداپتور",category:"تصویر",parent:"M001",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"S002",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M001",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M002",type:"main",name:"پروژکتور کوچک 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"S003",type:"sub",name:"آداپتور",category:"تصویر",parent:"M002",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"S004",type:"sub",name:"کابل تبدیل",category:"تصویر",parent:"M002",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M003",type:"main",name:"نور اصلی 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"S005",type:"sub",name:"کابل پاور",category:"تصویر",parent:"M003",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M004",type:"main",name:"نور اصلی 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"S006",type:"sub",name:"کابل پاور",category:"تصویر",parent:"M004",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M005",type:"main",name:"سافت باکس 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M006",type:"main",name:"سافت باکس 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M007",type:"main",name:"سه پایه پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M008",type:"main",name:"سه پایه نور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M009",type:"main",name:"سه راهی 4",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M010",type:"main",name:"رزرو",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M011",type:"main",name:"ویدیو پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"S007",type:"sub",name:"کابل پاور و کنترل",category:"تصویر",parent:"M011",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M012",type:"main",name:"سه راهی 1",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M013",type:"main",name:"سه راهی 2",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M014",type:"main",name:"سه راهی 3",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M015",type:"main",name:"DVD 1",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M016",type:"main",name:"آنتن",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M017",type:"main",name:"بسته AUX",category:"صوت",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"S008",type:"sub",name:"کابل AUX بلند",category:"صوت",parent:"M017",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"S009",type:"sub",name:"کابل دو سر تبدیل",category:"صوت",parent:"M017",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M018",type:"main",name:"بسته HDMI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"S010",type:"sub",name:"HDMI 2 متری",category:"تصویر",parent:"M018",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"S011",type:"sub",name:"HDMI 10 متری",category:"تصویر",parent:"M018",status:"سالم",location:"",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M019",type:"main",name:"DJI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M020",type:"main",name:"میکروفون یقه‌ای",category:"صوت",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M021",type:"main",name:"DVD 2",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M022",type:"main",name:"فلش 128",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M023",type:"main",name:"SD کارت 128",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M024",type:"main",name:"سه پایه دوربین",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M025",type:"main",name:"دوربین Sony A7 III",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M026",type:"main",name:"کیف دوربین",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M027",type:"main",name:"سه راهی 5",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M028",type:"main",name:"سه راهی 6",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M029",type:"main",name:"پرده پروژکتور",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M030",type:"main",name:"تبدیل AV به VGA",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M031",type:"main",name:"تبدیل VGA به HDMI",category:"تصویر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""},
+        {code:"M032",type:"main",name:"فلش 32 گیگ",category:"سایر",parent:"",status:"سالم",location:"انبار",checkDate:"",loanTo:"",loanDate:"",returnDate:"",description:""}
+    ];
+    saveAll();
 }
 
 /* =========================================================
    DATA NORMALIZATION
 ========================================================= */
 
-tasks=tasks.map(t=>({
-
+tasks = tasks.map(t=>({
     id:t.id||uid(),
-
     title:t.title||"بدون عنوان",
-
     description:t.description||t.desc||"",
-
     assignedTo:t.assignedTo||t.manager||"",
-
     createdBy:t.createdBy||"مدیر رسانه",
-
     priority:t.priority||"MEDIUM",
-
-    status:
-        t.status||
-        (t.done?"DONE":"TODO"),
-
+    status: t.status || (t.done?"DONE":"TODO"),
     deadline:t.deadline||"",
-
     createdAt:t.createdAt||nowISO(),
-
     completedAt:t.completedAt||"",
-
     cycle:t.cycle||currentMonth
-
 }));
 
-projects=projects.map(p=>({
-
+projects = projects.map(p=>({
     id:p.id||uid(),
-
     name:p.name||"",
-
     type:p.type||"",
-
     dept:p.dept||"تولید",
-
     manager:p.manager||"",
-
     start:p.start||"",
-
     deadline:p.deadline||"",
-
     status:p.status||"فعال",
-
     progress:Number(p.progress)||0,
-
     desc:p.desc||p.description||""
-
 }));
 
-reports=reports.map(r=>({
-
+reports = reports.map(r=>({
     id:r.id||uid(),
-
     manager:r.manager||"",
-
     dept:r.dept||departmentFromManager(r.manager),
-
     date:r.date||"",
-
     week:r.week||"",
-
     planned:Number(r.planned)||0,
-
     completed:Number(r.completed)||0,
-
     delayed:Number(r.delayed)||0,
-
     quality:Number(r.quality)||0,
-
     doneList:r.doneList||"",
-
     delayReason:r.delayReason||"",
-
     issues:r.issues||"",
-
     suggestions:r.suggestions||"",
-
     taskIds:Array.isArray(r.taskIds)?r.taskIds:[],
-
     approved:!!r.approved,
-
     approvedBy:r.approvedBy||"",
-
     approvedDate:r.approvedDate||"",
-
     score:Number(r.score)||0,
-
     month:r.month||currentMonth
-
 }));
 
-equipment=equipment.map(e=>({
-
+equipment = equipment.map(e=>({
     code:e.code||"",
-
     type:e.type||"main",
-
     name:e.name||"",
-
     category:e.category||"سایر",
-
     parent:e.parent||"",
-
     status:e.status||"سالم",
-
     location:e.location||"",
-
     checkDate:e.checkDate||"",
-
     loanTo:e.loanTo||"",
-
     loanDate:e.loanDate||"",
-
     returnDate:e.returnDate||"",
-
     description:e.description||""
-
 }));
 
 /* =========================================================
@@ -2888,46 +2723,14 @@ equipment=equipment.map(e=>({
 ========================================================= */
 
 function saveAll(){
-
-    localStorage.setItem(
-        "basair_projects",
-        JSON.stringify(projects)
-    );
-
-    localStorage.setItem(
-        "basair_reports",
-        JSON.stringify(reports)
-    );
-
-    localStorage.setItem(
-        "basair_tasks",
-        JSON.stringify(tasks)
-    );
-
-    localStorage.setItem(
-        "basair_people",
-        JSON.stringify(people)
-    );
-
-    localStorage.setItem(
-        "basair_equipment",
-        JSON.stringify(equipment)
-    );
-
-    localStorage.setItem(
-        "basair_notifications",
-        JSON.stringify(notifications)
-    );
-
-    localStorage.setItem(
-        "basair_activity",
-        JSON.stringify(activityLog)
-    );
-
-    localStorage.setItem(
-        "basair_month",
-        currentMonth
-    );
+    localStorage.setItem("basair_projects", JSON.stringify(projects));
+    localStorage.setItem("basair_reports", JSON.stringify(reports));
+    localStorage.setItem("basair_tasks", JSON.stringify(tasks));
+    localStorage.setItem("basair_people", JSON.stringify(people));
+    localStorage.setItem("basair_equipment", JSON.stringify(equipment));
+    localStorage.setItem("basair_notifications", JSON.stringify(notifications));
+    localStorage.setItem("basair_activity", JSON.stringify(activityLog));
+    localStorage.setItem("basair_month", currentMonth);
 }
 
 /* =========================================================
@@ -2935,30 +2738,16 @@ function saveAll(){
 ========================================================= */
 
 function logActivity(action,taskId){
-
     if(!currentUser)return;
-
     activityLog.unshift({
-
         id:uid(),
-
         user:currentUser.role,
-
         action:action,
-
         taskId:taskId||null,
-
         time:nowISO()
-
     });
-
     activityLog=activityLog.slice(0,500);
-
-    localStorage.setItem(
-        "basair_activity",
-        JSON.stringify(activityLog)
-    );
-
+    localStorage.setItem("basair_activity", JSON.stringify(activityLog));
 }
 
 /* =========================================================
@@ -2966,105 +2755,45 @@ function logActivity(action,taskId){
 ========================================================= */
 
 const pageNames={
-
     dashboard:"داشبورد",
-
     tasks:"وظایف",
-
     projects:"پروژه‌ها",
-
     reports:"گزارش هفتگی",
-
     archive:"آرشیو گزارش‌ها",
-
     performance:"ارزیابی عملکرد",
-
     people:"مدیریت نیروها",
-
     equipment:"تجهیزات",
-
     monthly:"مدیریت ماهانه",
-
     notifications:"اعلان‌ها",
-
     activity:"لاگ فعالیت"
-
 };
 
 function showPage(name,button){
-
-    document
-        .querySelectorAll(".page")
-        .forEach(p=>p.classList.remove("active"));
-
-    const page=document.getElementById(
-        "page-"+name
-    );
-
-    if(page){
-        page.classList.add("active");
-    }
-
-    document
-        .querySelectorAll(".nav button")
-        .forEach(b=>b.classList.remove("active"));
-
-    if(button){
-        button.classList.add("active");
-    }
-
-    document.getElementById(
-        "pageTopTitle"
-    ).textContent=pageNames[name]||"";
-
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    const page=document.getElementById("page-"+name);
+    if(page) page.classList.add("active");
+    document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+    if(button) button.classList.add("active");
+    document.getElementById("pageTopTitle").textContent=pageNames[name]||"";
     closeSidebar();
-
-    if(name==="dashboard"){
-        updateDashboard();
-    }
-
-    if(name==="tasks"){
-        renderTasks();
-    }
-
-    if(name==="performance"){
-        renderPerformance();
-    }
-
-    if(name==="notifications"){
-        renderNotifications();
-    }
-
-    if(name==="activity"){
-        renderActivity();
-    }
-
+    if(name==="dashboard") updateDashboard();
+    if(name==="tasks") renderTasks();
+    if(name==="performance") renderPerformance();
+    if(name==="notifications") renderNotifications();
+    if(name==="activity") renderActivity();
 }
 
 function toggleSidebar(){
-
-    document
-        .getElementById("sidebar")
-        .classList.toggle("open");
-
+    document.getElementById("sidebar").classList.toggle("open");
 }
 
 function closeSidebar(){
-
-    document
-        .getElementById("sidebar")
-        .classList.remove("open");
-
+    document.getElementById("sidebar").classList.remove("open");
 }
 
 function closeModal(id){
-
     const el=document.getElementById(id);
-
-    if(el){
-        el.classList.remove("show");
-    }
-
+    if(el) el.classList.remove("show");
 }
 
 /* =========================================================
@@ -3072,112 +2801,38 @@ function closeModal(id){
 ========================================================= */
 
 function deadlineState(deadline){
-
-    if(!deadline){
-        return {
-            cls:"deadline-good",
-            text:"بدون ددلاین"
-        };
-    }
-
+    if(!deadline) return {cls:"deadline-good", text:"بدون ددلاین"};
     const time=new Date(deadline).getTime();
-
-    if(isNaN(time)){
-        return {
-            cls:"deadline-good",
-            text:deadline
-        };
-    }
-
+    if(isNaN(time)) return {cls:"deadline-good", text:deadline};
     const diff=time-Date.now();
-
-    if(diff<0){
-
-        return {
-            cls:"deadline-overdue",
-            text:"گذشته"
-        };
-
-    }
-
+    if(diff<0) return {cls:"deadline-overdue", text:"گذشته"};
     const hours=diff/3600000;
-
-    if(hours<=48){
-
-        return {
-            cls:"deadline-near",
-            text:"نزدیک ددلاین"
-        };
-
-    }
-
-    return {
-        cls:"deadline-good",
-        text:"زمان دارد"
-    };
-
+    if(hours<=48) return {cls:"deadline-near", text:"نزدیک ددلاین"};
+    return {cls:"deadline-good", text:"زمان دارد"};
 }
 
 function priorityBadge(priority){
-
     const data={
-
-        CRITICAL:[
-            "🔴 Critical",
-            "priority-critical"
-        ],
-
-        HIGH:[
-            "🟠 High",
-            "priority-high"
-        ],
-
-        MEDIUM:[
-            "🟡 Medium",
-            "priority-medium"
-        ],
-
-        LOW:[
-            "🟢 Low",
-            "priority-low"
-        ]
-
+        CRITICAL:["🔴 Critical","priority-critical"],
+        HIGH:["🟠 High","priority-high"],
+        MEDIUM:["🟡 Medium","priority-medium"],
+        LOW:["🟢 Low","priority-low"]
     };
-
     const d=data[priority]||data.MEDIUM;
-
-    return `
-        <span class="priority ${d[1]}">
-            ${d[0]}
-        </span>
-    `;
-
+    return `<span class="priority ${d[1]}">${d[0]}</span>`;
 }
 
 function statusText(status){
-
-    if(status==="TODO")return "Todo";
-
-    if(status==="IN_PROGRESS")
-        return "In Progress";
-
-    if(status==="DONE")
-        return "Done";
-
+    if(status==="TODO") return "Todo";
+    if(status==="IN_PROGRESS") return "In Progress";
+    if(status==="DONE") return "Done";
     return status;
-
 }
 
 function statusBadgeTask(status){
-
-    if(status==="DONE")
-        return `<span class="badge badge-green">Done</span>`;
-
-    if(status==="IN_PROGRESS")
-        return `<span class="badge badge-blue">In Progress</span>`;
-
+    if(status==="DONE") return `<span class="badge badge-green">Done</span>`;
+    if(status==="IN_PROGRESS") return `<span class="badge badge-blue">In Progress</span>`;
     return `<span class="badge badge-gray">Todo</span>`;
-
 }
 
 /* =========================================================
@@ -3185,383 +2840,139 @@ function statusBadgeTask(status){
 ========================================================= */
 
 function visibleTasks(){
-
-    if(isAdmin()){
-        return tasks;
-    }
-
-    return tasks.filter(
-        t=>t.assignedTo===currentUser.role
-    );
-
+    if(isAdmin()) return tasks;
+    return tasks.filter(t=>t.assignedTo===currentUser.role);
 }
 
 function renderTaskCard(t){
-
     const dl=deadlineState(t.deadline);
-
-    const canChange=
-        isAdmin()||
-        t.assignedTo===currentUser.role;
-
+    const canChange=isAdmin() || t.assignedTo===currentUser.role;
     return `
-
 <div class="task-card">
-
 <div class="task-main">
-
-<input
-    class="task-check"
-    type="checkbox"
-    ${t.status==="DONE"?"checked":""}
-    ${canChange?"":"disabled"}
-    onchange="toggleTaskDone('${t.id}',this.checked)"
->
-
+<input class="task-check" type="checkbox" ${t.status==="DONE"?"checked":""} ${canChange?"":"disabled"} onchange="toggleTaskDone('${t.id}',this.checked)">
 <div class="task-content">
-
-<div class="task-title ${t.status==="DONE"?"done":""}">
-${escapeHTML(t.title)}
-</div>
-
-<div class="task-description">
-${escapeHTML(t.description||"")}
-</div>
-
+<div class="task-title ${t.status==="DONE"?"done":""}">${escapeHTML(t.title)}</div>
+<div class="task-description">${escapeHTML(t.description||"")}</div>
 <div class="task-meta">
-
 ${priorityBadge(t.priority)}
-
-<span class="deadline ${dl.cls}">
-⏰ ${escapeHTML(
-    t.deadline
-    ? new Date(t.deadline).toLocaleString("fa-IR")
-    : dl.text
-)}
-</span>
-
+<span class="deadline ${dl.cls}">⏰ ${escapeHTML(t.deadline ? new Date(t.deadline).toLocaleString("fa-IR") : dl.text)}</span>
 ${statusBadgeTask(t.status)}
-
-${isAdmin()?`
-<span class="badge badge-gray">
-${escapeHTML(t.assignedTo)}
-</span>
-`:""}
-
+${isAdmin()?`<span class="badge badge-gray">${escapeHTML(t.assignedTo)}</span>`:""}
 </div>
-
 </div>
-
 <div class="task-actions">
-
 ${canChange?`
-
-<select
-    style="padding:6px;border:1px solid #ddd;border-radius:7px;font-size:9px"
-    onchange="changeTaskStatus('${t.id}',this.value)"
->
-
-<option
-    value="TODO"
-    ${t.status==="TODO"?"selected":""}
->
-Todo
-</option>
-
-<option
-    value="IN_PROGRESS"
-    ${t.status==="IN_PROGRESS"?"selected":""}
->
-In Progress
-</option>
-
-<option
-    value="DONE"
-    ${t.status==="DONE"?"selected":""}
->
-Done
-</option>
-
+<select style="padding:6px;border:1px solid #ddd;border-radius:7px;font-size:9px" onchange="changeTaskStatus('${t.id}',this.value)">
+<option value="TODO" ${t.status==="TODO"?"selected":""}>Todo</option>
+<option value="IN_PROGRESS" ${t.status==="IN_PROGRESS"?"selected":""}>In Progress</option>
+<option value="DONE" ${t.status==="DONE"?"selected":""}>Done</option>
 </select>
-
 `:""}
-
-${isAdmin()?`
-
-<button
-    class="btn btn-danger"
-    onclick="deleteTask('${t.id}')"
->
-حذف
-</button>
-
-`:""}
-
+${isAdmin()?`<button class="btn btn-danger" onclick="deleteTask('${t.id}')">حذف</button>`:""}
 </div>
-
 </div>
-
-</div>
-
-`;
-
+</div>`;
 }
 
 function renderTasks(){
-
     const list=document.getElementById("taskList");
-
     if(!list)return;
-
     let arr=visibleTasks();
-
     if(isAdmin()){
-
-        const search=
-            (document.getElementById("taskSearch")?.value||"")
-            .toLowerCase()
-            .trim();
-
-        const manager=
-            document.getElementById("taskManagerFilter")?.value||"";
-
-        const priority=
-            document.getElementById("taskPriorityFilter")?.value||"";
-
-        const status=
-            document.getElementById("taskStatusFilter")?.value||"";
-
+        const search=(document.getElementById("taskSearch")?.value||"").toLowerCase().trim();
+        const manager=document.getElementById("taskManagerFilter")?.value||"";
+        const priority=document.getElementById("taskPriorityFilter")?.value||"";
+        const status=document.getElementById("taskStatusFilter")?.value||"";
         arr=arr.filter(t=>{
-
-            const text=
-                (
-                    t.title+
-                    " "+
-                    t.description+
-                    " "+
-                    t.assignedTo
-                ).toLowerCase();
-
-            return
-                (!search||text.includes(search))&&
-                (!manager||t.assignedTo===manager)&&
-                (!priority||t.priority===priority)&&
-                (!status||t.status===status);
-
+            const text=(t.title+" "+t.description+" "+t.assignedTo).toLowerCase();
+            return (!search||text.includes(search)) &&
+                   (!manager||t.assignedTo===manager) &&
+                   (!priority||t.priority===priority) &&
+                   (!status||t.status===status);
         });
-
     }
-
     arr.sort((a,b)=>{
-
-        const priorityScore={
-            CRITICAL:4,
-            HIGH:3,
-            MEDIUM:2,
-            LOW:1
-        };
-
-        return
-            (priorityScore[b.priority]||0)-
-            (priorityScore[a.priority]||0);
-
+        const priorityScore={CRITICAL:4,HIGH:3,MEDIUM:2,LOW:1};
+        return (priorityScore[b.priority]||0)-(priorityScore[a.priority]||0);
     });
-
-    list.innerHTML=
-        arr.length
-        ?arr.map(renderTaskCard).join("")
-        :`<div class="panel empty">وظیفه‌ای وجود ندارد.</div>`;
-
+    list.innerHTML=arr.length ? arr.map(renderTaskCard).join("") : `<div class="panel empty">وظیفه‌ای وجود ندارد.</div>`;
 }
 
 function openTaskModal(){
-
     if(!isAdmin())return;
-
     editingTask=null;
-
     document.getElementById("tTitle").value="";
     document.getElementById("tDesc").value="";
     document.getElementById("tDeadline").value="";
     document.getElementById("tPriority").value="MEDIUM";
     document.getElementById("tStatus").value="TODO";
-
-    document.getElementById("tManager").innerHTML=
-        managerList()
-        .map(m=>`
-            <option value="${escapeHTML(m[0])}">
-                ${escapeHTML(m[0])}
-            </option>
-        `)
-        .join("");
-
-    document
-        .getElementById("taskModal")
-        .classList.add("show");
-
+    document.getElementById("tManager").innerHTML=managerList().map(m=>`<option value="${escapeHTML(m[0])}">${escapeHTML(m[0])}</option>`).join("");
+    document.getElementById("taskModal").classList.add("show");
 }
 
 function saveTask(){
-
     if(!isAdmin())return;
-
-    const title=
-        document.getElementById("tTitle")
-        .value.trim();
-
-    if(!title){
-        alert("عنوان وظیفه را وارد کنید.");
-        return;
-    }
-
+    const title=document.getElementById("tTitle").value.trim();
+    if(!title){ alert("عنوان وظیفه را وارد کنید."); return; }
     const task={
-
         id:uid(),
-
         title:title,
-
-        description:
-            document.getElementById("tDesc")
-            .value.trim(),
-
-        assignedTo:
-            document.getElementById("tManager")
-            .value,
-
+        description:document.getElementById("tDesc").value.trim(),
+        assignedTo:document.getElementById("tManager").value,
         createdBy:currentUser.role,
-
-        priority:
-            document.getElementById("tPriority")
-            .value,
-
-        status:
-            document.getElementById("tStatus")
-            .value,
-
-        deadline:
-            document.getElementById("tDeadline")
-            .value,
-
+        priority:document.getElementById("tPriority").value,
+        status:document.getElementById("tStatus").value,
+        deadline:document.getElementById("tDeadline").value,
         createdAt:nowISO(),
-
         completedAt:"",
-
         cycle:currentMonth
-
     };
-
     tasks.push(task);
-
-    logActivity(
-        "ایجاد وظیفه: "+task.title,
-        task.id
-    );
-
+    logActivity("ایجاد وظیفه: "+task.title, task.id);
     saveAll();
-
     renderTasks();
     updateDashboard();
     renderNotifications();
-
     closeModal("taskModal");
-
-    alert("وظیفه با موفقیت ثبت شد.");
-
+    alert("✅ وظیفه با موفقیت ثبت شد.");
 }
 
 function changeTaskStatus(id,status){
-
     const t=tasks.find(x=>x.id===id);
-
     if(!t)return;
-
-    if(
-        !isAdmin() &&
-        t.assignedTo!==currentUser.role
-    ){
-        return;
-    }
-
+    if(!isAdmin() && t.assignedTo!==currentUser.role) return;
     const old=t.status;
-
     t.status=status;
-
-    if(status==="DONE"){
-
-        if(!t.completedAt){
-            t.completedAt=nowISO();
-        }
-
-    }else{
-
-        t.completedAt="";
-
-    }
-
-    logActivity(
-        `تغییر وضعیت وظیفه «${t.title}»: ${statusText(old)} → ${statusText(status)}`,
-        id
-    );
-
+    if(status==="DONE"){ if(!t.completedAt) t.completedAt=nowISO(); }
+    else{ t.completedAt=""; }
+    logActivity(`تغییر وضعیت وظیفه «${t.title}»: ${statusText(old)} → ${statusText(status)}`, id);
     saveAll();
-
     renderTasks();
     updateDashboard();
     renderPerformance();
     renderNotifications();
-
 }
 
-function toggleTaskDone(id,checked){
-
-    changeTaskStatus(
-        id,
-        checked?"DONE":"TODO"
-    );
-
-}
+function toggleTaskDone(id,checked){ changeTaskStatus(id,checked?"DONE":"TODO"); }
 
 function deleteTask(id){
-
     if(!isAdmin())return;
-
     const t=tasks.find(x=>x.id===id);
-
     if(!t)return;
-
-    if(!confirm(
-        `وظیفه «${t.title}» حذف شود؟`
-    ))return;
-
+    if(!confirm(`وظیفه «${t.title}» حذف شود؟`))return;
     tasks=tasks.filter(x=>x.id!==id);
-
-    logActivity(
-        "حذف وظیفه: "+t.title,
-        id
-    );
-
+    logActivity("حذف وظیفه: "+t.title, id);
     saveAll();
-
     renderTasks();
     updateDashboard();
     renderNotifications();
-
 }
 
 function filterOverdueTasks(){
-
-    const overdue=visibleTasks().filter(
-        t=>t.status!=="DONE" &&
-        deadlineState(t.deadline).cls==="deadline-overdue"
-    );
-
+    const overdue=visibleTasks().filter(t=>t.status!=="DONE" && deadlineState(t.deadline).cls==="deadline-overdue");
     const list=document.getElementById("taskList");
-
-    list.innerHTML=
-        overdue.length
-        ?overdue.map(renderTaskCard).join("")
-        :`<div class="panel empty">هیچ وظیفه عقب‌افتاده‌ای وجود ندارد.</div>`;
-
+    list.innerHTML=overdue.length ? overdue.map(renderTaskCard).join("") : `<div class="panel empty">هیچ وظیفه عقب‌افتاده‌ای وجود ندارد.</div>`;
 }
 
 /* =========================================================
@@ -3569,424 +2980,102 @@ function filterOverdueTasks(){
 ========================================================= */
 
 function updateDashboard(){
-
     if(!currentUser)return;
-
     const total=tasks.length;
+    const todo=tasks.filter(t=>t.status==="TODO").length;
+    const progress=tasks.filter(t=>t.status==="IN_PROGRESS").length;
+    const done=tasks.filter(t=>t.status==="DONE").length;
+    const overdue=tasks.filter(t=>t.status!=="DONE" && deadlineState(t.deadline).cls==="deadline-overdue").length;
+    const critical=tasks.filter(t=>t.priority==="CRITICAL" && t.status!=="DONE").length;
+    const activeProjects=projects.filter(p=>p.status==="فعال").length;
+    const delayedProjects=projects.filter(p=>p.status==="عقب‌مانده").length;
+    const peopleActive=people.filter(p=>p.status==="فعال").length;
 
-    const todo=
-        tasks.filter(t=>t.status==="TODO").length;
+    document.getElementById("dashboardGreeting").textContent=isAdmin()?"داشبورد مدیر رسانه":"داشبورد "+currentUser.role;
+    document.getElementById("dashboardSubtitle").textContent=isAdmin()?"تصویر عملیاتی کل رسانه برای تصمیم‌گیری":"فقط کارها، وظایف و اولویت‌های مربوط به شما";
 
-    const progress=
-        tasks.filter(t=>t.status==="IN_PROGRESS").length;
-
-    const done=
-        tasks.filter(t=>t.status==="DONE").length;
-
-    const overdue=
-        tasks.filter(t=>
-            t.status!=="DONE" &&
-            deadlineState(t.deadline).cls==="deadline-overdue"
-        ).length;
-
-    const critical=
-        tasks.filter(t=>
-            t.priority==="CRITICAL" &&
-            t.status!=="DONE"
-        ).length;
-
-    const activeProjects=
-        projects.filter(
-            p=>p.status==="فعال"
-        ).length;
-
-    const delayedProjects=
-        projects.filter(
-            p=>p.status==="عقب‌مانده"
-        ).length;
-
-    const peopleActive=
-        people.filter(
-            p=>p.status==="فعال"
-        ).length;
-
-    document.getElementById(
-        "dashboardGreeting"
-    ).textContent=
-        isAdmin()
-        ?"داشبورد مدیر رسانه"
-        :"داشبورد "+currentUser.role;
-
-    document.getElementById(
-        "dashboardSubtitle"
-    ).textContent=
-        isAdmin()
-        ?"تصویر عملیاتی کل رسانه برای تصمیم‌گیری"
-        :"فقط کارها، وظایف و اولویت‌های مربوط به شما";
-
-    const kpis=document.getElementById(
-        "dashboardKpis"
-    );
-
+    const kpis=document.getElementById("dashboardKpis");
     if(isAdmin()){
-
         kpis.innerHTML=`
-
-<div class="kpi">
-<strong>${total}</strong>
-<span>کل تسک‌ها</span>
-</div>
-
-<div class="kpi">
-<strong>${done}</strong>
-<span>Done</span>
-</div>
-
-<div class="kpi">
-<strong>${progress}</strong>
-<span>In Progress</span>
-</div>
-
-<div class="kpi">
-<strong>${overdue}</strong>
-<span>عقب‌افتاده</span>
-</div>
-
-`;
-
+<div class="kpi"><strong>${total}</strong><span>کل تسک‌ها</span></div>
+<div class="kpi"><strong>${done}</strong><span>Done</span></div>
+<div class="kpi"><strong>${progress}</strong><span>In Progress</span></div>
+<div class="kpi"><strong>${overdue}</strong><span>عقب‌افتاده</span></div>`;
     }else{
-
-        const mine=tasks.filter(
-            t=>t.assignedTo===currentUser.role
-        );
-
-        const mineDone=mine.filter(
-            t=>t.status==="DONE"
-        ).length;
-
-        const mineOpen=mine.filter(
-            t=>t.status!=="DONE"
-        ).length;
-
-        const mineCritical=mine.filter(
-            t=>
-                t.priority==="CRITICAL" &&
-                t.status!=="DONE"
-        ).length;
-
+        const mine=tasks.filter(t=>t.assignedTo===currentUser.role);
+        const mineDone=mine.filter(t=>t.status==="DONE").length;
+        const mineOpen=mine.filter(t=>t.status!=="DONE").length;
+        const mineCritical=mine.filter(t=>t.priority==="CRITICAL" && t.status!=="DONE").length;
         kpis.innerHTML=`
-
-<div class="kpi">
-<strong>${mine.length}</strong>
-<span>کل کارهای من</span>
-</div>
-
-<div class="kpi">
-<strong>${mineOpen}</strong>
-<span>باز</span>
-</div>
-
-<div class="kpi">
-<strong>${mineDone}</strong>
-<span>انجام‌شده</span>
-</div>
-
-<div class="kpi">
-<strong>${mineCritical}</strong>
-<span>Critical</span>
-</div>
-
-`;
-
+<div class="kpi"><strong>${mine.length}</strong><span>کل کارهای من</span></div>
+<div class="kpi"><strong>${mineOpen}</strong><span>باز</span></div>
+<div class="kpi"><strong>${mineDone}</strong><span>انجام‌شده</span></div>
+<div class="kpi"><strong>${mineCritical}</strong><span>Critical</span></div>`;
     }
 
     if(isAdmin()){
-
-        document.getElementById(
-            "adminDashboard"
-        ).style.display="block";
-
-        document.getElementById(
-            "employeeDashboard"
-        ).style.display="none";
-
+        document.getElementById("adminDashboard").style.display="block";
+        document.getElementById("employeeDashboard").style.display="none";
         const totalSafe=Math.max(total,1);
-
-        document.getElementById(
-            "chartTodo"
-        ).style.width=
-            (todo/totalSafe*100)+"%";
-
-        document.getElementById(
-            "chartProgress"
-        ).style.width=
-            (progress/totalSafe*100)+"%";
-
-        document.getElementById(
-            "chartDone"
-        ).style.width=
-            (done/totalSafe*100)+"%";
-
-        renderDashboardAlerts(
-            overdue,
-            critical
-        );
-
+        document.getElementById("chartTodo").style.width=(todo/totalSafe*100)+"%";
+        document.getElementById("chartProgress").style.width=(progress/totalSafe*100)+"%";
+        document.getElementById("chartDone").style.width=(done/totalSafe*100)+"%";
+        renderDashboardAlerts(overdue, critical);
         renderManagerPerformance();
-
-        const projectHTML=`
-
+        document.getElementById("dashboardProjects").innerHTML=`
 <div class="project-status">
-
-<div class="row">
-<span>پروژه‌های فعال</span>
-<strong class="green">${activeProjects}</strong>
-</div>
-
-<div class="row">
-<span>پروژه‌های عقب‌مانده</span>
-<strong class="red">${delayedProjects}</strong>
-</div>
-
-<div class="row">
-<span>نیروهای فعال</span>
-<strong>${peopleActive}</strong>
-</div>
-
-<div class="row">
-<span>نیازمند پیگیری تجهیزات</span>
-<strong class="red">
-${equipment.filter(e=>e.status!=="سالم").length}
-</strong>
-</div>
-
-</div>
-
-`;
-
-        document.getElementById(
-            "dashboardProjects"
-        ).innerHTML=projectHTML;
-
+<div class="row"><span>پروژه‌های فعال</span><strong class="green">${activeProjects}</strong></div>
+<div class="row"><span>پروژه‌های عقب‌مانده</span><strong class="red">${delayedProjects}</strong></div>
+<div class="row"><span>نیروهای فعال</span><strong>${peopleActive}</strong></div>
+<div class="row"><span>نیازمند پیگیری تجهیزات</span><strong class="red">${equipment.filter(e=>e.status!=="سالم").length}</strong></div>
+</div>`;
     }else{
-
-        document.getElementById(
-            "adminDashboard"
-        ).style.display="none";
-
-        document.getElementById(
-            "employeeDashboard"
-        ).style.display="block";
-
+        document.getElementById("adminDashboard").style.display="none";
+        document.getElementById("employeeDashboard").style.display="block";
         renderEmployeeDashboard();
-
     }
-
 }
 
-function renderDashboardAlerts(
-    overdue,
-    critical
-){
-
+function renderDashboardAlerts(overdue, critical){
     const arr=[];
-
-    tasks
-    .filter(t=>
-        t.priority==="CRITICAL" &&
-        t.status!=="DONE"
-    )
-    .slice(0,5)
-    .forEach(t=>{
-
-        arr.push(`
-            <div class="alert critical">
-                🔴 وظیفه Critical:
-                <strong>
-                ${escapeHTML(t.title)}
-                </strong>
-                — ${escapeHTML(t.assignedTo)}
-            </div>
-        `);
-
+    tasks.filter(t=>t.priority==="CRITICAL" && t.status!=="DONE").slice(0,5).forEach(t=>{
+        arr.push(`<div class="alert critical">🔴 وظیفه Critical: <strong>${escapeHTML(t.title)}</strong> — ${escapeHTML(t.assignedTo)}</div>`);
     });
-
-    tasks
-    .filter(t=>
-        t.status!=="DONE" &&
-        deadlineState(t.deadline).cls==="deadline-overdue"
-    )
-    .slice(0,5)
-    .forEach(t=>{
-
-        arr.push(`
-            <div class="alert critical">
-                ⏰ ددلاین گذشته:
-                <strong>
-                ${escapeHTML(t.title)}
-                </strong>
-                — ${escapeHTML(t.assignedTo)}
-            </div>
-        `);
-
+    tasks.filter(t=>t.status!=="DONE" && deadlineState(t.deadline).cls==="deadline-overdue").slice(0,5).forEach(t=>{
+        arr.push(`<div class="alert critical">⏰ ددلاین گذشته: <strong>${escapeHTML(t.title)}</strong> — ${escapeHTML(t.assignedTo)}</div>`);
     });
-
-    reports
-    .filter(r=>!r.approved)
-    .slice(0,4)
-    .forEach(r=>{
-
-        arr.push(`
-            <div class="alert">
-                📝 گزارش ${escapeHTML(r.manager)}
-                برای ${escapeHTML(r.week||"هفته جاری")}
-                در انتظار تأیید است.
-            </div>
-        `);
-
+    reports.filter(r=>!r.approved).slice(0,4).forEach(r=>{
+        arr.push(`<div class="alert">📝 گزارش ${escapeHTML(r.manager)} برای ${escapeHTML(r.week||"هفته جاری")} در انتظار تأیید است.</div>`);
     });
-
-    document.getElementById(
-        "dashboardAlerts"
-    ).innerHTML=
-        arr.length
-        ?arr.join("")
-        :`<div class="empty">هشداری وجود ندارد.</div>`;
-
+    document.getElementById("dashboardAlerts").innerHTML=arr.length ? arr.join("") : `<div class="empty">هشداری وجود ندارد.</div>`;
 }
 
 function renderManagerPerformance(){
-
     const managers=managerList();
-
     const html=managers.map(m=>{
-
-        const arr=tasks.filter(
-            t=>t.assignedTo===m[0]
-        );
-
-        const done=arr.filter(
-            t=>t.status==="DONE"
-        ).length;
-
-        const percent=
-            arr.length
-            ?Math.round(done/arr.length*100)
-            :0;
-
-        return `
-
-<div class="performance-row">
-
-<span>
-${escapeHTML(m[0])}
-</span>
-
-<div class="performance-bar">
-<div style="width:${percent}%"></div>
-</div>
-
-<strong>
-${percent}%
-</strong>
-
-</div>
-
-`;
-
+        const arr=tasks.filter(t=>t.assignedTo===m[0]);
+        const done=arr.filter(t=>t.status==="DONE").length;
+        const percent=arr.length ? Math.round(done/arr.length*100) : 0;
+        return `<div class="performance-row"><span>${escapeHTML(m[0])}</span><div class="performance-bar"><div style="width:${percent}%"></div></div><strong>${percent}%</strong></div>`;
     }).join("");
-
-    document.getElementById(
-        "managerPerformance"
-    ).innerHTML=html;
-
+    document.getElementById("managerPerformance").innerHTML=html;
 }
 
 function renderEmployeeDashboard(){
-
-    const mine=tasks.filter(
-        t=>t.assignedTo===currentUser.role
-    );
-
-    const focus=mine
-        .filter(t=>t.status!=="DONE")
-        .sort((a,b)=>{
-
-            const p={
-                CRITICAL:4,
-                HIGH:3,
-                MEDIUM:2,
-                LOW:1
-            };
-
-            return (p[b.priority]||0)-
-                   (p[a.priority]||0);
-
-        })
-        .slice(0,3);
-
-    document.getElementById(
-        "employeeFocus"
-    ).innerHTML=
-        focus.length
-        ?focus.map(renderTaskCard).join("")
-        :`<div class="empty">برای امروز کار مهمی وجود ندارد.</div>`;
-
-    const done=mine.filter(
-        t=>t.status==="DONE"
-    ).length;
-
-    const progress=mine.filter(
-        t=>t.status==="IN_PROGRESS"
-    ).length;
-
-    const todo=mine.filter(
-        t=>t.status==="TODO"
-    ).length;
-
-    document.getElementById(
-        "employeeTaskSummary"
-    ).innerHTML=`
-
+    const mine=tasks.filter(t=>t.assignedTo===currentUser.role);
+    const focus=mine.filter(t=>t.status!=="DONE").sort((a,b)=>{ const p={CRITICAL:4,HIGH:3,MEDIUM:2,LOW:1}; return (p[b.priority]||0)-(p[a.priority]||0); }).slice(0,3);
+    document.getElementById("employeeFocus").innerHTML=focus.length ? focus.map(renderTaskCard).join("") : `<div class="empty">برای امروز کار مهمی وجود ندارد.</div>`;
+    const done=mine.filter(t=>t.status==="DONE").length;
+    const progress=mine.filter(t=>t.status==="IN_PROGRESS").length;
+    const todo=mine.filter(t=>t.status==="TODO").length;
+    document.getElementById("employeeTaskSummary").innerHTML=`
 <div class="project-status">
-
-<div class="row">
-<span>Todo</span>
-<strong>${todo}</strong>
-</div>
-
-<div class="row">
-<span>In Progress</span>
-<strong class="blue">${progress}</strong>
-</div>
-
-<div class="row">
-<span>Done</span>
-<strong class="green">${done}</strong>
-</div>
-
-</div>
-
-`;
-
-    const urgent=mine.filter(
-        t=>
-            t.status!=="DONE" &&
-            (
-                t.priority==="CRITICAL"||
-                t.priority==="HIGH"||
-                deadlineState(t.deadline).cls==="deadline-overdue"||
-                deadlineState(t.deadline).cls==="deadline-near"
-            )
-    );
-
-    document.getElementById(
-        "employeeUrgent"
-    ).innerHTML=
-        urgent.length
-        ?urgent.slice(0,6).map(renderTaskCard).join("")
-        :`<div class="empty">کار فوری وجود ندارد.</div>`;
-
+<div class="row"><span>Todo</span><strong>${todo}</strong></div>
+<div class="row"><span>In Progress</span><strong class="blue">${progress}</strong></div>
+<div class="row"><span>Done</span><strong class="green">${done}</strong></div>
+</div>`;
+    const urgent=mine.filter(t=>t.status!=="DONE" && (t.priority==="CRITICAL"||t.priority==="HIGH"||deadlineState(t.deadline).cls==="deadline-overdue"||deadlineState(t.deadline).cls==="deadline-near"));
+    document.getElementById("employeeUrgent").innerHTML=urgent.length ? urgent.slice(0,6).map(renderTaskCard).join("") : `<div class="empty">کار فوری وجود ندارد.</div>`;
 }
 
 /* =========================================================
@@ -3994,286 +3083,83 @@ function renderEmployeeDashboard(){
 ========================================================= */
 
 function renderProjects(){
-
-    const q=
-        (document.getElementById("projectSearch")?.value||"")
-        .toLowerCase();
-
-    const status=
-        document.getElementById(
-            "projectStatusFilter"
-        )?.value||"";
-
-    const dept=
-        document.getElementById(
-            "projectDeptFilter"
-        )?.value||"";
-
+    const q=(document.getElementById("projectSearch")?.value||"").toLowerCase();
+    const status=document.getElementById("projectStatusFilter")?.value||"";
+    const dept=document.getElementById("projectDeptFilter")?.value||"";
     let arr=projects.filter(p=>{
-
-        if(
-            !isAdmin() &&
-            p.manager!==currentUser.role
-        ){
-            return false;
-        }
-
-        const text=
-            JSON.stringify(p).toLowerCase();
-
-        return
-            (!q||text.includes(q))&&
-            (!status||p.status===status)&&
-            (!dept||p.dept===dept);
-
+        if(!isAdmin() && p.manager!==currentUser.role) return false;
+        const text=JSON.stringify(p).toLowerCase();
+        return (!q||text.includes(q)) && (!status||p.status===status) && (!dept||p.dept===dept);
     });
-
-    document.getElementById(
-        "projectsBody"
-    ).innerHTML=
-
-        arr.length
-
-        ?arr.map(p=>`
-
+    document.getElementById("projectsBody").innerHTML=arr.length ? arr.map(p=>`
 <tr>
-
+<td><strong>${escapeHTML(p.name)}</strong></td>
+<td>${escapeHTML(p.type||"-")}</td>
+<td>${escapeHTML(p.dept)}</td>
+<td>${escapeHTML(p.manager||"-")}</td>
+<td>${escapeHTML(p.start||"-")}</td>
+<td>${escapeHTML(p.deadline||"-")}</td>
+<td>${projectStatusBadge(p.status)}</td>
+<td>${p.progress}%<div class="progress"><div style="width:${p.progress}%"></div></div></td>
 <td>
-<strong>
-${escapeHTML(p.name)}
-</strong>
-</td>
-
-<td>
-${escapeHTML(p.type||"-")}
-</td>
-
-<td>
-${escapeHTML(p.dept)}
-</td>
-
-<td>
-${escapeHTML(p.manager||"-")}
-</td>
-
-<td>
-${escapeHTML(p.start||"-")}
-</td>
-
-<td>
-${escapeHTML(p.deadline||"-")}
-</td>
-
-<td>
-${projectStatusBadge(p.status)}
-</td>
-
-<td>
-
-${p.progress}%
-
-<div class="progress">
-<div style="width:${p.progress}%"></div>
-</div>
-
-</td>
-
-<td>
-
-<button
-class="btn btn-info"
-onclick="viewProject('${p.id}')"
->
-مشاهده
-</button>
-
+<button class="btn btn-info" onclick="viewProject('${p.id}')">مشاهده</button>
 ${isAdmin()?`
-
-<button
-class="btn btn-warning"
-onclick="editProject('${p.id}')"
->
-ویرایش
-</button>
-
-<button
-class="btn btn-danger"
-onclick="deleteProject('${p.id}')"
->
-حذف
-</button>
-
+<button class="btn btn-warning" onclick="editProject('${p.id}')">ویرایش</button>
+<button class="btn btn-danger" onclick="deleteProject('${p.id}')">حذف</button>
 `:""}
-
 </td>
-
-</tr>
-
-`).join("")
-
-        :`
-
-<tr>
-<td colspan="9" class="empty">
-پروژه‌ای وجود ندارد.
-</td>
-</tr>
-
-`;
-
+</tr>`).join("") : `<tr><td colspan="9" class="empty">پروژه‌ای وجود ندارد.</td></tr>`;
 }
 
 function projectStatusBadge(status){
-
-    if(status==="فعال")
-        return `<span class="badge badge-blue">فعال</span>`;
-
-    if(status==="عقب‌مانده")
-        return `<span class="badge badge-red">عقب‌مانده</span>`;
-
-    if(status==="تکمیل‌شده")
-        return `<span class="badge badge-green">تکمیل‌شده</span>`;
-
+    if(status==="فعال") return `<span class="badge badge-blue">فعال</span>`;
+    if(status==="عقب‌مانده") return `<span class="badge badge-red">عقب‌مانده</span>`;
+    if(status==="تکمیل‌شده") return `<span class="badge badge-green">تکمیل‌شده</span>`;
     return `<span class="badge badge-gray">${escapeHTML(status)}</span>`;
-
 }
 
 function openProjectModal(){
-
     if(!isAdmin())return;
-
     editingProject=null;
-
-    [
-        "pName",
-        "pType",
-        "pManager",
-        "pStart",
-        "pDeadline",
-        "pDesc"
-    ].forEach(id=>{
-        document.getElementById(id).value="";
-    });
-
-    document.getElementById(
-        "pDept"
-    ).value="تولید";
-
-    document.getElementById(
-        "pStatus"
-    ).value="فعال";
-
-    document.getElementById(
-        "pProgress"
-    ).value=0;
-
-    document.getElementById(
-        "projectModalTitle"
-    ).textContent="پروژه جدید";
-
-    document.getElementById(
-        "projectModal"
-    ).classList.add("show");
-
+    ["pName","pType","pManager","pStart","pDeadline","pDesc"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("pDept").value="تولید";
+    document.getElementById("pStatus").value="فعال";
+    document.getElementById("pProgress").value=0;
+    document.getElementById("projectModalTitle").textContent="پروژه جدید";
+    document.getElementById("projectModal").classList.add("show");
 }
 
 function saveProject(){
-
     if(!isAdmin())return;
-
     const p={
-
         id:editingProject||uid(),
-
-        name:
-            document.getElementById("pName")
-            .value.trim(),
-
-        type:
-            document.getElementById("pType")
-            .value.trim(),
-
-        dept:
-            document.getElementById("pDept")
-            .value,
-
-        manager:
-            document.getElementById("pManager")
-            .value.trim(),
-
-        start:
-            document.getElementById("pStart")
-            .value.trim(),
-
-        deadline:
-            document.getElementById("pDeadline")
-            .value.trim(),
-
-        status:
-            document.getElementById("pStatus")
-            .value,
-
-        progress:
-            Math.min(
-                100,
-                Math.max(
-                    0,
-                    Number(
-                        document.getElementById("pProgress")
-                        .value
-                    )||0
-                )
-            ),
-
-        desc:
-            document.getElementById("pDesc")
-            .value.trim()
-
+        name:document.getElementById("pName").value.trim(),
+        type:document.getElementById("pType").value.trim(),
+        dept:document.getElementById("pDept").value,
+        manager:document.getElementById("pManager").value.trim(),
+        start:document.getElementById("pStart").value.trim(),
+        deadline:document.getElementById("pDeadline").value.trim(),
+        status:document.getElementById("pStatus").value,
+        progress:Math.min(100,Math.max(0,Number(document.getElementById("pProgress").value)||0)),
+        desc:document.getElementById("pDesc").value.trim()
     };
-
-    if(!p.name){
-        alert("نام پروژه الزامی است.");
-        return;
-    }
-
-    const i=projects.findIndex(
-        x=>x.id===p.id
-    );
-
-    if(i>=0){
-        projects[i]=p;
-    }else{
-        projects.push(p);
-    }
-
-    logActivity(
-        editingProject
-        ?"ویرایش پروژه: "+p.name
-        :"ایجاد پروژه: "+p.name,
-        null
-    );
-
+    if(!p.name){ alert("نام پروژه الزامی است."); return; }
+    const i=projects.findIndex(x=>x.id===p.id);
+    if(i>=0) projects[i]=p;
+    else projects.push(p);
+    logActivity(editingProject?"ویرایش پروژه: "+p.name:"ایجاد پروژه: "+p.name, null);
     saveAll();
-
     renderProjects();
     updateDashboard();
-
     closeModal("projectModal");
-
+    alert("✅ پروژه با موفقیت ذخیره شد.");
 }
 
 function editProject(id){
-
     if(!isAdmin())return;
-
-    const p=projects.find(
-        x=>x.id===id
-    );
-
+    const p=projects.find(x=>x.id===id);
     if(!p)return;
-
     editingProject=id;
-
     document.getElementById("pName").value=p.name;
     document.getElementById("pType").value=p.type;
     document.getElementById("pDept").value=p.dept;
@@ -4283,408 +3169,113 @@ function editProject(id){
     document.getElementById("pStatus").value=p.status;
     document.getElementById("pProgress").value=p.progress;
     document.getElementById("pDesc").value=p.desc||"";
-
-    document.getElementById(
-        "projectModalTitle"
-    ).textContent="ویرایش پروژه";
-
-    document.getElementById(
-        "projectModal"
-    ).classList.add("show");
-
+    document.getElementById("projectModalTitle").textContent="ویرایش پروژه";
+    document.getElementById("projectModal").classList.add("show");
 }
 
 function deleteProject(id){
-
     if(!isAdmin())return;
-
-    const p=projects.find(
-        x=>x.id===id
-    );
-
+    const p=projects.find(x=>x.id===id);
     if(!p)return;
-
-    if(!confirm(
-        `پروژه «${p.name}» حذف شود؟`
-    ))return;
-
-    projects=projects.filter(
-        x=>x.id!==id
-    );
-
-    logActivity(
-        "حذف پروژه: "+p.name,
-        null
-    );
-
+    if(!confirm(`پروژه «${p.name}» حذف شود؟`))return;
+    projects=projects.filter(x=>x.id!==id);
+    logActivity("حذف پروژه: "+p.name, null);
     saveAll();
-
     renderProjects();
     updateDashboard();
-
 }
 
 function viewProject(id){
-
-    const p=projects.find(
-        x=>x.id===id
-    );
-
+    const p=projects.find(x=>x.id===id);
     if(!p)return;
-
-    alert(
-`پروژه: ${p.name}
-
-نوع: ${p.type||"-"}
-بخش: ${p.dept}
-مسئول: ${p.manager||"-"}
-شروع: ${p.start||"-"}
-ددلاین: ${p.deadline||"-"}
-وضعیت: ${p.status}
-پیشرفت: ${p.progress}%
-
-توضیحات:
-${p.desc||"توضیحی ثبت نشده است."}`
-    );
-
+    alert(`پروژه: ${p.name}\n\nنوع: ${p.type||"-"}\nبخش: ${p.dept}\nمسئول: ${p.manager||"-"}\nشروع: ${p.start||"-"}\nددلاین: ${p.deadline||"-"}\nوضعیت: ${p.status}\nپیشرفت: ${p.progress}%\n\nتوضیحات:\n${p.desc||"توضیحی ثبت نشده است."}`);
 }
 
 /* =========================================================
    REPORTS
 ========================================================= */
 
-function calculateScore(
-    planned,
-    completed,
-    quality,
-    delayed
-){
-
+function calculateScore(planned, completed, quality, delayed){
     const p=Number(planned)||0;
     const c=Number(completed)||0;
-    const q=Math.min(
-        10,
-        Math.max(
-            0,
-            Number(quality)||0
-        )
-    );
+    const q=Math.min(10,Math.max(0,Number(quality)||0));
     const d=Number(delayed)||0;
-
-    const completion=
-        p
-        ?Math.min(c/p,1)
-        :0;
-
-    const noDelay=
-        p
-        ?Math.max(0,1-d/p)
-        :1;
-
-    return Math.round(
-        completion*60+
-        (q/10)*30+
-        noDelay*10
-    );
-
+    const completion=p ? Math.min(c/p,1) : 0;
+    const noDelay=p ? Math.max(0,1-d/p) : 1;
+    return Math.round(completion*60 + (q/10)*30 + noDelay*10);
 }
 
 function visibleReports(){
-
-    if(isAdmin()){
-        return reports;
-    }
-
-    return reports.filter(
-        r=>r.manager===currentUser.role
-    );
-
+    if(isAdmin()) return reports;
+    return reports.filter(r=>r.manager===currentUser.role);
 }
 
 function renderReports(){
-
     let arr=visibleReports();
-
     if(isAdmin()){
-
-        const manager=
-            document.getElementById(
-                "reportManagerFilter"
-            )?.value||"";
-
-        const status=
-            document.getElementById(
-                "reportStatusFilter"
-            )?.value||"";
-
-        arr=arr.filter(r=>
-            (!manager||r.manager===manager)&&
-            (!status||
-                (
-                    status==="approved"
-                    ?r.approved
-                    :!r.approved
-                )
-            )
-        );
-
+        const manager=document.getElementById("reportManagerFilter")?.value||"";
+        const status=document.getElementById("reportStatusFilter")?.value||"";
+        arr=arr.filter(r=>(!manager||r.manager===manager) && (!status||(status==="approved"?r.approved:!r.approved)));
     }
-
-    document.getElementById(
-        "reportsBody"
-    ).innerHTML=
-
-        arr.length
-
-        ?arr.map(r=>`
-
+    document.getElementById("reportsBody").innerHTML=arr.length ? arr.map(r=>`
 <tr>
-
+<td>${escapeHTML(r.manager)}</td>
+<td>${escapeHTML(r.dept)}</td>
+<td>${escapeHTML(r.week)}</td>
+<td>${r.planned}</td>
+<td>${r.completed}</td>
+<td>${r.delayed}</td>
+<td>${r.quality}/10</td>
+<td><strong>${r.score}%</strong></td>
+<td>${r.approved?'<span class="badge badge-green">تأیید شده</span>':'<span class="badge badge-yellow">در انتظار تأیید</span>'}</td>
 <td>
-${escapeHTML(r.manager)}
-</td>
-
-<td>
-${escapeHTML(r.dept)}
-</td>
-
-<td>
-${escapeHTML(r.week)}
-</td>
-
-<td>
-${r.planned}
-</td>
-
-<td>
-${r.completed}
-</td>
-
-<td>
-${r.delayed}
-</td>
-
-<td>
-${r.quality}/10
-</td>
-
-<td>
-<strong>
-${r.score}%
-</strong>
-</td>
-
-<td>
-${
-r.approved
-?'<span class="badge badge-green">تأیید شده</span>'
-:'<span class="badge badge-yellow">در انتظار تأیید</span>'
-}
-</td>
-
-<td>
-
-<button
-class="btn btn-info"
-onclick="openReport('${r.id}')"
->
-مشاهده
-</button>
-
+<button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
 ${isAdmin()?`
-
-<button
-class="btn btn-warning"
-onclick="editReport('${r.id}')"
->
-ویرایش
-</button>
-
-<button
-class="btn btn-danger"
-onclick="removeReport('${r.id}')"
->
-حذف
-</button>
-
+<button class="btn btn-warning" onclick="editReport('${r.id}')">ویرایش</button>
+<button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>
 `:""}
-
 </td>
-
-</tr>
-
-`).join("")
-
-        :`
-
-<tr>
-<td colspan="10" class="empty">
-گزارشی ثبت نشده است.
-</td>
-</tr>
-
-`;
-
+</tr>`).join("") : `<tr><td colspan="10" class="empty">گزارشی ثبت نشده است.</td></tr>`;
 }
 
 function openReportModal(){
-
     editingReport=null;
-
-    document.getElementById(
-        "rManager"
-    ).value=currentUser.role;
-
-    document.getElementById(
-        "rDept"
-    ).value=
-        currentUser.dept==="all"
-        ?"مدیریت رسانه"
-        :currentUser.dept;
-
-    [
-        "rDate",
-        "rWeek",
-        "rDoneList",
-        "rDelayReason",
-        "rIssues",
-        "rSuggestions"
-    ].forEach(id=>{
-        document.getElementById(id).value="";
-    });
-
-    [
-        "rPlanned",
-        "rCompleted",
-        "rDelayed",
-        "rQuality"
-    ].forEach(id=>{
-        document.getElementById(id).value=0;
-    });
-
-    document.getElementById(
-        "deleteReportBtn"
-    ).style.display="none";
-
-    document.getElementById(
-        "approveReportBtn"
-    ).style.display="none";
-
-    document.getElementById(
-        "saveReportBtn"
-    ).style.display="";
-
+    document.getElementById("rManager").value=currentUser.role;
+    document.getElementById("rDept").value=currentUser.dept==="all"?"مدیریت رسانه":currentUser.dept;
+    ["rDate","rWeek","rDoneList","rDelayReason","rIssues","rSuggestions"].forEach(id=>document.getElementById(id).value="");
+    ["rPlanned","rCompleted","rDelayed","rQuality"].forEach(id=>document.getElementById(id).value=0);
+    document.getElementById("deleteReportBtn").style.display="none";
+    document.getElementById("approveReportBtn").style.display="none";
+    document.getElementById("saveReportBtn").style.display="";
     renderReportTasks([]);
-
-    document.getElementById(
-        "reportModalTitle"
-    ).textContent="ثبت گزارش هفتگی";
-
-    document.getElementById(
-        "reportModal"
-    ).classList.add("show");
-
+    document.getElementById("reportModalTitle").textContent="ثبت گزارش هفتگی";
+    document.getElementById("reportModal").classList.add("show");
 }
 
 function renderReportTasks(selected){
-
-    const manager=
-        editingReport
-        ?reports.find(
-            r=>r.id===editingReport
-        )?.manager
-        :currentUser.role;
-
-    const arr=tasks.filter(
-        t=>t.assignedTo===manager
-    );
-
-    document.getElementById(
-        "reportTasks"
-    ).innerHTML=
-
-        arr.length
-
-        ?arr.map(t=>`
-
+    const manager=editingReport ? reports.find(r=>r.id===editingReport)?.manager : currentUser.role;
+    const arr=tasks.filter(t=>t.assignedTo===manager);
+    document.getElementById("reportTasks").innerHTML=arr.length ? arr.map(t=>`
 <label class="check-item">
-
-<input
-    type="checkbox"
-    data-task="${t.id}"
-    ${selected.includes(t.id)?"checked":""}
->
-
+<input type="checkbox" data-task="${t.id}" ${selected.includes(t.id)?"checked":""}>
 <span>
-
-<strong>
-${escapeHTML(t.title)}
-</strong>
-
+<strong>${escapeHTML(t.title)}</strong>
 <br>
-
-<small>
-${priorityBadgeText(t.priority)}
-—
-${statusText(t.status)}
-—
-ددلاین:
-${escapeHTML(
-    t.deadline
-    ?new Date(t.deadline).toLocaleString("fa-IR")
-    :"-"
-)}
-</small>
-
+<small>${priorityBadgeText(t.priority)} — ${statusText(t.status)} — ددلاین: ${escapeHTML(t.deadline?new Date(t.deadline).toLocaleString("fa-IR"):"-")}</small>
 </span>
-
-</label>
-
-`).join("")
-
-        :`
-
-<div class="empty">
-برای این مدیر وظیفه‌ای ثبت نشده است.
-</div>
-
-`;
-
+</label>`).join("") : `<div class="empty">برای این مدیر وظیفه‌ای ثبت نشده است.</div>`;
 }
 
 function priorityBadgeText(priority){
-
-    const map={
-        CRITICAL:"🔴 Critical",
-        HIGH:"🟠 High",
-        MEDIUM:"🟡 Medium",
-        LOW:"🟢 Low"
-    };
-
+    const map={CRITICAL:"🔴 Critical",HIGH:"🟠 High",MEDIUM:"🟡 Medium",LOW:"🟢 Low"};
     return map[priority]||"Medium";
-
 }
 
 function openReport(id){
-
-    const r=reports.find(
-        x=>x.id===id
-    );
-
+    const r=reports.find(x=>x.id===id);
     if(!r)return;
-
-    if(
-        !isAdmin() &&
-        r.manager!==currentUser.role
-    ){
-
-        alert("دسترسی ندارید.");
-        return;
-
-    }
-
+    if(!isAdmin() && r.manager!==currentUser.role){ alert("دسترسی ندارید."); return; }
     editingReport=id;
-
     document.getElementById("rManager").value=r.manager;
     document.getElementById("rDept").value=r.dept;
     document.getElementById("rDate").value=r.date;
@@ -4697,426 +3288,160 @@ function openReport(id){
     document.getElementById("rDelayReason").value=r.delayReason||"";
     document.getElementById("rIssues").value=r.issues||"";
     document.getElementById("rSuggestions").value=r.suggestions||"";
-
-    renderReportTasks(
-        r.taskIds||[]
-    );
-
-    document.getElementById(
-        "deleteReportBtn"
-    ).style.display=
-        isAdmin()?"":"none";
-
-    document.getElementById(
-        "approveReportBtn"
-    ).style.display=
-        isAdmin()&&!r.approved
-        ?""
-        :"none";
-
-    document.getElementById(
-        "saveReportBtn"
-    ).style.display=
-        isAdmin()||!r.approved
-        ?""
-        :"none";
-
-    document.getElementById(
-        "reportModalTitle"
-    ).textContent=
-        r.approved
-        ?"گزارش تأییدشده"
-        :"مشاهده / ویرایش گزارش";
-
-    document.getElementById(
-        "reportModal"
-    ).classList.add("show");
-
+    renderReportTasks(r.taskIds||[]);
+    document.getElementById("deleteReportBtn").style.display=isAdmin()?"":"none";
+    document.getElementById("approveReportBtn").style.display=isAdmin()&&!r.approved?"":"none";
+    document.getElementById("saveReportBtn").style.display=isAdmin()||!r.approved?"":"none";
+    document.getElementById("reportModalTitle").textContent=r.approved?"گزارش تأییدشده":"مشاهده / ویرایش گزارش";
+    document.getElementById("reportModal").classList.add("show");
 }
 
-function editReport(id){
-
-    if(!isAdmin())return;
-
-    openReport(id);
-
-}
+function editReport(id){ if(!isAdmin())return; openReport(id); }
 
 function saveReport(){
-
-    if(
-        editingReport &&
-        !isAdmin()
-    ){
-
-        const old=reports.find(
-            r=>r.id===editingReport
-        );
-
-        if(old && old.approved){
-
-            alert(
-                "گزارش تأیید شده و قابل ویرایش نیست."
-            );
-
-            return;
-
-        }
-
+    if(editingReport && !isAdmin()){
+        const old=reports.find(r=>r.id===editingReport);
+        if(old && old.approved){ alert("گزارش تأیید شده و قابل ویرایش نیست."); return; }
     }
-
-    const manager=
-        document.getElementById(
-            "rManager"
-        ).value;
-
-    if(
-        !isAdmin() &&
-        manager!==currentUser.role
-    ){
-        alert("دسترسی ندارید.");
-        return;
-    }
-
-    const taskIds=[
-        ...document.querySelectorAll(
-            "#reportTasks input[data-task]:checked"
-        )
-    ].map(
-        x=>x.dataset.task
-    );
-
+    const manager=document.getElementById("rManager").value;
+    if(!isAdmin() && manager!==currentUser.role){ alert("دسترسی ندارید."); return; }
+    const taskIds=[...document.querySelectorAll("#reportTasks input[data-task]:checked")].map(x=>x.dataset.task);
     const r={
-
         id:editingReport||uid(),
-
         manager:manager,
-
-        dept:
-            document.getElementById(
-                "rDept"
-            ).value,
-
-        date:
-            document.getElementById(
-                "rDate"
-            ).value,
-
-        week:
-            document.getElementById(
-                "rWeek"
-            ).value,
-
-        planned:
-            Number(
-                document.getElementById(
-                    "rPlanned"
-                ).value
-            )||0,
-
-        completed:
-            Number(
-                document.getElementById(
-                    "rCompleted"
-                ).value
-            )||0,
-
-        delayed:
-            Number(
-                document.getElementById(
-                    "rDelayed"
-                ).value
-            )||0,
-
-        quality:
-            Number(
-                document.getElementById(
-                    "rQuality"
-                ).value
-            )||0,
-
-        doneList:
-            document.getElementById(
-                "rDoneList"
-            ).value,
-
-        delayReason:
-            document.getElementById(
-                "rDelayReason"
-            ).value,
-
-        issues:
-            document.getElementById(
-                "rIssues"
-            ).value,
-
-        suggestions:
-            document.getElementById(
-                "rSuggestions"
-            ).value,
-
+        dept:document.getElementById("rDept").value,
+        date:document.getElementById("rDate").value,
+        week:document.getElementById("rWeek").value,
+        planned:Number(document.getElementById("rPlanned").value)||0,
+        completed:Number(document.getElementById("rCompleted").value)||0,
+        delayed:Number(document.getElementById("rDelayed").value)||0,
+        quality:Number(document.getElementById("rQuality").value)||0,
+        doneList:document.getElementById("rDoneList").value,
+        delayReason:document.getElementById("rDelayReason").value,
+        issues:document.getElementById("rIssues").value,
+        suggestions:document.getElementById("rSuggestions").value,
         taskIds:taskIds,
-
-        approved:
-            editingReport
-            ?(
-                reports.find(
-                    x=>x.id===editingReport
-                )?.approved||false
-            )
-            :false,
-
+        approved:editingReport ? (reports.find(x=>x.id===editingReport)?.approved||false) : false,
         month:currentMonth
-
     };
-
-    r.score=calculateScore(
-        r.planned,
-        r.completed,
-        r.quality,
-        r.delayed
-    );
-
+    r.score=calculateScore(r.planned, r.completed, r.quality, r.delayed);
     if(editingReport){
-
-        const i=reports.findIndex(
-            x=>x.id===editingReport
-        );
-
-        if(i>=0){
-
-            const old=reports[i];
-
-            reports[i]={
-                ...old,
-                ...r
-            };
-
-        }
-
+        const i=reports.findIndex(x=>x.id===editingReport);
+        if(i>=0){ const old=reports[i]; reports[i]={...old,...r}; }
     }else{
-
         reports.push(r);
-
     }
-
-    logActivity(
-        editingReport
-        ?"ویرایش گزارش "+r.manager
-        :"ثبت گزارش "+r.manager,
-        null
-    );
-
+    logActivity(editingReport?"ویرایش گزارش "+r.manager:"ثبت گزارش "+r.manager, null);
     saveAll();
-
     renderReports();
     renderArchive();
     renderPerformance();
     updateDashboard();
     renderNotifications();
-
     closeModal("reportModal");
-
+    alert("✅ گزارش با موفقیت ذخیره شد.");
 }
 
 function approveReport(){
-
-    if(
-        !isAdmin()||
-        !editingReport
-    )return;
-
-    const r=reports.find(
-        x=>x.id===editingReport
-    );
-
+    if(!isAdmin()||!editingReport)return;
+    const r=reports.find(x=>x.id===editingReport);
     if(!r)return;
-
     r.approved=true;
-
     r.approvedBy=currentUser.role;
-
-    r.approvedDate=
-        new Date().toLocaleDateString(
-            "fa-IR"
-        );
-
+    r.approvedDate=new Date().toLocaleDateString("fa-IR");
     r.month=currentMonth;
-
-    logActivity(
-        "تأیید و آرشیو گزارش "+r.manager,
-        null
-    );
-
+    logActivity("تأیید و آرشیو گزارش "+r.manager, null);
     saveAll();
-
     renderReports();
     renderArchive();
     renderPerformance();
     updateDashboard();
-
     closeModal("reportModal");
-
-    alert(
-        "گزارش تأیید شد و در آرشیو ثبت گردید."
-    );
-
+    alert("✅ گزارش تأیید شد و در آرشیو ثبت گردید.");
 }
 
 function deleteReport(){
-
-    if(
-        !isAdmin()||
-        !editingReport
-    )return;
-
-    removeReport(
-        editingReport
-    );
-
+    if(!isAdmin()||!editingReport)return;
+    removeReport(editingReport);
     closeModal("reportModal");
-
 }
 
 function removeReport(id){
-
     if(!isAdmin())return;
-
-    const r=reports.find(
-        x=>x.id===id
-    );
-
+    const r=reports.find(x=>x.id===id);
     if(!r)return;
-
-    if(!confirm(
-        "این گزارش حذف شود؟"
-    ))return;
-
-    reports=reports.filter(
-        x=>x.id!==id
-    );
-
-    logActivity(
-        "حذف گزارش "+r.manager,
-        null
-    );
-
+    if(!confirm("این گزارش حذف شود؟"))return;
+    reports=reports.filter(x=>x.id!==id);
+    logActivity("حذف گزارش "+r.manager, null);
     saveAll();
-
     renderReports();
     renderArchive();
     renderPerformance();
     updateDashboard();
-
 }
 
 function exportReports(){
-
     if(!isAdmin())return;
-
-    // فقط گزارش‌های تأیید شده صادر می‌شوند
-    const approvedReports = reports.filter(r=>r.approved);
-    
-    if(approvedReports.length === 0){
-        alert("هیچ گزارش تأیید شده‌ای برای خروجی وجود ندارد.");
-        return;
-    }
-
-    downloadJSON(
-        approvedReports,
-        `basair-reports-archive-${currentMonth}.json`
-    );
-
+    const approvedReports=reports.filter(r=>r.approved);
+    if(approvedReports.length===0){ alert("هیچ گزارش تأیید شده‌ای برای خروجی وجود ندارد."); return; }
+    downloadJSON(approvedReports, `basair-reports-archive-${currentMonth}.json`);
 }
 
 /* =========================================================
-   IMPORT REPORTS (جدید)
+   IMPORT REPORTS
 ========================================================= */
 
 function importReports(event){
-    if (!isAdmin()) {
-        alert("فقط مدیر اصلی می‌تواند گزارش وارد کند.");
-        return;
-    }
-
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const importedData = JSON.parse(e.target.result);
-            
-            if (!Array.isArray(importedData)) {
-                alert("فرمت فایل صحیح نیست. لطفاً فایل JSON معتبر وارد کنید.");
-                return;
-            }
-
-            if (importedData.length === 0) {
-                alert("فایل خالی است.");
-                return;
-            }
-
-            let message = `📋 ${importedData.length} گزارش پیدا شد:\n\n`;
-            importedData.slice(0, 10).forEach((r, i) => {
-                message += `${i+1}. ${r.manager || 'نامشخص'} - ${r.week || 'هفته نامشخص'} (${r.score || 0}%)\n`;
-            });
-            if (importedData.length > 10) {
-                message += `\n... و ${importedData.length - 10} گزارش دیگر`;
-            }
-            
-            if (!confirm(`آیا این گزارش‌ها را وارد کنید؟\n\n${message}`)) {
-                return;
-            }
-
-            let addedCount = 0;
-            let skippedCount = 0;
-            
-            importedData.forEach(newReport => {
-                const exists = reports.some(r => r.id === newReport.id);
-                if (!exists) {
-                    const report = {
-                        id: newReport.id || uid(),
-                        manager: newReport.manager || "نامشخص",
-                        dept: newReport.dept || "",
-                        date: newReport.date || "",
-                        week: newReport.week || "",
-                        planned: Number(newReport.planned) || 0,
-                        completed: Number(newReport.completed) || 0,
-                        delayed: Number(newReport.delayed) || 0,
-                        quality: Number(newReport.quality) || 0,
-                        doneList: newReport.doneList || "",
-                        delayReason: newReport.delayReason || "",
-                        issues: newReport.issues || "",
-                        suggestions: newReport.suggestions || "",
-                        taskIds: Array.isArray(newReport.taskIds) ? newReport.taskIds : [],
-                        approved: !!newReport.approved,
-                        approvedBy: newReport.approvedBy || "",
-                        approvedDate: newReport.approvedDate || "",
-                        score: Number(newReport.score) || 0,
-                        month: newReport.month || currentMonth
-                    };
-                    reports.push(report);
+    if(!isAdmin()){ alert("فقط مدیر اصلی می‌تواند گزارش وارد کند."); return; }
+    const file=event.target.files[0];
+    if(!file)return;
+    const reader=new FileReader();
+    reader.onload=function(e){
+        try{
+            const importedData=JSON.parse(e.target.result);
+            if(!Array.isArray(importedData)){ alert("فرمت فایل صحیح نیست."); return; }
+            if(importedData.length===0){ alert("فایل خالی است."); return; }
+            let message=`📋 ${importedData.length} گزارش پیدا شد:\n\n`;
+            importedData.slice(0,10).forEach((r,i)=>{ message+=`${i+1}. ${r.manager||'نامشخص'} - ${r.week||'هفته نامشخص'} (${r.score||0}%)\n`; });
+            if(importedData.length>10) message+=`\n... و ${importedData.length-10} گزارش دیگر`;
+            if(!confirm(`آیا این گزارش‌ها را وارد کنید؟\n\n${message}`)) return;
+            let addedCount=0, skippedCount=0;
+            importedData.forEach(newReport=>{
+                const exists=reports.some(r=>r.id===newReport.id);
+                if(!exists){
+                    reports.push({
+                        id:newReport.id||uid(),
+                        manager:newReport.manager||"نامشخص",
+                        dept:newReport.dept||"",
+                        date:newReport.date||"",
+                        week:newReport.week||"",
+                        planned:Number(newReport.planned)||0,
+                        completed:Number(newReport.completed)||0,
+                        delayed:Number(newReport.delayed)||0,
+                        quality:Number(newReport.quality)||0,
+                        doneList:newReport.doneList||"",
+                        delayReason:newReport.delayReason||"",
+                        issues:newReport.issues||"",
+                        suggestions:newReport.suggestions||"",
+                        taskIds:Array.isArray(newReport.taskIds)?newReport.taskIds:[],
+                        approved:!!newReport.approved,
+                        approvedBy:newReport.approvedBy||"",
+                        approvedDate:newReport.approvedDate||"",
+                        score:Number(newReport.score)||0,
+                        month:newReport.month||currentMonth
+                    });
                     addedCount++;
-                } else {
-                    skippedCount++;
-                }
+                }else{ skippedCount++; }
             });
-
             saveAll();
             renderReports();
             renderArchive();
             renderPerformance();
             updateDashboard();
             renderNotifications();
-
             alert(`✅ ${addedCount} گزارش با موفقیت وارد شد.\n${skippedCount} گزارش تکراری بودند و وارد نشدند.`);
-            
-            document.getElementById('importFileInput').value = '';
-
-        } catch (error) {
-            alert("❌ خطا در خواندن فایل: " + error.message);
-        }
+            document.getElementById('importFileInput').value='';
+        }catch(error){ alert("❌ خطا در خواندن فایل: "+error.message); }
     };
     reader.readAsText(file);
 }
@@ -5126,104 +3451,26 @@ function importReports(event){
 ========================================================= */
 
 function renderArchive(){
-
-    let arr=reports.filter(
-        r=>r.approved
-    );
-
-    const manager=
-        document.getElementById(
-            "archiveManagerFilter"
-        )?.value||"";
-
-    const search=
-        (
-            document.getElementById(
-                "archiveSearch"
-            )?.value||""
-        ).toLowerCase();
-
+    let arr=reports.filter(r=>r.approved);
+    const manager=document.getElementById("archiveManagerFilter")?.value||"";
+    const search=(document.getElementById("archiveSearch")?.value||"").toLowerCase();
     arr=arr.filter(r=>{
-
-        const text=
-            (
-                r.manager+
-                " "+
-                r.dept+
-                " "+
-                r.week
-            ).toLowerCase();
-
-        return
-            (!manager||r.manager===manager)&&
-            (!search||text.includes(search));
-
+        const text=(r.manager+" "+r.dept+" "+r.week).toLowerCase();
+        return (!manager||r.manager===manager) && (!search||text.includes(search));
     });
-
-    document.getElementById(
-        "archiveBody"
-    ).innerHTML=
-
-        arr.length
-
-        ?arr.map(r=>`
-
+    document.getElementById("archiveBody").innerHTML=arr.length ? arr.map(r=>`
 <tr>
-
 <td>${escapeHTML(r.manager)}</td>
-
 <td>${escapeHTML(r.dept)}</td>
-
 <td>${escapeHTML(r.week)}</td>
-
+<td><strong>${r.score}%</strong></td>
+<td>${escapeHTML(r.approvedBy||"-")}</td>
+<td>${escapeHTML(r.approvedDate||"-")}</td>
 <td>
-<strong>${r.score}%</strong>
+<button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
+${isAdmin()?`<button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>`:""}
 </td>
-
-<td>
-${escapeHTML(r.approvedBy||"-")}
-</td>
-
-<td>
-${escapeHTML(r.approvedDate||"-")}
-</td>
-
-<td>
-
-<button
-class="btn btn-info"
-onclick="openReport('${r.id}')"
->
-مشاهده
-</button>
-
-${isAdmin()?`
-
-<button
-class="btn btn-danger"
-onclick="removeReport('${r.id}')"
->
-حذف
-</button>
-
-`:""}
-
-</td>
-
-</tr>
-
-`).join("")
-
-        :`
-
-<tr>
-<td colspan="7" class="empty">
-آرشیوی وجود ندارد.
-</td>
-</tr>
-
-`;
-
+</tr>`).join("") : `<tr><td colspan="7" class="empty">آرشیوی وجود ندارد.</td></tr>`;
 }
 
 /* =========================================================
@@ -5231,219 +3478,48 @@ onclick="removeReport('${r.id}')"
 ========================================================= */
 
 function completionMinutes(t){
-
-    if(
-        !t.completedAt||
-        !t.createdAt
-    )return null;
-
-    const diff=
-        new Date(t.completedAt)-
-        new Date(t.createdAt);
-
+    if(!t.completedAt||!t.createdAt)return null;
+    const diff=new Date(t.completedAt)-new Date(t.createdAt);
     if(diff<0)return null;
-
-    return Math.round(
-        diff/60000
-    );
-
+    return Math.round(diff/60000);
 }
 
 function formatDuration(minutes){
-
-    if(minutes===null||minutes===undefined)
-        return "-";
-
-    if(minutes<60)
-        return minutes+" دقیقه";
-
-    const hours=Math.round(
-        minutes/60
-    );
-
-    if(hours<24)
-        return hours+" ساعت";
-
-    return Math.round(
-        hours/24
-    )+" روز";
-
+    if(minutes===null||minutes===undefined)return "-";
+    if(minutes<60)return minutes+" دقیقه";
+    const hours=Math.round(minutes/60);
+    if(hours<24)return hours+" ساعت";
+    return Math.round(hours/24)+" روز";
 }
 
 function renderPerformance(){
-
     const managers=managerList();
-
-    let totalDone=0;
-    let times=[];
-
+    let totalDone=0, times=[];
     const rows=managers.map(m=>{
-
-        const arr=tasks.filter(
-            t=>t.assignedTo===m[0]
-        );
-
-        const done=arr.filter(
-            t=>t.status==="DONE"
-        ).length;
-
-        const progress=arr.filter(
-            t=>t.status==="IN_PROGRESS"
-        ).length;
-
-        const todo=arr.filter(
-            t=>t.status==="TODO"
-        ).length;
-
-        const overdue=arr.filter(
-            t=>
-                t.status!=="DONE" &&
-                deadlineState(t.deadline).cls==="deadline-overdue"
-        ).length;
-
-        const taskTimes=arr
-            .map(completionMinutes)
-            .filter(x=>x!==null);
-
+        const arr=tasks.filter(t=>t.assignedTo===m[0]);
+        const done=arr.filter(t=>t.status==="DONE").length;
+        const progress=arr.filter(t=>t.status==="IN_PROGRESS").length;
+        const todo=arr.filter(t=>t.status==="TODO").length;
+        const overdue=arr.filter(t=>t.status!=="DONE" && deadlineState(t.deadline).cls==="deadline-overdue").length;
+        const taskTimes=arr.map(completionMinutes).filter(x=>x!==null);
         times.push(...taskTimes);
-
         totalDone+=done;
-
-        const avg=
-            taskTimes.length
-            ?Math.round(
-                taskTimes.reduce(
-                    (a,b)=>a+b,
-                    0
-                )/taskTimes.length
-            )
-            :null;
-
-        const performance=
-            arr.length
-            ?Math.round(
-                done/arr.length*100
-            )
-            :0;
-
-        return `
-
-<tr>
-
-<td>
-${escapeHTML(m[0])}
-</td>
-
-<td>
-${escapeHTML(m[1])}
-</td>
-
-<td>
-<strong class="green">
-${done}
-</strong>
-</td>
-
-<td>
-<strong class="blue">
-${progress}
-</strong>
-</td>
-
-<td>
-${todo}
-</td>
-
-<td>
-<strong class="${overdue?'red':''}">
-${overdue}
-</strong>
-</td>
-
-<td>
-${formatDuration(avg)}
-</td>
-
-<td>
-<strong
-class="${
-performance>=80
-?'green'
-:performance>=40
-?'yellow'
-:'red'
-}"
->
-${performance}%
-</strong>
-</td>
-
-</tr>
-
-`;
-
+        const avg=taskTimes.length ? Math.round(taskTimes.reduce((a,b)=>a+b,0)/taskTimes.length) : null;
+        const performance=arr.length ? Math.round(done/arr.length*100) : 0;
+        return `<tr><td>${escapeHTML(m[0])}</td><td>${escapeHTML(m[1])}</td><td><strong class="green">${done}</strong></td><td><strong class="blue">${progress}</strong></td><td>${todo}</td><td><strong class="${overdue?'red':''}">${overdue}</strong></td><td>${formatDuration(avg)}</td><td><strong class="${performance>=80?'green':performance>=40?'yellow':'red'}">${performance}%</strong></td></tr>`;
     }).join("");
-
-    document.getElementById(
-        "performanceBody"
-    ).innerHTML=rows;
-
-    const avgAll=
-        times.length
-        ?Math.round(
-            times.reduce(
-                (a,b)=>a+b,
-                0
-            )/times.length
-        )
-        :0;
-
-    document.getElementById(
-        "performanceTotalDone"
-    ).textContent=totalDone;
-
-    document.getElementById(
-        "performanceAvgTime"
-    ).textContent=
-        formatDuration(avgAll);
-
+    document.getElementById("performanceBody").innerHTML=rows;
+    const avgAll=times.length ? Math.round(times.reduce((a,b)=>a+b,0)/times.length) : 0;
+    document.getElementById("performanceTotalDone").textContent=totalDone;
+    document.getElementById("performanceAvgTime").textContent=formatDuration(avgAll);
     const scored=managers.map(m=>{
-
-        const arr=tasks.filter(
-            t=>t.assignedTo===m[0]
-        );
-
-        const done=arr.filter(
-            t=>t.status==="DONE"
-        ).length;
-
-        return {
-            name:m[0],
-            score:arr.length
-                ?done/arr.length*100
-                :0
-        };
-
+        const arr=tasks.filter(t=>t.assignedTo===m[0]);
+        const done=arr.filter(t=>t.status==="DONE").length;
+        return {name:m[0], score:arr.length ? done/arr.length*100 : 0};
     });
-
-    scored.sort(
-        (a,b)=>b.score-a.score
-    );
-
-    document.getElementById(
-        "performanceBest"
-    ).textContent=
-        scored[0]&&scored[0].score>0
-        ?scored[0].name
-        :"-";
-
-    document.getElementById(
-        "performanceAttention"
-    ).textContent=
-        scored.filter(
-            x=>x.score<40
-        ).length;
-
+    scored.sort((a,b)=>b.score-a.score);
+    document.getElementById("performanceBest").textContent=scored[0]&&scored[0].score>0 ? scored[0].name : "-";
+    document.getElementById("performanceAttention").textContent=scored.filter(x=>x.score<40).length;
 }
 
 /* =========================================================
@@ -5451,422 +3527,125 @@ ${performance}%
 ========================================================= */
 
 function renderPeople(){
-
-    let arr=isAdmin()
-        ?people
-        :people.filter(
-            p=>p.dept===currentUser.dept
-        );
-
-    document.getElementById(
-        "peopleBody"
-    ).innerHTML=
-
-        arr.length
-
-        ?arr.map((p,i)=>`
-
+    let arr=isAdmin() ? people : people.filter(p=>p.dept===currentUser.dept);
+    document.getElementById("peopleBody").innerHTML=arr.length ? arr.map((p,i)=>`
 <tr>
-
-<td>
-${escapeHTML(p.name)}
-</td>
-
-<td>
-${escapeHTML(p.role||"-")}
-</td>
-
-<td>
-${escapeHTML(p.dept||"-")}
-</td>
-
-<td>
-${
-p.status==="فعال"
-?'<span class="badge badge-green">فعال</span>'
-:'<span class="badge badge-gray">غیرفعال</span>'
-}
-</td>
-
-<td>
-${escapeHTML(p.skills||"-")}
-</td>
-
-<td>
-
-${
-isAdmin()
-?`
-<button
-class="btn btn-danger"
-onclick="deletePerson(${i})"
->
-حذف
-</button>
-`
-:"-"
-}
-
-</td>
-
-</tr>
-
-`).join("")
-
-        :`
-
-<tr>
-<td colspan="6" class="empty">
-نیرویی ثبت نشده است.
-</td>
-</tr>
-
-`;
-
+<td>${escapeHTML(p.name)}</td>
+<td>${escapeHTML(p.role||"-")}</td>
+<td>${escapeHTML(p.dept||"-")}</td>
+<td>${p.status==="فعال"?'<span class="badge badge-green">فعال</span>':'<span class="badge badge-gray">غیرفعال</span>'}</td>
+<td>${escapeHTML(p.skills||"-")}</td>
+<td>${isAdmin()?`<button class="btn btn-danger" onclick="deletePerson(${i})">حذف</button>`:"-"}</td>
+</tr>`).join("") : `<tr><td colspan="6" class="empty">نیرویی ثبت نشده است.</td></tr>`;
 }
 
 function openPersonModal(){
-
     if(!isAdmin())return;
-
-    [
-        "personName",
-        "personRole",
-        "personSkills"
-    ].forEach(id=>{
-        document.getElementById(id).value="";
-    });
-
-    document.getElementById(
-        "personDept"
-    ).value="فیلمبرداری";
-
-    document.getElementById(
-        "personStatus"
-    ).value="فعال";
-
-    document.getElementById(
-        "personModal"
-    ).classList.add("show");
-
+    ["personName","personRole","personSkills"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("personDept").value="فیلمبرداری";
+    document.getElementById("personStatus").value="فعال";
+    document.getElementById("personModal").classList.add("show");
 }
 
 function savePerson(){
-
     if(!isAdmin())return;
-
-    const name=
-        document.getElementById(
-            "personName"
-        ).value.trim();
-
-    if(!name){
-
-        alert("نام الزامی است.");
-        return;
-
-    }
-
+    const name=document.getElementById("personName").value.trim();
+    if(!name){ alert("نام الزامی است."); return; }
     people.push({
-
         name:name,
-
-        role:
-            document.getElementById(
-                "personRole"
-            ).value.trim(),
-
-        dept:
-            document.getElementById(
-                "personDept"
-            ).value,
-
-        status:
-            document.getElementById(
-                "personStatus"
-            ).value,
-
-        skills:
-            document.getElementById(
-                "personSkills"
-            ).value.trim()
-
+        role:document.getElementById("personRole").value.trim(),
+        dept:document.getElementById("personDept").value,
+        status:document.getElementById("personStatus").value,
+        skills:document.getElementById("personSkills").value.trim()
     });
-
-    logActivity(
-        "افزودن نیروی جدید: "+name,
-        null
-    );
-
+    logActivity("افزودن نیروی جدید: "+name, null);
     saveAll();
-
     renderPeople();
     updateDashboard();
-
     closeModal("personModal");
-
+    alert("✅ نیرو با موفقیت ثبت شد.");
 }
 
 function deletePerson(i){
-
     if(!isAdmin())return;
-
     const p=people[i];
-
     if(!p)return;
-
-    if(!confirm(
-        `نیروی «${p.name}» حذف شود؟`
-    ))return;
-
+    if(!confirm(`نیروی «${p.name}» حذف شود؟`))return;
     people.splice(i,1);
-
-    logActivity(
-        "حذف نیرو: "+p.name,
-        null
-    );
-
+    logActivity("حذف نیرو: "+p.name, null);
     saveAll();
-
     renderPeople();
     updateDashboard();
-
 }
 
 /* =========================================================
    EQUIPMENT
 ========================================================= */
 
+function toggleEquipmentParent() {
+    const type = document.getElementById('eType').value;
+    const parentGroup = document.getElementById('parentGroup');
+    if (type === 'sub') {
+        parentGroup.style.display = 'flex';
+    } else {
+        parentGroup.style.display = 'flex';
+        document.getElementById('eParent').value = '';
+    }
+}
+
 function renderEquipment(){
-
-    const q=
-        (
-            document.getElementById(
-                "eqSearch"
-            )?.value||""
-        ).toLowerCase();
-
-    const status=
-        document.getElementById(
-            "eqStatus"
-        )?.value||"";
-
-    const category=
-        document.getElementById(
-            "eqCategory"
-        )?.value||"";
-
-    const mains=
-        equipment.filter(
-            x=>x.type==="main"
-        );
-
+    const q=(document.getElementById("eqSearch")?.value||"").toLowerCase();
+    const status=document.getElementById("eqStatus")?.value||"";
+    const category=document.getElementById("eqCategory")?.value||"";
+    const mains=equipment.filter(x=>x.type==="main");
     let html="";
-
-    mains.forEach(m=>{
-
-        const children=
-            equipment.filter(
-                x=>x.parent===m.code
-            );
-
-        const match=x=>{
-
-            const text=
-                JSON.stringify(x)
-                .toLowerCase();
-
-            return
-                (!q||text.includes(q))&&
-                (!status||x.status===status)&&
-                (!category||x.category===category);
-
-        };
-
-        if(match(m)){
-            html+=equipmentRow(m);
-        }
-
-        children.forEach(c=>{
-            if(match(c)){
-                html+=equipmentRow(c);
-            }
+    if(mains.length===0 && equipment.length===0){
+        html=`<tr><td colspan="9" class="empty">هیچ تجهیزی ثبت نشده است.</td></tr>`;
+    }else{
+        mains.forEach(m=>{
+            const children=equipment.filter(x=>x.parent===m.code);
+            const match=x=>{
+                const text=JSON.stringify(x).toLowerCase();
+                return (!q||text.includes(q)) && (!status||x.status===status) && (!category||x.category===category);
+            };
+            if(match(m)) html+=equipmentRow(m);
+            children.forEach(c=>{ if(match(c)) html+=equipmentRow(c); });
         });
-
-    });
-
-    document.getElementById(
-        "equipmentBody"
-    ).innerHTML=
-        html||
-        `
-        <tr>
-        <td colspan="9" class="empty">
-        موردی پیدا نشد.
-        </td>
-        </tr>
-        `;
-
-    document.getElementById(
-        "eqMain"
-    ).textContent=
-        equipment.filter(
-            x=>x.type==="main"
-        ).length;
-
-    document.getElementById(
-        "eqSub"
-    ).textContent=
-        equipment.filter(
-            x=>x.type==="sub"
-        ).length;
-
-    document.getElementById(
-        "eqAudio"
-    ).textContent=
-        equipment.filter(
-            x=>x.category==="صوت"
-        ).length;
-
-    document.getElementById(
-        "eqProblem"
-    ).textContent=
-        equipment.filter(
-            x=>x.status!=="سالم"
-        ).length;
-
+    }
+    document.getElementById("equipmentBody").innerHTML=html || `<tr><td colspan="9" class="empty">موردی پیدا نشد.</td></tr>`;
+    document.getElementById("eqMain").textContent=equipment.filter(x=>x.type==="main").length;
+    document.getElementById("eqSub").textContent=equipment.filter(x=>x.type==="sub").length;
+    document.getElementById("eqAudio").textContent=equipment.filter(x=>x.category==="صوت").length;
+    document.getElementById("eqProblem").textContent=equipment.filter(x=>x.status!=="سالم").length;
 }
 
 function equipmentRow(e){
-
-    return `
-
-<tr class="${
-    e.type==="main"
-    ?"main-equipment"
-    :"sub-equipment"
-}">
-
-<td>
-${escapeHTML(e.code)}
-</td>
-
-<td>
-${e.type==="sub"?"↳ ":""}
-${escapeHTML(e.name)}
-</td>
-
-<td>
-${escapeHTML(e.category)}
-</td>
-
-<td>
-${escapeHTML(e.parent||"-")}
-</td>
-
-<td>
-${equipmentStatusBadge(e.status)}
-</td>
-
-<td>
-${escapeHTML(e.location||"-")}
-</td>
-
-<td>
-${escapeHTML(e.checkDate||"-")}
-</td>
-
-<td>
-${escapeHTML(e.description||"-")}
-</td>
-
-<td>
-
-${
-isAdmin()
-?`
-<button
-class="btn btn-warning"
-onclick="editEquipment('${e.code}')"
->
-ویرایش
-</button>
-
-<button
-class="btn btn-danger"
-onclick="deleteEquipment('${e.code}')"
->
-حذف
-</button>
-`
-:"-"
-}
-
-</td>
-
-</tr>
-
-`;
-
+    return `<tr class="${e.type==="main"?"main-equipment":"sub-equipment"}">
+<td><strong>${escapeHTML(e.code)}</strong></td>
+<td>${e.type==="sub"?"↳ ":""}${escapeHTML(e.name)}</td>
+<td>${escapeHTML(e.category)}</td>
+<td>${escapeHTML(e.parent||"-")}</td>
+<td>${equipmentStatusBadge(e.status)}</td>
+<td>${escapeHTML(e.location||"-")}</td>
+<td>${escapeHTML(e.checkDate||"-")}</td>
+<td>${escapeHTML(e.description||"-")}</td>
+<td>${isAdmin()?`<button class="btn btn-warning" onclick="editEquipment('${e.code}')">ویرایش</button><button class="btn btn-danger" onclick="deleteEquipment('${e.code}')">حذف</button>`:"-"}</td>
+</tr>`;
 }
 
 function equipmentStatusBadge(s){
-
-    if(s==="سالم")
-        return `<span class="badge badge-green">سالم</span>`;
-
-    if(s==="نیازمند بررسی")
-        return `<span class="badge badge-yellow">نیازمند بررسی</span>`;
-
-    if(s==="نیازمند تعمیر")
-        return `<span class="badge badge-yellow">نیازمند تعمیر</span>`;
-
-    if(s==="خراب")
-        return `<span class="badge badge-red">خراب</span>`;
-
-    if(s==="مفقود")
-        return `<span class="badge badge-gray">مفقود</span>`;
-
-    return `<span class="badge badge-blue">${escapeHTML(s)}</span>`;
-
+    const map={"سالم":'<span class="badge badge-green">سالم</span>',"نیازمند بررسی":'<span class="badge badge-yellow">نیازمند بررسی</span>',"نیازمند تعمیر":'<span class="badge badge-yellow">نیازمند تعمیر</span>',"خراب":'<span class="badge badge-red">خراب</span>',"مفقود":'<span class="badge badge-gray">مفقود</span>'};
+    return map[s] || `<span class="badge badge-blue">${escapeHTML(s)}</span>`;
 }
 
 function openEquipmentModal(code=null){
-
     if(!isAdmin())return;
-
     editingEquipment=code;
-
-    const parent=
-        document.getElementById(
-            "eParent"
-        );
-
-    parent.innerHTML=
-        '<option value="">بدون وابستگی</option>'+
-        equipment
-        .filter(
-            x=>x.type==="main"
-        )
-        .map(
-            x=>`
-                <option value="${escapeHTML(x.code)}">
-                ${escapeHTML(x.code)}
-                —
-                ${escapeHTML(x.name)}
-                </option>
-            `
-        )
-        .join("");
-
+    const parent=document.getElementById("eParent");
+    parent.innerHTML='<option value="">بدون وابستگی</option>'+equipment.filter(x=>x.type==="main").map(x=>`<option value="${escapeHTML(x.code)}">${escapeHTML(x.code)} — ${escapeHTML(x.name)}</option>`).join("");
     if(code){
-
-        const e=equipment.find(
-            x=>x.code===code
-        );
-
+        const e=equipment.find(x=>x.code===code);
         if(!e)return;
-
         document.getElementById("eCode").value=e.code;
         document.getElementById("eType").value=e.type;
         document.getElementById("eName").value=e.name;
@@ -5879,250 +3658,67 @@ function openEquipmentModal(code=null){
         document.getElementById("eLoanDate").value=e.loanDate||"";
         document.getElementById("eReturnDate").value=e.returnDate||"";
         document.getElementById("eDesc").value=e.description||"";
-
+        toggleEquipmentParent();
     }else{
-
-        [
-            "eCode",
-            "eName",
-            "eLocation",
-            "eCheck",
-            "eLoanTo",
-            "eLoanDate",
-            "eReturnDate",
-            "eDesc"
-        ].forEach(id=>{
-            document.getElementById(id).value="";
-        });
-
-        document.getElementById(
-            "eType"
-        ).value="main";
-
-        document.getElementById(
-            "eCategory"
-        ).value="تصویر";
-
-        document.getElementById(
-            "eParent"
-        ).value="";
-
-        document.getElementById(
-            "eStatus"
-        ).value="سالم";
-
+        ["eCode","eName","eLocation","eCheck","eLoanTo","eLoanDate","eReturnDate","eDesc"].forEach(id=>document.getElementById(id).value="");
+        document.getElementById("eType").value="main";
+        document.getElementById("eCategory").value="تصویر";
+        document.getElementById("eParent").value="";
+        document.getElementById("eStatus").value="سالم";
+        toggleEquipmentParent();
     }
-
-    document.getElementById(
-        "equipmentModal"
-    ).classList.add("show");
-
+    document.getElementById("equipmentModal").classList.add("show");
 }
 
-function editEquipment(code){
-
-    openEquipmentModal(code);
-
-}
+function editEquipment(code){ openEquipmentModal(code); }
 
 function saveEquipment(){
-
     if(!isAdmin())return;
-
     const e={
-
-        code:
-            document.getElementById(
-                "eCode"
-            ).value.trim().toUpperCase(),
-
-        type:
-            document.getElementById(
-                "eType"
-            ).value,
-
-        name:
-            document.getElementById(
-                "eName"
-            ).value.trim(),
-
-        category:
-            document.getElementById(
-                "eCategory"
-            ).value,
-
-        parent:
-            document.getElementById(
-                "eParent"
-            ).value,
-
-        status:
-            document.getElementById(
-                "eStatus"
-            ).value,
-
-        location:
-            document.getElementById(
-                "eLocation"
-            ).value.trim(),
-
-        checkDate:
-            document.getElementById(
-                "eCheck"
-            ).value.trim(),
-
-        loanTo:
-            document.getElementById(
-                "eLoanTo"
-            ).value.trim(),
-
-        loanDate:
-            document.getElementById(
-                "eLoanDate"
-            ).value.trim(),
-
-        returnDate:
-            document.getElementById(
-                "eReturnDate"
-            ).value.trim(),
-
-        description:
-            document.getElementById(
-                "eDesc"
-            ).value.trim()
-
+        code:document.getElementById("eCode").value.trim().toUpperCase(),
+        type:document.getElementById("eType").value,
+        name:document.getElementById("eName").value.trim(),
+        category:document.getElementById("eCategory").value,
+        parent:document.getElementById("eParent").value,
+        status:document.getElementById("eStatus").value,
+        location:document.getElementById("eLocation").value.trim(),
+        checkDate:document.getElementById("eCheck").value.trim(),
+        loanTo:document.getElementById("eLoanTo").value.trim(),
+        loanDate:document.getElementById("eLoanDate").value.trim(),
+        returnDate:document.getElementById("eReturnDate").value.trim(),
+        description:document.getElementById("eDesc").value.trim()
     };
-
-    if(!e.code||!e.name){
-
-        alert(
-            "کد و نام تجهیز الزامی است."
-        );
-
-        return;
-
-    }
-
-    if(
-        e.type==="sub" &&
-        !e.parent
-    ){
-
-        alert(
-            "برای زیرمجموعه باید تجهیز اصلی مشخص شود."
-        );
-
-        return;
-
-    }
-
-    if(
-        e.type==="main" &&
-        e.parent
-    ){
-
-        alert(
-            "تجهیز اصلی نباید وابسته باشد."
-        );
-
-        return;
-
-    }
-
-    const duplicate=
-        equipment.find(
-            x=>
-                x.code===e.code &&
-                x.code!==editingEquipment
-        );
-
-    if(duplicate){
-
-        alert(
-            "این کد قبلاً استفاده شده است."
-        );
-
-        return;
-
-    }
-
+    if(!e.code||!e.name){ alert("❌ کد و نام تجهیز الزامی است."); return; }
+    if(e.type==="sub" && !e.parent){ alert("❌ برای زیرمجموعه باید تجهیز اصلی مشخص شود."); return; }
+    if(e.type==="main" && e.parent){ alert("❌ تجهیز اصلی نباید وابسته باشد."); return; }
+    const duplicate=equipment.find(x=>x.code===e.code && x.code!==editingEquipment);
+    if(duplicate){ alert("❌ این کد قبلاً استفاده شده است."); return; }
     if(editingEquipment){
-
-        const i=equipment.findIndex(
-            x=>x.code===editingEquipment
-        );
-
-        if(i>=0){
-            equipment[i]=e;
-        }
-
-        logActivity(
-            "ویرایش تجهیز: "+e.name,
-            null
-        );
-
+        const i=equipment.findIndex(x=>x.code===editingEquipment);
+        if(i>=0) equipment[i]=e;
+        logActivity("ویرایش تجهیز: "+e.name, null);
     }else{
-
         equipment.push(e);
-
-        logActivity(
-            "افزودن تجهیز: "+e.name,
-            null
-        );
-
+        logActivity("افزودن تجهیز: "+e.name, null);
     }
-
     saveAll();
-
     renderEquipment();
     updateDashboard();
-
-    closeModal(
-        "equipmentModal"
-    );
-
+    closeModal("equipmentModal");
+    alert("✅ تجهیز با موفقیت ثبت شد.");
 }
 
 function deleteEquipment(code){
-
     if(!isAdmin())return;
-
-    const item=equipment.find(
-        x=>x.code===code
-    );
-
+    const item=equipment.find(x=>x.code===code);
     if(!item)return;
-
-    const children=
-        equipment.filter(
-            x=>x.parent===code
-        );
-
-    if(!confirm(
-        `تجهیز «${item.name}» حذف شود؟`+
-        (
-            children.length
-            ?`\n${children.length} زیرمجموعه نیز حذف می‌شود.`
-            :""
-        )
-    ))return;
-
-    equipment=equipment.filter(
-        x=>
-            x.code!==code &&
-            x.parent!==code
-    );
-
-    logActivity(
-        "حذف تجهیز: "+item.name,
-        null
-    );
-
+    const children=equipment.filter(x=>x.parent===code);
+    if(!confirm(`تجهیز «${item.name}» حذف شود؟${children.length?`\n${children.length} زیرمجموعه نیز حذف می‌شود.`:""}`))return;
+    equipment=equipment.filter(x=>x.code!==code && x.parent!==code);
+    logActivity("حذف تجهیز: "+item.name, null);
     saveAll();
-
     renderEquipment();
     updateDashboard();
-
 }
 
 /* =========================================================
@@ -6130,73 +3726,26 @@ function deleteEquipment(code){
 ========================================================= */
 
 function updateMonthly(){
-
-    document.getElementById(
-        "currentMonth"
-    ).textContent=currentMonth;
-
-    document.getElementById(
-        "monthInfo"
-    ).textContent=
-        `چرخه فعال سامانه: ${currentMonth}`;
-
+    document.getElementById("currentMonth").textContent=currentMonth;
+    document.getElementById("monthInfo").textContent=`چرخه فعال سامانه: ${currentMonth}`;
 }
 
 function startNewMonth(){
-
     if(!isAdmin())return;
-
-    if(!confirm(
-        "ماه جدید شروع شود؟\n\n"+
-        "آرشیو گزارش‌ها و پروژه‌ها حذف نخواهند شد."
-    ))return;
-
-    const m=prompt(
-        "ماه جدید را وارد کنید:",
-        currentMonth
-    );
-
+    if(!confirm("ماه جدید شروع شود؟\n\nآرشیو گزارش‌ها و پروژه‌ها حذف نخواهند شد."))return;
+    const m=prompt("ماه جدید را وارد کنید:", currentMonth);
     if(!m)return;
-
     const oldMonth=currentMonth;
-
     currentMonth=m.trim();
-
-    tasks=tasks.map(t=>({
-
-        ...t,
-
-        cycle:currentMonth,
-
-        status:
-            t.status==="DONE"
-            ?"TODO"
-            :t.status,
-
-        completedAt:
-            t.status==="DONE"
-            ?""
-            :t.completedAt
-
-    }));
-
-    logActivity(
-        `شروع ماه جدید: ${oldMonth} → ${currentMonth}`,
-        null
-    );
-
+    tasks=tasks.map(t=>({...t, cycle:currentMonth, status:t.status==="DONE"?"TODO":t.status, completedAt:t.status==="DONE"?"":t.completedAt}));
+    logActivity(`شروع ماه جدید: ${oldMonth} → ${currentMonth}`, null);
     saveAll();
-
     updateMonthly();
     renderTasks();
     updateDashboard();
     renderPerformance();
     renderNotifications();
-
-    alert(
-        `ماه ${currentMonth} با موفقیت آغاز شد.`
-    );
-
+    alert(`ماه ${currentMonth} با موفقیت آغاز شد.`);
 }
 
 /* =========================================================
@@ -6204,112 +3753,20 @@ function startNewMonth(){
 ========================================================= */
 
 function renderNotifications(){
-
     const arr=[];
-
-    const currentTasks=
-        isAdmin()
-        ?tasks
-        :tasks.filter(
-            t=>t.assignedTo===currentUser.role
-        );
-
-    currentTasks
-    .filter(
-        t=>t.status!=="DONE"
-    )
-    .forEach(t=>{
-
-        const dl=deadlineState(
-            t.deadline
-        );
-
-        if(t.priority==="CRITICAL"){
-
-            arr.push({
-
-                type:"critical",
-
-                text:
-                    `وظیفه Critical «${t.title}» هنوز انجام نشده است.`
-
-            });
-
-        }
-
-        if(dl.cls==="deadline-overdue"){
-
-            arr.push({
-
-                type:"critical",
-
-                text:
-                    `ددلاین وظیفه «${t.title}» گذشته است.`
-
-            });
-
-        }else if(dl.cls==="deadline-near"){
-
-            arr.push({
-
-                type:"normal",
-
-                text:
-                    `ددلاین وظیفه «${t.title}» نزدیک است.`
-
-            });
-
-        }
-
+    const currentTasks=isAdmin() ? tasks : tasks.filter(t=>t.assignedTo===currentUser.role);
+    currentTasks.filter(t=>t.status!=="DONE").forEach(t=>{
+        const dl=deadlineState(t.deadline);
+        if(t.priority==="CRITICAL") arr.push({type:"critical", text:`وظیفه Critical «${t.title}» هنوز انجام نشده است.`});
+        if(dl.cls==="deadline-overdue") arr.push({type:"critical", text:`ددلاین وظیفه «${t.title}» گذشته است.`});
+        else if(dl.cls==="deadline-near") arr.push({type:"normal", text:`ددلاین وظیفه «${t.title}» نزدیک است.`});
     });
-
     if(isAdmin()){
-
-        reports
-        .filter(r=>!r.approved)
-        .forEach(r=>{
-
-            arr.push({
-
-                type:"normal",
-
-                text:
-                    `گزارش ${r.manager} برای ${r.week||"هفته جاری"} در انتظار تأیید است.`
-
-            });
-
+        reports.filter(r=>!r.approved).forEach(r=>{
+            arr.push({type:"normal", text:`گزارش ${r.manager} برای ${r.week||"هفته جاری"} در انتظار تأیید است.`});
         });
-
     }
-
-    document.getElementById(
-        "notificationsList"
-    ).innerHTML=
-
-        arr.length
-
-        ?arr.map(a=>`
-
-<div class="alert ${
-    a.type==="critical"
-    ?"critical"
-    :"info"
-}">
-
-🔔 ${escapeHTML(a.text)}
-
-</div>
-
-`).join("")
-
-        :`
-
-<div class="panel empty">
-اعلانی وجود ندارد.
-</div>
-
-`;
-
+    document.getElementById("notificationsList").innerHTML=arr.length ? arr.map(a=>`<div class="alert ${a.type==="critical"?"critical":"info"}">🔔 ${escapeHTML(a.text)}</div>`).join("") : `<div class="panel empty">اعلانی وجود ندارد.</div>`;
 }
 
 /* =========================================================
@@ -6317,65 +3774,21 @@ function renderNotifications(){
 ========================================================= */
 
 function renderActivity(){
-
     if(!isAdmin())return;
-
     const arr=activityLog;
-
-    document.getElementById(
-        "activityList"
-    ).innerHTML=
-
-        arr.length
-
-        ?arr.slice(0,150).map(a=>`
-
+    document.getElementById("activityList").innerHTML=arr.length ? arr.slice(0,150).map(a=>`
 <div class="activity-item">
-
-<div class="activity-icon">
-🕘
-</div>
-
+<div class="activity-icon">🕘</div>
 <div class="activity-content">
-
-<strong>
-${escapeHTML(a.action)}
-</strong>
-
-<small>
-کاربر:
-${escapeHTML(a.user)}
-—
-${escapeHTML(
-    new Date(a.time).toLocaleString("fa-IR")
-)}
-</small>
-
+<strong>${escapeHTML(a.action)}</strong>
+<small>کاربر: ${escapeHTML(a.user)} — ${escapeHTML(new Date(a.time).toLocaleString("fa-IR"))}</small>
 </div>
-
-</div>
-
-`).join("")
-
-        :`
-
-<div class="empty">
-لاگ فعالیتی ثبت نشده است.
-</div>
-
-`;
-
+</div>`).join("") : `<div class="empty">لاگ فعالیتی ثبت نشده است.</div>`;
 }
 
 function exportActivity(){
-
     if(!isAdmin())return;
-
-    downloadJSON(
-        activityLog,
-        "basair-activity-log.json"
-    );
-
+    downloadJSON(activityLog, "basair-activity-log.json");
 }
 
 /* =========================================================
@@ -6383,108 +3796,29 @@ function exportActivity(){
 ========================================================= */
 
 function fillManagerFilters(){
-
-    const options=managerList()
-        .map(m=>`
-            <option value="${escapeHTML(m[0])}">
-                ${escapeHTML(m[0])}
-            </option>
-        `)
-        .join("");
-
-    const ids=[
-        "taskManagerFilter",
-        "reportManagerFilter",
-        "archiveManagerFilter"
-    ];
-
-    ids.forEach(id=>{
-
-        const el=
-            document.getElementById(id);
-
+    const options=managerList().map(m=>`<option value="${escapeHTML(m[0])}">${escapeHTML(m[0])}</option>`).join("");
+    ["taskManagerFilter","reportManagerFilter","archiveManagerFilter"].forEach(id=>{
+        const el=document.getElementById(id);
         if(!el)return;
-
-        const first=
-            id==="taskManagerFilter"
-            ?"همه افراد"
-            :"همه مدیران";
-
-        el.innerHTML=
-            `<option value="">${first}</option>`+
-            options;
-
+        const first=id==="taskManagerFilter"?"همه افراد":"همه مدیران";
+        el.innerHTML=`<option value="">${first}</option>`+options;
     });
-
-}
-
-function resetTaskFilters(){
-
-    if(!document.getElementById("taskSearch"))
-        return;
-
-    document.getElementById(
-        "taskSearch"
-    ).value="";
-
-    document.getElementById(
-        "taskManagerFilter"
-    ).value="";
-
-    document.getElementById(
-        "taskPriorityFilter"
-    ).value="";
-
-    document.getElementById(
-        "taskStatusFilter"
-    ).value="";
-
-    renderTasks();
-
 }
 
 /* =========================================================
    DOWNLOAD
 ========================================================= */
 
-function downloadJSON(
-    data,
-    filename
-){
-
-    const blob=new Blob(
-        [
-            JSON.stringify(
-                data,
-                null,
-                2
-            )
-        ],
-        {
-            type:"application/json"
-        }
-    );
-
-    const url=
-        URL.createObjectURL(blob);
-
-    const a=
-        document.createElement("a");
-
+function downloadJSON(data, filename){
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
     a.href=url;
     a.download=filename;
-
     document.body.appendChild(a);
-
     a.click();
-
     a.remove();
-
-    setTimeout(
-        ()=>URL.revokeObjectURL(url),
-        500
-    );
-
+    setTimeout(()=>URL.revokeObjectURL(url),500);
 }
 
 /* =========================================================
@@ -6492,58 +3826,29 @@ function downloadJSON(
 ========================================================= */
 
 function initialize(){
-
     fillManagerFilters();
-
     renderProjects();
-
     renderReports();
-
     renderArchive();
-
     renderTasks();
-
     renderPerformance();
-
     renderPeople();
-
     renderEquipment();
-
     renderNotifications();
-
     renderActivity();
-
     updateDashboard();
-
     updateMonthly();
-
     applyPermissions();
-
 }
 
 /* =========================================================
    MODAL CLICK OUTSIDE
 ========================================================= */
 
-document
-.querySelectorAll(".modal")
-.forEach(modal=>{
-
-    modal.addEventListener(
-        "click",
-        event=>{
-
-            if(
-                event.target===modal
-            ){
-                modal.classList.remove(
-                    "show"
-                );
-            }
-
-        }
-    );
-
+document.querySelectorAll(".modal").forEach(modal=>{
+    modal.addEventListener("click", event=>{
+        if(event.target===modal) modal.classList.remove("show");
+    });
 });
 
 /* =========================================================
