@@ -1,22 +1,11 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سامانه مدیریت رسانه بصائر</title>
-
-    <!-- ===== کتابخانه‌های خارجی ===== -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js">
-    </script>
-
     <style>
-        /* ===== تمام استایل‌های قبلی به همان شکل ===== */
+        /* ===== تمام استایل‌های قبلی به همراه اصلاحات Modal ===== */
         * {
             box-sizing: border-box;
         }
@@ -535,11 +524,432 @@
             }
         }
 
-        /* ===== CHART ===== */
-        .chart-container {
+        /* ===== MODAL (اصلاح شده) ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .58);
+            z-index: 2500;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .modal.show {
+            display: flex;
+        }
+        .modal-box {
+            width: 100%;
+            max-width: 780px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 16px;
+            padding: 22px;
+            margin: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
             position: relative;
-            height: 200px;
-            margin-top: 10px;
+        }
+        .modal-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 10;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .modal-head h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: #edf0f2;
+            color: #333;
+            font-size: 22px;
+            border: none;
+            flex-shrink: 0;
+        }
+        .close-btn:hover {
+            background: #e1e5e8;
+        }
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+            position: sticky;
+            bottom: 0;
+            background: #fff;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ===== سایر استایل‌های فرم و جدول ===== */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 13px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .form-group.full {
+            grid-column: 1/-1;
+        }
+        .form-group label {
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 10px;
+            border: 1px solid #d8dcdf;
+            border-radius: 8px;
+            outline: none;
+            background: #fff;
+        }
+        .form-group textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+        .checklist {
+            background: #f8f9fa;
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 10px;
+        }
+        .checklist-title {
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 9px;
+        }
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 8px;
+            background: #fff;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 10px;
+        }
+        .check-item input {
+            width: 17px;
+            height: 17px;
+        }
+        .status-chart {
+            display: flex;
+            height: 18px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #eee;
+            margin: 15px 0 9px;
+        }
+        .status-chart div {
+            height: 100%;
+            transition: .3s;
+        }
+        .chart-todo {
+            background: #95a5a6
+        }
+        .chart-progress {
+            background: #2980b9
+        }
+        .chart-done {
+            background: #27ae60
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 10px;
+            color: var(--muted);
+        }
+        .legend span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot.todo {
+            background: #95a5a6
+        }
+        .dot.progress {
+            background: #2980b9
+        }
+        .dot.done {
+            background: #27ae60
+        }
+        .equipment-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .month-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            margin-bottom: 18px;
+        }
+        .month-value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .hero {
+            background: linear-gradient(135deg, #263746, #34495e);
+            color: #fff;
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow);
+        }
+        .hero h2 {
+            margin: 0 0 7px;
+            font-size: 21px;
+        }
+        .hero p {
+            margin: 0;
+            font-size: 11px;
+            color: #d4dde3;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+        }
+        .kpi {
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 11px;
+            padding: 13px;
+        }
+        .kpi strong {
+            display: block;
+            font-size: 22px;
+        }
+        .kpi span {
+            font-size: 10px;
+            color: #d1d9df;
+        }
+        .priority {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 7px;
+            border-radius: 15px;
+            font-size: 9px;
+            font-weight: bold;
+        }
+        .priority-critical {
+            background: var(--red-bg);
+            color: var(--red);
+        }
+        .priority-high {
+            background: #fff0e4;
+            color: #d35400;
+        }
+        .priority-medium {
+            background: var(--yellow-bg);
+            color: #9a6800;
+        }
+        .priority-low {
+            background: var(--green-bg);
+            color: var(--green);
+        }
+        .deadline {
+            padding: 4px 7px;
+            border-radius: 15px;
+            font-size: 9px;
+        }
+        .deadline-good {
+            background: var(--green-bg);
+            color: var(--green);
+        }
+        .deadline-near {
+            background: var(--yellow-bg);
+            color: #9a6800;
+        }
+        .deadline-overdue {
+            background: var(--red-bg);
+            color: var(--red);
+        }
+        .task-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 9px;
+            transition: .2s;
+        }
+        .task-card:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .05);
+        }
+        .task-main {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .task-check {
+            width: 19px;
+            height: 19px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+        .task-content {
+            flex: 1;
+        }
+        .task-title {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .task-title.done {
+            text-decoration: line-through;
+            color: #999;
+        }
+        .task-description {
+            font-size: 10px;
+            color: var(--muted);
+            margin-top: 5px;
+            line-height: 1.8;
+        }
+        .task-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 9px;
+        }
+        .task-actions {
+            display: flex;
+            gap: 5px;
+        }
+        .daily-focus {
+            border: 2px solid #34495e;
+            background: #f8fafb;
+        }
+        .focus-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .focus-title h3 {
+            margin: 0;
+        }
+        .focus-label {
+            background: var(--primary);
+            color: #fff;
+            padding: 5px 8px;
+            border-radius: 7px;
+            font-size: 9px;
+        }
+        .project-status {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+        }
+        .project-status .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 11px;
+        }
+        .project-status .row:last-child {
+            border-bottom: 0;
+        }
+        .progress {
+            height: 7px;
+            background: #e8ebed;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 7px;
+        }
+        .progress div {
+            height: 100%;
+            background: #27ae60;
+        }
+        .activity-item {
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .activity-item:last-child {
+            border-bottom: 0;
+        }
+        .activity-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: #eef2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .activity-content {
+            flex: 1;
+        }
+        .activity-content strong {
+            font-size: 10px;
+        }
+        .activity-content small {
+            display: block;
+            color: var(--muted);
+            margin-top: 4px;
+            font-size: 9px;
+        }
+        .manager-performance {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+        .performance-row {
+            display: grid;
+            grid-template-columns: 150px 1fr 60px;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+        }
+        .performance-bar {
+            height: 8px;
+            background: #edf0f2;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .performance-bar div {
+            height: 100%;
+            background: #34495e;
+        }
+        .archive-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
         }
 
         /* ===== RESPONSIVE ===== */
@@ -577,6 +987,16 @@
             .grid-2 {
                 grid-template-columns: 1fr;
             }
+            .modal-box {
+                max-width: 95%;
+                padding: 15px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full {
+                grid-column: auto;
+            }
         }
         @media(max-width:600px) {
             .content {
@@ -599,19 +1019,21 @@
             .card .num {
                 font-size: 22px;
             }
+            .modal-box {
+                padding: 12px;
+            }
+            .modal-head h3 {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- =========================
-    TOAST CONTAINER
-    ========================= -->
+    <!-- ========================= TOAST ========================= -->
     <div id="toast-container"></div>
 
-    <!-- =========================
-    LOGIN
-    ========================= -->
+    <!-- ========================= LOGIN ========================= -->
     <div id="loginPage" class="login-page">
         <div class="login-box">
             <div class="login-logo">ب</div>
@@ -626,9 +1048,7 @@
         </div>
     </div>
 
-    <!-- =========================
-    APP
-    ========================= -->
+    <!-- ========================= APP ========================= -->
     <div id="app" class="app">
         <aside id="sidebar" class="sidebar">
             <div class="sidebar-header">
@@ -669,7 +1089,6 @@
             </header>
 
             <div class="content">
-
                 <!-- ===== DASHBOARD ===== -->
                 <section id="page-dashboard" class="page active">
                     <div class="hero">
@@ -680,16 +1099,16 @@
                     <div id="adminDashboard">
                         <div class="grid-2">
                             <div class="panel">
-                                <h3>📊 وضعیت کل تسک‌ها</h3>
+                                <h3>📊 وضعیت کل وظایف</h3>
                                 <div class="status-chart">
                                     <div id="chartTodo" class="chart-todo"></div>
                                     <div id="chartProgress" class="chart-progress"></div>
                                     <div id="chartDone" class="chart-done"></div>
                                 </div>
                                 <div class="legend">
-                                    <span><i class="dot todo"></i> Todo</span>
-                                    <span><i class="dot progress"></i> In Progress</span>
-                                    <span><i class="dot done"></i> Done</span>
+                                    <span><i class="dot todo"></i> انجام نشده</span>
+                                    <span><i class="dot progress"></i> در حال انجام</span>
+                                    <span><i class="dot done"></i> انجام شده</span>
                                 </div>
                             </div>
                             <div class="panel">
@@ -707,30 +1126,14 @@
                                 <div id="dashboardProjects"></div>
                             </div>
                         </div>
-                        <!-- ===== نمودارهای تحلیلی جدید ===== -->
-                        <div class="grid-2">
-                            <div class="panel">
-                                <h3>📈 توزیع وظایف</h3>
-                                <div class="chart-container">
-                                    <canvas id="taskChart"></canvas>
-                                </div>
-                            </div>
-                            <div class="panel">
-                                <h3>📊 امتیاز گزارش‌ها</h3>
-                                <div class="chart-container">
-                                    <canvas id="reportChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- ===== دکمه‌های خروجی پیشرفته ===== -->
                         <div class="panel" style="display:flex; gap:10px; flex-wrap:wrap;">
-                            <button class="btn btn-success" onclick="exportExcel()">📊 خروجی اکسل</button>
-                            <button class="btn btn-danger" onclick="exportPDF()">📄 خروجی پی‌دی‌اف</button>
+                            <button class="btn btn-success" onclick="showToast('📊 خروجی اکسل در نسخه پایدار', 'info')">📊 خروجی اکسل</button>
+                            <button class="btn btn-danger" onclick="showToast('📄 خروجی پی‌دی‌اف در نسخه پایدار', 'info')">📄 خروجی پی‌دی‌اف</button>
                         </div>
                     </div>
                     <div id="employeeDashboard">
                         <div class="panel daily-focus">
-                            <div class="focus-title"><h3>🎯 Daily Focus</h3><span class="focus-label">۳ کار مهم</span></div>
+                            <div class="focus-title"><h3>🎯 تمرکز روزانه</h3><span class="focus-label">۳ کار مهم</span></div>
                             <div id="employeeFocus"></div>
                         </div>
                         <div class="grid-2">
@@ -751,16 +1154,16 @@
                         <select id="taskManagerFilter" onchange="renderTasks()"><option value="">همه افراد</option></select>
                         <select id="taskPriorityFilter" onchange="renderTasks()">
                             <option value="">همه اولویت‌ها</option>
-                            <option value="CRITICAL">🔴 Critical</option>
-                            <option value="HIGH">🟠 High</option>
-                            <option value="MEDIUM">🟡 Medium</option>
-                            <option value="LOW">🟢 Low</option>
+                            <option value="CRITICAL">🔴 بحرانی</option>
+                            <option value="HIGH">🟠 زیاد</option>
+                            <option value="MEDIUM">🟡 متوسط</option>
+                            <option value="LOW">🟢 کم</option>
                         </select>
                         <select id="taskStatusFilter" onchange="renderTasks()">
                             <option value="">همه وضعیت‌ها</option>
-                            <option value="TODO">Todo</option>
-                            <option value="IN_PROGRESS">In Progress</option>
-                            <option value="DONE">Done</option>
+                            <option value="TODO">انجام نشده</option>
+                            <option value="IN_PROGRESS">در حال انجام</option>
+                            <option value="DONE">انجام شده</option>
                         </select>
                         <button class="btn btn-danger" onclick="filterOverdueTasks()">⏰ عقب‌افتاده‌ها</button>
                     </div>
@@ -839,7 +1242,7 @@
                     </div>
                     <div class="table-wrap">
                         <table>
-                            <thead><tr><th>مدیر</th><th>بخش</th><th>Done</th><th>In Progress</th><th>Todo</th><th>عقب‌افتاده</th><th>میانگین زمان انجام</th><th>عملکرد</th></tr></thead>
+                            <thead><tr><th>مدیر</th><th>بخش</th><th>انجام شده</th><th>در حال انجام</th><th>انجام نشده</th><th>عقب‌افتاده</th><th>میانگین زمان انجام</th><th>عملکرد</th></tr></thead>
                             <tbody id="performanceBody"></tbody>
                         </table>
                     </div>
@@ -897,7 +1300,7 @@
                         <div><div style="color:#777;font-size:11px">ماه فعال سامانه</div><div class="month-value" id="currentMonth">1405/07</div><div id="monthInfo" style="color:#777;font-size:10px;margin-top:7px"></div></div>
                         <div><span class="badge badge-blue">چرخه فعال</span></div>
                     </div>
-                    <div class="panel"><h3>نحوه شروع چرخه جدید</h3><p style="font-size:11px;line-height:2;color:#666">با شروع ماه جدید، گزارش‌های تأییدشده و آرشیو حذف نمی‌شوند. پروژه‌ها نیز باقی می‌مانند. وظایف فعال (غیر از Done) وارد چرخه جدید می‌شوند و تسک‌های انجام‌شده دست نخورده باقی می‌مانند.</p></div>
+                    <div class="panel"><h3>نحوه شروع چرخه جدید</h3><p style="font-size:11px;line-height:2;color:#666">با شروع ماه جدید، گزارش‌های تأییدشده و آرشیو حذف نمی‌شوند. پروژه‌ها نیز باقی می‌مانند. وظایف فعال (غیر از انجام شده) وارد چرخه جدید می‌شوند و وظایف انجام‌شده دست نخورده باقی می‌مانند.</p></div>
                 </section>
 
                 <!-- ===== NOTIFICATIONS ===== -->
@@ -916,9 +1319,8 @@
         </main>
     </div>
 
-    <!-- =========================
-    MODALS (همانند قبل)
-    ========================= -->
+    <!-- ========================= MODALS ========================= -->
+
     <!-- PROJECT MODAL -->
     <div id="projectModal" class="modal">
         <div class="modal-box">
@@ -948,7 +1350,7 @@
                 <div class="form-group"><label>مسئول</label><select id="tManager"></select></div>
                 <div class="form-group"><label>اولویت</label><select id="tPriority"><option value="LOW">🟢 کم</option><option value="MEDIUM" selected>🟡 متوسط</option><option value="HIGH">🟠 زیاد</option><option value="CRITICAL">🔴 بحرانی</option></select></div>
                 <div class="form-group"><label>ددلاین</label><input id="tDeadline" type="datetime-local"></div>
-                <div class="form-group"><label>وضعیت اولیه</label><select id="tStatus"><option value="TODO">Todo</option><option value="IN_PROGRESS">In Progress</option></select></div>
+                <div class="form-group"><label>وضعیت اولیه</label><select id="tStatus"><option value="TODO">انجام نشده</option><option value="IN_PROGRESS">در حال انجام</option></select></div>
             </div>
             <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal('taskModal')">انصراف</button><button class="btn btn-success" onclick="saveTask()">💾 ثبت وظیفه</button></div>
         </div>
@@ -967,10 +1369,10 @@
                 <div class="form-group"><label>کارهای انجام‌شده</label><input id="rCompleted" type="number" min="0"></div>
                 <div class="form-group"><label>کارهای با تأخیر</label><input id="rDelayed" type="number" min="0"></div>
                 <div class="form-group"><label>کیفیت از ۱۰</label><input id="rQuality" type="number" min="0" max="10"></div>
-                <div class="form-group full"><label>کارهای انجام‌شده / خروجی‌ها</label><textarea id="rDoneList" placeholder="لیست کارهایی که این هفته انجام دادید..."></textarea></div>
-                <div class="form-group full"><label>علت تأخیرها</label><textarea id="rDelayReason" placeholder="اگر تأخیری داشتید، علت را بنویسید..."></textarea></div>
-                <div class="form-group full"><label>مشکلات و موانع</label><textarea id="rIssues" placeholder="چه مشکلاتی داشتید؟"></textarea></div>
-                <div class="form-group full"><label>پیشنهادها</label><textarea id="rSuggestions" placeholder="پیشنهادات برای بهبود..."></textarea></div>
+                <div class="form-group full"><label>کارهای انجام‌شده / خروجی‌ها</label><textarea id="rDoneList"></textarea></div>
+                <div class="form-group full"><label>علت تأخیرها</label><textarea id="rDelayReason"></textarea></div>
+                <div class="form-group full"><label>مشکلات و موانع</label><textarea id="rIssues"></textarea></div>
+                <div class="form-group full"><label>پیشنهادها</label><textarea id="rSuggestions"></textarea></div>
                 <div id="reportFeedbackContainer" class="form-group full" style="display:none;">
                     <label>📝 نظر مدیر اصلی</label>
                     <div id="reportFeedbackDisplay" class="feedback-box"></div>
@@ -1028,7 +1430,7 @@
 
     <script>
         // ============================================================
-        // TOAST NOTIFICATION SYSTEM (جایگزین alert)
+        // TOAST
         // ============================================================
         function showToast(message, type = 'info', duration = 3000) {
             const container = document.getElementById('toast-container');
@@ -1036,9 +1438,7 @@
             toast.className = `toast toast-${type}`;
             toast.textContent = message;
             container.appendChild(toast);
-            setTimeout(() => {
-                if (toast.parentNode) toast.remove();
-            }, duration);
+            setTimeout(() => { if (toast.parentNode) toast.remove(); }, duration);
         }
 
         // ============================================================
@@ -1060,10 +1460,6 @@
         let editingEquipment = null;
         let editingTask = null;
 
-        // Chart instances
-        let taskChartInstance = null;
-        let reportChartInstance = null;
-
         // ============================================================
         // HELPERS
         // ============================================================
@@ -1073,9 +1469,6 @@
         function uid() { return Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8); }
 
         function nowISO() { return new Date().toISOString(); }
-
-        function faDate(date) { if (!date) return "-"; try { return new Date(date).toLocaleDateString("fa-IR"); } catch {
-            return date; } }
 
         function isAdmin() { return currentUser && currentUser.dept === "all"; }
 
@@ -1159,7 +1552,7 @@
         let currentMonth = localStorage.getItem("basair_month") || "1405/07";
 
         // ============================================================
-        // EQUIPMENT DEFAULT DATA
+        // EQUIPMENT DEFAULT DATA (۳۲ مورد)
         // ============================================================
         if (!Array.isArray(equipment) || equipment.length === 0) {
             equipment = [
@@ -1362,8 +1755,7 @@
             if (button) button.classList.add("active");
             document.getElementById("pageTopTitle").textContent = pageNames[name] || "";
             closeSidebar();
-            if (name === "dashboard") { updateDashboard();
-                renderAnalytics(); }
+            if (name === "dashboard") updateDashboard();
             if (name === "tasks") renderTasks();
             if (name === "performance") renderPerformance();
             if (name === "notifications") renderNotifications();
@@ -1391,23 +1783,23 @@
         }
 
         function priorityBadge(priority) {
-            const data = { CRITICAL: ["🔴 Critical", "priority-critical"], HIGH: ["🟠 High", "priority-high"],
-                MEDIUM: ["🟡 Medium", "priority-medium"], LOW: ["🟢 Low", "priority-low"] };
+            const data = { CRITICAL: ["🔴 بحرانی", "priority-critical"], HIGH: ["🟠 زیاد", "priority-high"],
+                MEDIUM: ["🟡 متوسط", "priority-medium"], LOW: ["🟢 کم", "priority-low"] };
             const d = data[priority] || data.MEDIUM;
             return `<span class="priority ${d[1]}">${d[0]}</span>`;
         }
 
         function statusText(status) {
-            if (status === "TODO") return "Todo";
-            if (status === "IN_PROGRESS") return "In Progress";
-            if (status === "DONE") return "Done";
+            if (status === "TODO") return "انجام نشده";
+            if (status === "IN_PROGRESS") return "در حال انجام";
+            if (status === "DONE") return "انجام شده";
             return status;
         }
 
         function statusBadgeTask(status) {
-            if (status === "DONE") return `<span class="badge badge-green">Done</span>`;
-            if (status === "IN_PROGRESS") return `<span class="badge badge-blue">In Progress</span>`;
-            return `<span class="badge badge-gray">Todo</span>`;
+            if (status === "DONE") return `<span class="badge badge-green">انجام شده</span>`;
+            if (status === "IN_PROGRESS") return `<span class="badge badge-blue">در حال انجام</span>`;
+            return `<span class="badge badge-gray">انجام نشده</span>`;
         }
 
         // ============================================================
@@ -1422,31 +1814,31 @@
             const dl = deadlineState(t.deadline);
             const canChange = isAdmin() || t.assignedTo === currentUser.role;
             return `
-        <div class="task-card">
-        <div class="task-main">
-        <input class="task-check" type="checkbox" ${t.status==="DONE"?"checked":""} ${canChange?"":"disabled"} onchange="toggleTaskDone('${t.id}',this.checked)">
-        <div class="task-content">
-        <div class="task-title ${t.status==="DONE"?"done":""}">${escapeHTML(t.title)}</div>
-        <div class="task-description">${escapeHTML(t.description||"")}</div>
-        <div class="task-meta">
-        ${priorityBadge(t.priority)}
-        <span class="deadline ${dl.cls}">⏰ ${escapeHTML(t.deadline ? new Date(t.deadline).toLocaleString("fa-IR") : dl.text)}</span>
-        ${statusBadgeTask(t.status)}
-        ${isAdmin()?`<span class="badge badge-gray">${escapeHTML(t.assignedTo)}</span>`:""}
-        </div>
-        </div>
-        <div class="task-actions">
-        ${canChange?`
-        <select style="padding:6px;border:1px solid #ddd;border-radius:7px;font-size:9px" onchange="changeTaskStatus('${t.id}',this.value)">
-        <option value="TODO" ${t.status==="TODO"?"selected":""}>Todo</option>
-        <option value="IN_PROGRESS" ${t.status==="IN_PROGRESS"?"selected":""}>In Progress</option>
-        <option value="DONE" ${t.status==="DONE"?"selected":""}>Done</option>
-        </select>
-        `:""}
-        ${isAdmin()?`<button class="btn btn-danger" onclick="deleteTask('${t.id}')">حذف</button>`:""}
-        </div>
-        </div>
-        </div>`;
+            <div class="task-card">
+            <div class="task-main">
+            <input class="task-check" type="checkbox" ${t.status==="DONE"?"checked":""} ${canChange?"":"disabled"} onchange="toggleTaskDone('${t.id}',this.checked)">
+            <div class="task-content">
+            <div class="task-title ${t.status==="DONE"?"done":""}">${escapeHTML(t.title)}</div>
+            <div class="task-description">${escapeHTML(t.description||"")}</div>
+            <div class="task-meta">
+            ${priorityBadge(t.priority)}
+            <span class="deadline ${dl.cls}">⏰ ${escapeHTML(t.deadline ? new Date(t.deadline).toLocaleString("fa-IR") : dl.text)}</span>
+            ${statusBadgeTask(t.status)}
+            ${isAdmin()?`<span class="badge badge-gray">${escapeHTML(t.assignedTo)}</span>`:""}
+            </div>
+            </div>
+            <div class="task-actions">
+            ${canChange?`
+            <select style="padding:6px;border:1px solid #ddd;border-radius:7px;font-size:9px" onchange="changeTaskStatus('${t.id}',this.value)">
+            <option value="TODO" ${t.status==="TODO"?"selected":""}>انجام نشده</option>
+            <option value="IN_PROGRESS" ${t.status==="IN_PROGRESS"?"selected":""}>در حال انجام</option>
+            <option value="DONE" ${t.status==="DONE"?"selected":""}>انجام شده</option>
+            </select>
+            `:""}
+            ${isAdmin()?`<button class="btn btn-danger" onclick="deleteTask('${t.id}')">حذف</button>`:""}
+            </div>
+            </div>
+            </div>`;
         }
 
         function renderTasks() {
@@ -1572,7 +1964,6 @@
             const done = tasks.filter(t => t.status === "DONE").length;
             const overdue = tasks.filter(t => t.status !== "DONE" && deadlineState(t.deadline).cls === "deadline-overdue")
                 .length;
-            const critical = tasks.filter(t => t.priority === "CRITICAL" && t.status !== "DONE").length;
             const activeProjects = projects.filter(p => p.status === "فعال").length;
             const delayedProjects = projects.filter(p => p.status === "عقب‌مانده").length;
             const peopleActive = people.filter(p => p.status === "فعال").length;
@@ -1586,20 +1977,20 @@
             const kpis = document.getElementById("dashboardKpis");
             if (isAdmin()) {
                 kpis.innerHTML = `
-            <div class="kpi"><strong>${total}</strong><span>کل تسک‌ها</span></div>
-            <div class="kpi"><strong>${done}</strong><span>Done</span></div>
-            <div class="kpi"><strong>${progress}</strong><span>In Progress</span></div>
-            <div class="kpi"><strong>${overdue}</strong><span>عقب‌افتاده</span></div>`;
+                <div class="kpi"><strong>${total}</strong><span>کل وظایف</span></div>
+                <div class="kpi"><strong>${done}</strong><span>انجام شده</span></div>
+                <div class="kpi"><strong>${progress}</strong><span>در حال انجام</span></div>
+                <div class="kpi"><strong>${overdue}</strong><span>عقب‌افتاده</span></div>`;
             } else {
                 const mine = tasks.filter(t => t.assignedTo === currentUser.role);
                 const mineDone = mine.filter(t => t.status === "DONE").length;
                 const mineOpen = mine.filter(t => t.status !== "DONE").length;
                 const mineCritical = mine.filter(t => t.priority === "CRITICAL" && t.status !== "DONE").length;
                 kpis.innerHTML = `
-            <div class="kpi"><strong>${mine.length}</strong><span>کل کارهای من</span></div>
-            <div class="kpi"><strong>${mineOpen}</strong><span>باز</span></div>
-            <div class="kpi"><strong>${mineDone}</strong><span>انجام‌شده</span></div>
-            <div class="kpi"><strong>${mineCritical}</strong><span>Critical</span></div>`;
+                <div class="kpi"><strong>${mine.length}</strong><span>کل کارهای من</span></div>
+                <div class="kpi"><strong>${mineOpen}</strong><span>باز</span></div>
+                <div class="kpi"><strong>${mineDone}</strong><span>انجام‌شده</span></div>
+                <div class="kpi"><strong>${mineCritical}</strong><span>بحرانی</span></div>`;
             }
 
             if (isAdmin()) {
@@ -1609,16 +2000,15 @@
                 document.getElementById("chartTodo").style.width = (todo / totalSafe * 100) + "%";
                 document.getElementById("chartProgress").style.width = (progress / totalSafe * 100) + "%";
                 document.getElementById("chartDone").style.width = (done / totalSafe * 100) + "%";
-                renderDashboardAlerts(overdue, critical);
+                renderDashboardAlerts(overdue);
                 renderManagerPerformance();
                 document.getElementById("dashboardProjects").innerHTML = `
-            <div class="project-status">
-            <div class="row"><span>پروژه‌های فعال</span><strong class="green">${activeProjects}</strong></div>
-            <div class="row"><span>پروژه‌های عقب‌مانده</span><strong class="red">${delayedProjects}</strong></div>
-            <div class="row"><span>نیروهای فعال</span><strong>${peopleActive}</strong></div>
-            <div class="row"><span>نیازمند پیگیری تجهیزات</span><strong class="red">${equipment.filter(e => e.status !== "سالم" && e.status !== "امانت داده شده").length}</strong></div>
-            </div>`;
-                renderAnalytics(); // نمودارها
+                <div class="project-status">
+                <div class="row"><span>پروژه‌های فعال</span><strong class="green">${activeProjects}</strong></div>
+                <div class="row"><span>پروژه‌های عقب‌مانده</span><strong class="red">${delayedProjects}</strong></div>
+                <div class="row"><span>نیروهای فعال</span><strong>${peopleActive}</strong></div>
+                <div class="row"><span>نیازمند پیگیری تجهیزات</span><strong class="red">${equipment.filter(e => e.status !== "سالم" && e.status !== "امانت داده شده").length}</strong></div>
+                </div>`;
             } else {
                 document.getElementById("adminDashboard").style.display = "none";
                 document.getElementById("employeeDashboard").style.display = "block";
@@ -1626,11 +2016,11 @@
             }
         }
 
-        function renderDashboardAlerts(overdue, critical) {
+        function renderDashboardAlerts(overdue) {
             const arr = [];
             tasks.filter(t => t.priority === "CRITICAL" && t.status !== "DONE").slice(0, 5).forEach(t => {
                 arr.push(
-                    `<div class="alert critical">🔴 وظیفه Critical: <strong>${escapeHTML(t.title)}</strong> — ${escapeHTML(t.assignedTo)}</div>`
+                    `<div class="alert critical">🔴 وظیفه بحرانی: <strong>${escapeHTML(t.title)}</strong> — ${escapeHTML(t.assignedTo)}</div>`
                     );
             });
             tasks.filter(t => t.status !== "DONE" && deadlineState(t.deadline).cls === "deadline-overdue").slice(0, 5)
@@ -1675,137 +2065,15 @@
             const todo = mine.filter(t => t.status === "TODO").length;
             document.getElementById("employeeTaskSummary").innerHTML = `
             <div class="project-status">
-            <div class="row"><span>Todo</span><strong>${todo}</strong></div>
-            <div class="row"><span>In Progress</span><strong class="blue">${progress}</strong></div>
-            <div class="row"><span>Done</span><strong class="green">${done}</strong></div>
+            <div class="row"><span>انجام نشده</span><strong>${todo}</strong></div>
+            <div class="row"><span>در حال انجام</span><strong class="blue">${progress}</strong></div>
+            <div class="row"><span>انجام شده</span><strong class="green">${done}</strong></div>
             </div>`;
             const urgent = mine.filter(t => t.status !== "DONE" && (t.priority === "CRITICAL" || t.priority === "HIGH" ||
                 deadlineState(t.deadline).cls === "deadline-overdue" || deadlineState(t.deadline).cls ===
                 "deadline-near"));
             document.getElementById("employeeUrgent").innerHTML = urgent.length ? urgent.slice(0, 6).map(renderTaskCard)
                 .join("") : `<div class="empty">کار فوری وجود ندارد.</div>`;
-        }
-
-        // ============================================================
-        // ANALYTICS CHARTS (نمودارهای تحلیلی)
-        // ============================================================
-        function renderAnalytics() {
-            if (!isAdmin()) return;
-
-            // نمودار توزیع وظایف
-            const todo = tasks.filter(t => t.status === "TODO").length;
-            const inProgress = tasks.filter(t => t.status === "IN_PROGRESS").length;
-            const done = tasks.filter(t => t.status === "DONE").length;
-
-            const ctx1 = document.getElementById('taskChart').getContext('2d');
-            if (taskChartInstance) taskChartInstance.destroy();
-            taskChartInstance = new Chart(ctx1, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Todo', 'In Progress', 'Done'],
-                    datasets: [{
-                        data: [todo, inProgress, done],
-                        backgroundColor: ['#95a5a6', '#2980b9', '#27ae60'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { font: { size: 10 } } }
-                    }
-                }
-            });
-
-            // نمودار امتیاز گزارش‌ها (میانگین امتیاز هر مدیر)
-            const managers = managerList();
-            const reportScores = managers.map(m => {
-                const r = reports.filter(r => r.manager === m[0] && r.approved && !r.rejected);
-                const avg = r.length ? Math.round(r.reduce((a, b) => a + b.score, 0) / r.length) : 0;
-                return { label: m[0], score: avg };
-            });
-
-            const ctx2 = document.getElementById('reportChart').getContext('2d');
-            if (reportChartInstance) reportChartInstance.destroy();
-            reportChartInstance = new Chart(ctx2, {
-                type: 'bar',
-                data: {
-                    labels: reportScores.map(d => d.label),
-                    datasets: [{
-                        label: 'میانگین امتیاز گزارش',
-                        data: reportScores.map(d => d.score),
-                        backgroundColor: '#2980b9',
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: { beginAtZero: true, max: 100 }
-                    },
-                    plugins: {
-                        legend: { display: false }
-                    }
-                }
-            });
-        }
-
-        // ============================================================
-        // EXPORT EXCEL & PDF (خروجی‌های پیشرفته)
-        // ============================================================
-        function exportExcel() {
-            if (!isAdmin()) { showToast("❌ فقط مدیر اصلی", "error"); return; }
-            try {
-                const data = reports.filter(r => r.approved && !r.rejected).map(r => ({
-                    'مدیر': r.manager,
-                    'بخش': r.dept,
-                    'هفته': r.week,
-                    'برنامه': r.planned,
-                    'انجام': r.completed,
-                    'تاخیر': r.delayed,
-                    'کیفیت': r.quality,
-                    'امتیاز': r.score,
-                    'تأییدکننده': r.approvedBy,
-                    'تاریخ تأیید': r.approvedDate
-                }));
-                if (data.length === 0) { showToast("❌ هیچ داده‌ای برای خروجی وجود ندارد.", "warning"); return; }
-                const ws = XLSX.utils.json_to_sheet(data);
-                const wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, "گزارش‌ها");
-                XLSX.writeFile(wb, `گزارش‌های_${currentMonth}.xlsx`);
-                showToast("✅ خروجی اکسل با موفقیت دانلود شد.", "success");
-            } catch (e) {
-                showToast("❌ خطا در ساخت اکسل: " + e.message, "error");
-            }
-        }
-
-        function exportPDF() {
-            if (!isAdmin()) { showToast("❌ فقط مدیر اصلی", "error"); return; }
-            try {
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF({ orientation: 'landscape', unit: 'mm' });
-                doc.text('گزارش‌های هفتگی - ' + currentMonth, 14, 15);
-
-                const data = reports.filter(r => r.approved && !r.rejected).map(r => [
-                    r.manager, r.dept, r.week, r.planned, r.completed, r.delayed, r.quality, r.score
-                ]);
-                if (data.length === 0) { showToast("❌ هیچ داده‌ای برای خروجی وجود ندارد.", "warning"); return; }
-                doc.autoTable({
-                    head: [
-                        ['مدیر', 'بخش', 'هفته', 'برنامه', 'انجام', 'تاخیر', 'کیفیت', 'امتیاز']
-                    ],
-                    body: data,
-                    startY: 25,
-                    styles: { fontSize: 7 },
-                    headStyles: { fillColor: [38, 55, 70] }
-                });
-                doc.save(`گزارش‌های_${currentMonth}.pdf`);
-                showToast("✅ خروجی پی‌دی‌اف با موفقیت دانلود شد.", "success");
-            } catch (e) {
-                showToast("❌ خطا در ساخت پی‌دی‌اف: " + e.message, "error");
-            }
         }
 
         // ============================================================
@@ -1821,23 +2089,23 @@
                 return (!q || text.includes(q)) && (!status || p.status === status) && (!dept || p.dept === dept);
             });
             document.getElementById("projectsBody").innerHTML = arr.length ? arr.map(p => `
-            <tr>
-            <td><strong>${escapeHTML(p.name)}</strong></td>
-            <td>${escapeHTML(p.type||"-")}</td>
-            <td>${escapeHTML(p.dept)}</td>
-            <td>${escapeHTML(p.manager||"-")}</td>
-            <td>${escapeHTML(p.start||"-")}</td>
-            <td>${escapeHTML(p.deadline||"-")}</td>
-            <td>${projectStatusBadge(p.status)}</td>
-            <td>${p.progress}%<div class="progress"><div style="width:${p.progress}%"></div></div></td>
-            <td>
-            <button class="btn btn-info" onclick="viewProject('${p.id}')">مشاهده</button>
-            ${isAdmin()?`
-            <button class="btn btn-warning" onclick="editProject('${p.id}')">ویرایش</button>
-            <button class="btn btn-danger" onclick="deleteProject('${p.id}')">حذف</button>
-            `:""}
-            </td>
-            </tr>`).join("") : `<tr><td colspan="9" class="empty">پروژه‌ای وجود ندارد.</td></tr>`;
+                <tr>
+                <td><strong>${escapeHTML(p.name)}</strong></td>
+                <td>${escapeHTML(p.type||"-")}</td>
+                <td>${escapeHTML(p.dept)}</td>
+                <td>${escapeHTML(p.manager||"-")}</td>
+                <td>${escapeHTML(p.start||"-")}</td>
+                <td>${escapeHTML(p.deadline||"-")}</td>
+                <td>${projectStatusBadge(p.status)}</td>
+                <td>${p.progress}%<div class="progress"><div style="width:${p.progress}%"></div></div></td>
+                <td>
+                <button class="btn btn-info" onclick="viewProject('${p.id}')">مشاهده</button>
+                ${isAdmin()?`
+                <button class="btn btn-warning" onclick="editProject('${p.id}')">ویرایش</button>
+                <button class="btn btn-danger" onclick="deleteProject('${p.id}')">حذف</button>
+                `:""}
+                </td>
+                </tr>`).join("") : `<tr><td colspan="9" class="empty">پروژه‌ای وجود ندارد.</td></tr>`;
         }
 
         function projectStatusBadge(status) {
@@ -1919,11 +2187,13 @@
         function viewProject(id) {
             const p = projects.find(x => x.id === id);
             if (!p) return;
-            alert(`پروژه: ${p.name}\n\nنوع: ${p.type||"-"}\nبخش: ${p.dept}\nمسئول: ${p.manager||"-"}\nشروع: ${p.start||"-"}\nددلاین: ${p.deadline||"-"}\nوضعیت: ${p.status}\nپیشرفت: ${p.progress}%\n\nتوضیحات:\n${p.desc||"توضیحی ثبت نشده است."}`);
+            alert(
+                `پروژه: ${p.name}\n\nنوع: ${p.type||"-"}\nبخش: ${p.dept}\nمسئول: ${p.manager||"-"}\nشروع: ${p.start||"-"}\nددلاین: ${p.deadline||"-"}\nوضعیت: ${p.status}\nپیشرفت: ${p.progress}%\n\nتوضیحات:\n${p.desc||"توضیحی ثبت نشده است."}`
+                );
         }
 
         // ============================================================
-        // REPORTS (با قابلیت رد با نظر)
+        // REPORTS
         // ============================================================
         function calculateScore(planned, completed, quality, delayed) {
             const p = Number(planned) || 0;
@@ -1954,25 +2224,25 @@
                 });
             }
             document.getElementById("reportsBody").innerHTML = arr.length ? arr.map(r => `
-            <tr>
-            <td>${escapeHTML(r.manager)}</td>
-            <td>${escapeHTML(r.dept)}</td>
-            <td>${escapeHTML(r.week)}</td>
-            <td>${r.planned}</td>
-            <td>${r.completed}</td>
-            <td>${r.delayed}</td>
-            <td>${r.quality}/10</td>
-            <td><strong>${r.score}%</strong></td>
-            <td>${r.approved ? '<span class="badge badge-green">تأیید شده</span>' : r.rejected ? '<span class="badge badge-red">رد شده</span>' : '<span class="badge badge-yellow">در انتظار تأیید</span>'}</td>
-            <td>
-            <button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
-            ${isAdmin()?`
-            <button class="btn btn-warning" onclick="editReport('${r.id}')">ویرایش</button>
-            ${!r.approved && !r.rejected ? `<button class="btn btn-purple" onclick="rejectReportFromList('${r.id}')">رد با نظر</button>` : ''}
-            <button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>
-            `:""}
-            </td>
-            </tr>`).join("") : `<tr><td colspan="10" class="empty">گزارشی ثبت نشده است.</td></tr>`;
+                <tr>
+                <td>${escapeHTML(r.manager)}</td>
+                <td>${escapeHTML(r.dept)}</td>
+                <td>${escapeHTML(r.week)}</td>
+                <td>${r.planned}</td>
+                <td>${r.completed}</td>
+                <td>${r.delayed}</td>
+                <td>${r.quality}/10</td>
+                <td><strong>${r.score}%</strong></td>
+                <td>${r.approved ? '<span class="badge badge-green">تأیید شده</span>' : r.rejected ? '<span class="badge badge-red">رد شده</span>' : '<span class="badge badge-yellow">در انتظار تأیید</span>'}</td>
+                <td>
+                <button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
+                ${isAdmin()?`
+                <button class="btn btn-warning" onclick="editReport('${r.id}')">ویرایش</button>
+                ${!r.approved && !r.rejected ? `<button class="btn btn-purple" onclick="rejectReportFromList('${r.id}')">رد با نظر</button>` : ''}
+                <button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>
+                `:""}
+                </td>
+                </tr>`).join("") : `<tr><td colspan="10" class="empty">گزارشی ثبت نشده است.</td></tr>`;
         }
 
         function openReportModal() {
@@ -1996,19 +2266,19 @@
             const manager = editingReport ? reports.find(r => r.id === editingReport)?.manager : currentUser.role;
             const arr = tasks.filter(t => t.assignedTo === manager);
             document.getElementById("reportTasks").innerHTML = arr.length ? arr.map(t => `
-            <label class="check-item">
-            <input type="checkbox" data-task="${t.id}" ${selected.includes(t.id)?"checked":""}>
-            <span>
-            <strong>${escapeHTML(t.title)}</strong>
-            <br>
-            <small>${priorityBadgeText(t.priority)} — ${statusText(t.status)} — ددلاین: ${escapeHTML(t.deadline?new Date(t.deadline).toLocaleString("fa-IR"):"-")}</small>
-            </span>
-            </label>`).join("") : `<div class="empty">برای این مدیر وظیفه‌ای ثبت نشده است.</div>`;
+                <label class="check-item">
+                <input type="checkbox" data-task="${t.id}" ${selected.includes(t.id)?"checked":""}>
+                <span>
+                <strong>${escapeHTML(t.title)}</strong>
+                <br>
+                <small>${priorityBadgeText(t.priority)} — ${statusText(t.status)} — ددلاین: ${escapeHTML(t.deadline?new Date(t.deadline).toLocaleString("fa-IR"):"-")}</small>
+                </span>
+                </label>`).join("") : `<div class="empty">برای این مدیر وظیفه‌ای ثبت نشده است.</div>`;
         }
 
         function priorityBadgeText(priority) {
-            const map = { CRITICAL: "🔴 Critical", HIGH: "🟠 High", MEDIUM: "🟡 Medium", LOW: "🟢 Low" };
-            return map[priority] || "Medium";
+            const map = { CRITICAL: "بحرانی", HIGH: "زیاد", MEDIUM: "متوسط", LOW: "کم" };
+            return map[priority] || "متوسط";
         }
 
         function openReport(id) {
@@ -2041,11 +2311,11 @@
             const isApproved = r.approved;
             document.getElementById("deleteReportBtn").style.display = isAdmin() ? "" : "none";
             document.getElementById("approveReportBtn").style.display = (isAdmin() && !isApproved && !isRejected) ? "" :
-            "none";
+                "none";
             document.getElementById("rejectReportBtn").style.display = (isAdmin() && !isApproved && !isRejected) ? "" :
-            "none";
+                "none";
             document.getElementById("saveReportBtn").style.display = (isAdmin() || (!isApproved && !isRejected)) ? "" :
-            "none";
+                "none";
 
             document.getElementById("reportModalTitle").textContent = isApproved ? "گزارش تأییدشده" : isRejected ?
                 "گزارش رد شده" : "مشاهده / ویرایش گزارش";
@@ -2269,18 +2539,18 @@
                 return (!manager || r.manager === manager) && (!search || text.includes(search));
             });
             document.getElementById("archiveBody").innerHTML = arr.length ? arr.map(r => `
-            <tr>
-            <td>${escapeHTML(r.manager)}</td>
-            <td>${escapeHTML(r.dept)}</td>
-            <td>${escapeHTML(r.week)}</td>
-            <td><strong>${r.score}%</strong></td>
-            <td>${escapeHTML(r.approvedBy||"-")}</td>
-            <td>${escapeHTML(r.approvedDate||"-")}</td>
-            <td>
-            <button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
-            ${isAdmin()?`<button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>`:""}
-            </td>
-            </tr>`).join("") : `<tr><td colspan="7" class="empty">آرشیوی وجود ندارد.</td></tr>`;
+                <tr>
+                <td>${escapeHTML(r.manager)}</td>
+                <td>${escapeHTML(r.dept)}</td>
+                <td>${escapeHTML(r.week)}</td>
+                <td><strong>${r.score}%</strong></td>
+                <td>${escapeHTML(r.approvedBy||"-")}</td>
+                <td>${escapeHTML(r.approvedDate||"-")}</td>
+                <td>
+                <button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
+                ${isAdmin()?`<button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>`:""}
+                </td>
+                </tr>`).join("") : `<tr><td colspan="7" class="empty">آرشیوی وجود ندارد.</td></tr>`;
         }
 
         // ============================================================
@@ -2341,14 +2611,14 @@
         function renderPeople() {
             let arr = isAdmin() ? people : people.filter(p => p.dept === currentUser.dept);
             document.getElementById("peopleBody").innerHTML = arr.length ? arr.map((p, i) => `
-            <tr>
-            <td>${escapeHTML(p.name)}</td>
-            <td>${escapeHTML(p.role||"-")}</td>
-            <td>${escapeHTML(p.dept||"-")}</td>
-            <td>${p.status==="فعال"?'<span class="badge badge-green">فعال</span>':'<span class="badge badge-gray">غیرفعال</span>'}</td>
-            <td>${escapeHTML(p.skills||"-")}</td>
-            <td>${isAdmin()?`<button class="btn btn-danger" onclick="deletePerson(${i})">حذف</button>`:"-"}</td>
-            </tr>`).join("") : `<tr><td colspan="6" class="empty">نیرویی ثبت نشده است.</td></tr>`;
+                <tr>
+                <td>${escapeHTML(p.name)}</td>
+                <td>${escapeHTML(p.role||"-")}</td>
+                <td>${escapeHTML(p.dept||"-")}</td>
+                <td>${p.status==="فعال"?'<span class="badge badge-green">فعال</span>':'<span class="badge badge-gray">غیرفعال</span>'}</td>
+                <td>${escapeHTML(p.skills||"-")}</td>
+                <td>${isAdmin()?`<button class="btn btn-danger" onclick="deletePerson(${i})">حذف</button>`:"-"}</td>
+                </tr>`).join("") : `<tr><td colspan="6" class="empty">نیرویی ثبت نشده است.</td></tr>`;
         }
 
         function openPersonModal() {
@@ -2432,24 +2702,24 @@
 
         function equipmentRow(e) {
             return `<tr class="${e.type === "main" ? "main-equipment" : "sub-equipment"}">
-            <td><strong>${escapeHTML(e.code)}</strong></td>
-            <td>${e.type === "sub" ? "↳ " : ""}${escapeHTML(e.name)}</td>
-            <td>${escapeHTML(e.category)}</td>
-            <td>${escapeHTML(e.parent || "-")}</td>
-            <td>${equipmentStatusBadge(e.status)}</td>
-            <td>${escapeHTML(e.location || "-")}</td>
-            <td>${escapeHTML(e.checkDate || "-")}</td>
-            <td>${escapeHTML(e.description || "-")}</td>
-            <td>
-            ${isAdmin() ? `
-            <button class="btn btn-warning" onclick="editEquipment('${e.code}')">ویرایش</button>
-            <button class="btn btn-danger" onclick="deleteEquipment('${e.code}')">حذف</button>
-            ` : `
-            ${e.status === "درخواست امانت" ? `<span class="badge badge-purple">در انتظار تأیید</span>` : ''}
-            ${e.status === "سالم" && e.type === "main" ? `<button class="btn btn-info" onclick="requestLoan('${e.code}')">درخواست امانت</button>` : ''}
-            `}
-            </td>
-            </tr>`;
+                <td><strong>${escapeHTML(e.code)}</strong></td>
+                <td>${e.type === "sub" ? "↳ " : ""}${escapeHTML(e.name)}</td>
+                <td>${escapeHTML(e.category)}</td>
+                <td>${escapeHTML(e.parent || "-")}</td>
+                <td>${equipmentStatusBadge(e.status)}</td>
+                <td>${escapeHTML(e.location || "-")}</td>
+                <td>${escapeHTML(e.checkDate || "-")}</td>
+                <td>${escapeHTML(e.description || "-")}</td>
+                <td>
+                ${isAdmin() ? `
+                <button class="btn btn-warning" onclick="editEquipment('${e.code}')">ویرایش</button>
+                <button class="btn btn-danger" onclick="deleteEquipment('${e.code}')">حذف</button>
+                ` : `
+                ${e.status === "درخواست امانت" ? `<span class="badge badge-purple">در انتظار تأیید</span>` : ''}
+                ${e.status === "سالم" && e.type === "main" ? `<button class="btn btn-info" onclick="requestLoan('${e.code}')">درخواست امانت</button>` : ''}
+                `}
+                </td>
+                </tr>`;
         }
 
         function equipmentStatusBadge(s) {
@@ -2570,7 +2840,7 @@
         }
 
         // ============================================================
-        // MONTH (اصلاح چرخه ماهانه)
+        // MONTH
         // ============================================================
         function updateMonthly() {
             document.getElementById("currentMonth").textContent = currentMonth;
@@ -2584,7 +2854,6 @@
             if (!m) return;
             const oldMonth = currentMonth;
             currentMonth = m.trim();
-            // اصلاح بحرانی: فقط تسک‌های باز را ریست کن، تسک‌های Done دست نخورده باقی بمانند
             tasks = tasks.map(t => {
                 if (t.status === "DONE") {
                     return { ...t, cycle: currentMonth };
@@ -2603,7 +2872,7 @@
         }
 
         // ============================================================
-        // NOTIFICATIONS (با یادآوری خودکار)
+        // NOTIFICATIONS
         // ============================================================
         function renderNotifications() {
             const arr = [];
@@ -2611,13 +2880,12 @@
             currentTasks.filter(t => t.status !== "DONE").forEach(t => {
                 const dl = deadlineState(t.deadline);
                 if (t.priority === "CRITICAL") arr.push({ type: "critical",
-                    text: `🔴 وظیفه Critical «${t.title}» هنوز انجام نشده است.` });
+                    text: `🔴 وظیفه بحرانی «${t.title}» هنوز انجام نشده است.` });
                 if (dl.cls === "deadline-overdue") arr.push({ type: "critical",
                     text: `⏰ ددلاین وظیفه «${t.title}» گذشته است.` });
                 else if (dl.cls === "deadline-near") arr.push({ type: "normal",
                     text: `⏳ ددلاین وظیفه «${t.title}» نزدیک است.` });
             });
-            // یادآوری تجهیزات امانت داده شده
             equipment.filter(e => e.status === "امانت داده شده" && e.returnDate).forEach(e => {
                 const returnDate = new Date(e.returnDate);
                 const today = new Date();
@@ -2625,7 +2893,8 @@
                 if (diff < 0) {
                     arr.push({ type: "critical", text: `🚨 تاریخ بازگشت تجهیز «${e.name}» (${e.code}) گذشته است.` });
                 } else if (diff <= 3) {
-                    arr.push({ type: "normal", text: `⏳ تجهیز «${e.name}» (${e.code}) تا ${Math.ceil(diff)} روز دیگر باید برگردد.` });
+                    arr.push({ type: "normal",
+                        text: `⏳ تجهیز «${e.name}» (${e.code}) تا ${Math.ceil(diff)} روز دیگر باید برگردد.` });
                 }
             });
             if (isAdmin()) {
@@ -2650,13 +2919,13 @@
             if (!isAdmin()) return;
             const arr = activityLog;
             document.getElementById("activityList").innerHTML = arr.length ? arr.slice(0, 150).map(a => `
-            <div class="activity-item">
-            <div class="activity-icon">🕘</div>
-            <div class="activity-content">
-            <strong>${escapeHTML(a.action)}</strong>
-            <small>کاربر: ${escapeHTML(a.user)} — ${escapeHTML(new Date(a.time).toLocaleString("fa-IR"))}</small>
-            </div>
-            </div>`).join("") : `<div class="empty">لاگ فعالیتی ثبت نشده است.</div>`;
+                <div class="activity-item">
+                <div class="activity-icon">🕘</div>
+                <div class="activity-content">
+                <strong>${escapeHTML(a.action)}</strong>
+                <small>کاربر: ${escapeHTML(a.user)} — ${escapeHTML(new Date(a.time).toLocaleString("fa-IR"))}</small>
+                </div>
+                </div>`).join("") : `<div class="empty">لاگ فعالیتی ثبت نشده است.</div>`;
         }
 
         function exportActivity() {
@@ -2727,6 +2996,5 @@
         // ============================================================
         checkSession();
     </script>
-
 </body>
 </html>
