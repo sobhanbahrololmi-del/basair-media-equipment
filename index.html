@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>سامانه مدیریت رسانه بصائر</title>
     <style>
-        /* ===== تمام استایل‌های قبلی به همراه اصلاحات Modal ===== */
+        /* ===== تمام استایل‌های قبلی ===== */
         * {
             box-sizing: border-box;
         }
@@ -317,6 +317,11 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
         .toolbar {
             display: flex;
             flex-wrap: wrap;
@@ -524,7 +529,72 @@
             }
         }
 
-        /* ===== MODAL (اصلاح شده) ===== */
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:1100px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media(max-width:850px) {
+            .sidebar {
+                transform: translateX(100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main {
+                margin-right: 0;
+            }
+            .menu-btn {
+                display: block;
+            }
+            .mobile-close {
+                display: block;
+                float: left;
+                width: 34px;
+                height: 34px;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, .1);
+                color: #fff;
+                font-size: 20px;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media(max-width:600px) {
+            .content {
+                padding: 12px;
+            }
+            .topbar {
+                padding: 0 12px;
+            }
+            .page-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .cards {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .card {
+                padding: 14px;
+            }
+            .card .num {
+                font-size: 22px;
+            }
+        }
+
+        /* ===== MODAL ===== */
         .modal {
             display: none;
             position: fixed;
@@ -533,8 +603,7 @@
             z-index: 2500;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            overflow-y: auto;
+            padding: 15px;
         }
         .modal.show {
             display: flex;
@@ -542,14 +611,11 @@
         .modal-box {
             width: 100%;
             max-width: 780px;
-            max-height: 90vh;
-            overflow-y: auto;
+            max-height: 92vh;
+            overflow: auto;
             background: #fff;
             border-radius: 16px;
             padding: 22px;
-            margin: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
-            position: relative;
         }
         .modal-head {
             display: flex;
@@ -557,12 +623,6 @@
             justify-content: space-between;
             gap: 10px;
             margin-bottom: 20px;
-            position: sticky;
-            top: 0;
-            background: #fff;
-            z-index: 10;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
         }
         .modal-head h3 {
             margin: 0;
@@ -576,7 +636,6 @@
             color: #333;
             font-size: 22px;
             border: none;
-            flex-shrink: 0;
         }
         .close-btn:hover {
             background: #e1e5e8;
@@ -587,14 +646,7 @@
             gap: 8px;
             margin-top: 18px;
             flex-wrap: wrap;
-            position: sticky;
-            bottom: 0;
-            background: #fff;
-            padding-top: 10px;
-            border-top: 1px solid var(--border);
         }
-
-        /* ===== سایر استایل‌های فرم و جدول ===== */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -872,6 +924,10 @@
             border-radius: 12px;
             padding: 14px;
         }
+        .project-status h4 {
+            margin: 0 0 12px;
+            font-size: 13px;
+        }
         .project-status .row {
             display: flex;
             justify-content: space-between;
@@ -951,89 +1007,28 @@
             gap: 8px;
             margin-bottom: 15px;
         }
-
-        /* ===== RESPONSIVE ===== */
-        @media(max-width:1100px) {
-            .cards {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
+        .main-equipment {
+            background: #e9eef2 !important;
+            font-weight: bold;
         }
-        @media(max-width:850px) {
-            .sidebar {
-                transform: translateX(100%);
-            }
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            .main {
-                margin-right: 0;
-            }
-            .menu-btn {
-                display: block;
-            }
-            .mobile-close {
-                display: block;
-                float: left;
-                width: 34px;
-                height: 34px;
-                border-radius: 8px;
-                background: rgba(255, 255, 255, .1);
-                color: #fff;
-                font-size: 20px;
-            }
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-            .modal-box {
-                max-width: 95%;
-                padding: 15px;
-            }
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            .form-group.full {
-                grid-column: auto;
-            }
+        .sub-equipment {
+            background: #fafafa !important;
         }
-        @media(max-width:600px) {
-            .content {
-                padding: 12px;
-            }
-            .topbar {
-                padding: 0 12px;
-            }
-            .page-title {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .cards {
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-            }
-            .card {
-                padding: 14px;
-            }
-            .card .num {
-                font-size: 22px;
-            }
-            .modal-box {
-                padding: 12px;
-            }
-            .modal-head h3 {
-                font-size: 14px;
-            }
+        .sub-equipment td:first-child {
+            padding-right: 28px;
         }
     </style>
 </head>
 <body>
 
-    <!-- ========================= TOAST ========================= -->
+    <!-- =========================
+    TOAST CONTAINER
+    ========================= -->
     <div id="toast-container"></div>
 
-    <!-- ========================= LOGIN ========================= -->
+    <!-- =========================
+    LOGIN
+    ========================= -->
     <div id="loginPage" class="login-page">
         <div class="login-box">
             <div class="login-logo">ب</div>
@@ -1048,7 +1043,9 @@
         </div>
     </div>
 
-    <!-- ========================= APP ========================= -->
+    <!-- =========================
+    APP
+    ========================= -->
     <div id="app" class="app">
         <aside id="sidebar" class="sidebar">
             <div class="sidebar-header">
@@ -1099,7 +1096,7 @@
                     <div id="adminDashboard">
                         <div class="grid-2">
                             <div class="panel">
-                                <h3>📊 وضعیت کل وظایف</h3>
+                                <h3>📊 وضعیت کل تسک‌ها</h3>
                                 <div class="status-chart">
                                     <div id="chartTodo" class="chart-todo"></div>
                                     <div id="chartProgress" class="chart-progress"></div>
@@ -1126,9 +1123,10 @@
                                 <div id="dashboardProjects"></div>
                             </div>
                         </div>
-                        <div class="panel" style="display:flex; gap:10px; flex-wrap:wrap;">
-                            <button class="btn btn-success" onclick="showToast('📊 خروجی اکسل در نسخه پایدار', 'info')">📊 خروجی اکسل</button>
-                            <button class="btn btn-danger" onclick="showToast('📄 خروجی پی‌دی‌اف در نسخه پایدار', 'info')">📄 خروجی پی‌دی‌اف</button>
+                        <!-- ===== پنل جدید: تجهیزات امانت داده شده ===== -->
+                        <div class="panel">
+                            <h3>📦 تجهیزات امانت داده شده</h3>
+                            <div id="loanedEquipmentList"></div>
                         </div>
                     </div>
                     <div id="employeeDashboard">
@@ -1155,9 +1153,9 @@
                         <select id="taskPriorityFilter" onchange="renderTasks()">
                             <option value="">همه اولویت‌ها</option>
                             <option value="CRITICAL">🔴 بحرانی</option>
-                            <option value="HIGH">🟠 زیاد</option>
+                            <option value="HIGH">🟠 بالا</option>
                             <option value="MEDIUM">🟡 متوسط</option>
-                            <option value="LOW">🟢 کم</option>
+                            <option value="LOW">🟢 پایین</option>
                         </select>
                         <select id="taskStatusFilter" onchange="renderTasks()">
                             <option value="">همه وضعیت‌ها</option>
@@ -1269,6 +1267,7 @@
                         <div class="card"><div class="num" id="eqMain">0</div><div class="label">تجهیزات اصلی</div></div>
                         <div class="card"><div class="num" id="eqSub">0</div><div class="label">زیرمجموعه‌ها</div></div>
                         <div class="card"><div class="num" id="eqAudio">0</div><div class="label">تجهیزات صوت</div></div>
+                        <div class="card"><div class="num green" id="eqLoaned">0</div><div class="label">امانت داده شده</div></div>
                         <div class="card"><div class="num red" id="eqProblem">0</div><div class="label">نیازمند پیگیری</div></div>
                     </div>
                     <div class="toolbar">
@@ -1300,7 +1299,7 @@
                         <div><div style="color:#777;font-size:11px">ماه فعال سامانه</div><div class="month-value" id="currentMonth">1405/07</div><div id="monthInfo" style="color:#777;font-size:10px;margin-top:7px"></div></div>
                         <div><span class="badge badge-blue">چرخه فعال</span></div>
                     </div>
-                    <div class="panel"><h3>نحوه شروع چرخه جدید</h3><p style="font-size:11px;line-height:2;color:#666">با شروع ماه جدید، گزارش‌های تأییدشده و آرشیو حذف نمی‌شوند. پروژه‌ها نیز باقی می‌مانند. وظایف فعال (غیر از انجام شده) وارد چرخه جدید می‌شوند و وظایف انجام‌شده دست نخورده باقی می‌مانند.</p></div>
+                    <div class="panel"><h3>نحوه شروع چرخه جدید</h3><p style="font-size:11px;line-height:2;color:#666">با شروع ماه جدید، گزارش‌های تأییدشده و آرشیو حذف نمی‌شوند. پروژه‌ها نیز باقی می‌مانند. وظایف فعال (غیر از انجام شده) وارد چرخه جدید می‌شوند و تسک‌های انجام‌شده دست نخورده باقی می‌مانند.</p></div>
                 </section>
 
                 <!-- ===== NOTIFICATIONS ===== -->
@@ -1319,8 +1318,9 @@
         </main>
     </div>
 
-    <!-- ========================= MODALS ========================= -->
-
+    <!-- =========================
+    MODALS
+    ========================= -->
     <!-- PROJECT MODAL -->
     <div id="projectModal" class="modal">
         <div class="modal-box">
@@ -1364,7 +1364,32 @@
                 <div class="form-group"><label>مدیر</label><input id="rManager" readonly></div>
                 <div class="form-group"><label>بخش</label><input id="rDept" readonly></div>
                 <div class="form-group"><label>تاریخ گزارش</label><input id="rDate" type="date"></div>
-                <div class="form-group"><label>هفته</label><input id="rWeek" placeholder="هفته اول مهر 1405"></div>
+                <div class="form-group"><label>هفته</label>
+                    <select id="rWeek">
+                        <option value="">انتخاب هفته</option>
+                        <option value="هفته اول">هفته اول</option>
+                        <option value="هفته دوم">هفته دوم</option>
+                        <option value="هفته سوم">هفته سوم</option>
+                        <option value="هفته چهارم">هفته چهارم</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>ماه</label>
+                    <select id="rMonth">
+                        <option value="">انتخاب ماه</option>
+                        <option value="فروردین">فروردین</option>
+                        <option value="اردیبهشت">اردیبهشت</option>
+                        <option value="خرداد">خرداد</option>
+                        <option value="تیر">تیر</option>
+                        <option value="مرداد">مرداد</option>
+                        <option value="شهریور">شهریور</option>
+                        <option value="مهر">مهر</option>
+                        <option value="آبان">آبان</option>
+                        <option value="آذر">آذر</option>
+                        <option value="دی">دی</option>
+                        <option value="بهمن">بهمن</option>
+                        <option value="اسفند">اسفند</option>
+                    </select>
+                </div>
                 <div class="form-group"><label>کارهای برنامه‌ریزی‌شده</label><input id="rPlanned" type="number" min="0"></div>
                 <div class="form-group"><label>کارهای انجام‌شده</label><input id="rCompleted" type="number" min="0"></div>
                 <div class="form-group"><label>کارهای با تأخیر</label><input id="rDelayed" type="number" min="0"></div>
@@ -1412,7 +1437,7 @@
             <div class="modal-head"><h3>تجهیزات</h3><button class="close-btn" onclick="closeModal('equipmentModal')">×</button></div>
             <div class="form-grid">
                 <div class="form-group"><label>کد</label><input id="eCode" placeholder="مثال: M001"></div>
-                <div class="form-group"><label>نوع</label><select id="eType" onchange="toggleEquipmentParent()"><option value="main">تجهیز اصلی M</option><option value="sub">زیرمجموعه S</option></select></div>
+                <div class="form-group"><label>نوع</label><select id="eType" onchange="toggleEquipmentParent()"><option value="main">تجهیز اصلی</option><option value="sub">زیرمجموعه</option></select></div>
                 <div class="form-group"><label>نام تجهیز</label><input id="eName" placeholder="نام تجهیز را وارد کنید"></div>
                 <div class="form-group"><label>دسته</label><select id="eCategory"><option>تصویر</option><option>صوت</option><option>سایر</option></select></div>
                 <div class="form-group" id="parentGroup"><label>وابسته به</label><select id="eParent"><option value="">بدون وابستگی</option></select></div>
@@ -1430,7 +1455,7 @@
 
     <script>
         // ============================================================
-        // TOAST
+        // TOAST NOTIFICATION SYSTEM
         // ============================================================
         function showToast(message, type = 'info', duration = 3000) {
             const container = document.getElementById('toast-container');
@@ -1438,7 +1463,54 @@
             toast.className = `toast toast-${type}`;
             toast.textContent = message;
             container.appendChild(toast);
-            setTimeout(() => { if (toast.parentNode) toast.remove(); }, duration);
+            setTimeout(() => {
+                if (toast.parentNode) toast.remove();
+            }, duration);
+        }
+
+        // ============================================================
+        // PERSIAN DATE HELPERS
+        // ============================================================
+        function toPersianDate(dateStr) {
+            if (!dateStr) return '-';
+            try {
+                const date = new Date(dateStr);
+                if (isNaN(date.getTime())) return dateStr;
+                const formatter = new Intl.DateTimeFormat('fa-IR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                return formatter.format(date);
+            } catch {
+                return dateStr;
+            }
+        }
+
+        function toPersianDateShort(dateStr) {
+            if (!dateStr) return '-';
+            try {
+                const date = new Date(dateStr);
+                if (isNaN(date.getTime())) return dateStr;
+                const formatter = new Intl.DateTimeFormat('fa-IR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                });
+                return formatter.format(date);
+            } catch {
+                return dateStr;
+            }
+        }
+
+        function getCurrentPersianMonth() {
+            const formatter = new Intl.DateTimeFormat('fa-IR', { month: 'long' });
+            return formatter.format(new Date());
+        }
+
+        function getCurrentPersianYear() {
+            const formatter = new Intl.DateTimeFormat('fa-IR', { year: 'numeric' });
+            return formatter.format(new Date());
         }
 
         // ============================================================
@@ -1552,7 +1624,7 @@
         let currentMonth = localStorage.getItem("basair_month") || "1405/07";
 
         // ============================================================
-        // EQUIPMENT DEFAULT DATA (۳۲ مورد)
+        // EQUIPMENT DEFAULT DATA
         // ============================================================
         if (!Array.isArray(equipment) || equipment.length === 0) {
             equipment = [
@@ -1682,6 +1754,7 @@
             dept: r.dept || departmentFromManager(r.manager),
             date: r.date || "",
             week: r.week || "",
+            month: r.month || "",
             planned: Number(r.planned) || 0,
             completed: Number(r.completed) || 0,
             delayed: Number(r.delayed) || 0,
@@ -1697,7 +1770,7 @@
             rejected: !!r.rejected,
             feedback: r.feedback || "",
             score: Number(r.score) || 0,
-            month: r.month || currentMonth
+            monthCycle: r.monthCycle || currentMonth
         }));
 
         equipment = equipment.map(e => ({
@@ -1783,8 +1856,8 @@
         }
 
         function priorityBadge(priority) {
-            const data = { CRITICAL: ["🔴 بحرانی", "priority-critical"], HIGH: ["🟠 زیاد", "priority-high"],
-                MEDIUM: ["🟡 متوسط", "priority-medium"], LOW: ["🟢 کم", "priority-low"] };
+            const data = { CRITICAL: ["🔴 بحرانی", "priority-critical"], HIGH: ["🟠 بالا", "priority-high"],
+                MEDIUM: ["🟡 متوسط", "priority-medium"], LOW: ["🟢 پایین", "priority-low"] };
             const d = data[priority] || data.MEDIUM;
             return `<span class="priority ${d[1]}">${d[0]}</span>`;
         }
@@ -1813,32 +1886,33 @@
         function renderTaskCard(t) {
             const dl = deadlineState(t.deadline);
             const canChange = isAdmin() || t.assignedTo === currentUser.role;
+            const deadlineDisplay = t.deadline ? toPersianDate(t.deadline) : dl.text;
             return `
-            <div class="task-card">
-            <div class="task-main">
-            <input class="task-check" type="checkbox" ${t.status==="DONE"?"checked":""} ${canChange?"":"disabled"} onchange="toggleTaskDone('${t.id}',this.checked)">
-            <div class="task-content">
-            <div class="task-title ${t.status==="DONE"?"done":""}">${escapeHTML(t.title)}</div>
-            <div class="task-description">${escapeHTML(t.description||"")}</div>
-            <div class="task-meta">
-            ${priorityBadge(t.priority)}
-            <span class="deadline ${dl.cls}">⏰ ${escapeHTML(t.deadline ? new Date(t.deadline).toLocaleString("fa-IR") : dl.text)}</span>
-            ${statusBadgeTask(t.status)}
-            ${isAdmin()?`<span class="badge badge-gray">${escapeHTML(t.assignedTo)}</span>`:""}
-            </div>
-            </div>
-            <div class="task-actions">
-            ${canChange?`
-            <select style="padding:6px;border:1px solid #ddd;border-radius:7px;font-size:9px" onchange="changeTaskStatus('${t.id}',this.value)">
-            <option value="TODO" ${t.status==="TODO"?"selected":""}>انجام نشده</option>
-            <option value="IN_PROGRESS" ${t.status==="IN_PROGRESS"?"selected":""}>در حال انجام</option>
-            <option value="DONE" ${t.status==="DONE"?"selected":""}>انجام شده</option>
-            </select>
-            `:""}
-            ${isAdmin()?`<button class="btn btn-danger" onclick="deleteTask('${t.id}')">حذف</button>`:""}
-            </div>
-            </div>
-            </div>`;
+                <div class="task-card">
+                <div class="task-main">
+                <input class="task-check" type="checkbox" ${t.status==="DONE"?"checked":""} ${canChange?"":"disabled"} onchange="toggleTaskDone('${t.id}',this.checked)">
+                <div class="task-content">
+                <div class="task-title ${t.status==="DONE"?"done":""}">${escapeHTML(t.title)}</div>
+                <div class="task-description">${escapeHTML(t.description||"")}</div>
+                <div class="task-meta">
+                ${priorityBadge(t.priority)}
+                <span class="deadline ${dl.cls}">⏰ ${escapeHTML(deadlineDisplay)}</span>
+                ${statusBadgeTask(t.status)}
+                ${isAdmin()?`<span class="badge badge-gray">${escapeHTML(t.assignedTo)}</span>`:""}
+                </div>
+                </div>
+                <div class="task-actions">
+                ${canChange?`
+                <select style="padding:6px;border:1px solid #ddd;border-radius:7px;font-size:9px" onchange="changeTaskStatus('${t.id}',this.value)">
+                <option value="TODO" ${t.status==="TODO"?"selected":""}>انجام نشده</option>
+                <option value="IN_PROGRESS" ${t.status==="IN_PROGRESS"?"selected":""}>در حال انجام</option>
+                <option value="DONE" ${t.status==="DONE"?"selected":""}>انجام شده</option>
+                </select>
+                `:""}
+                ${isAdmin()?`<button class="btn btn-danger" onclick="deleteTask('${t.id}')">حذف</button>`:""}
+                </div>
+                </div>
+                </div>`;
         }
 
         function renderTasks() {
@@ -1967,6 +2041,7 @@
             const activeProjects = projects.filter(p => p.status === "فعال").length;
             const delayedProjects = projects.filter(p => p.status === "عقب‌مانده").length;
             const peopleActive = people.filter(p => p.status === "فعال").length;
+            const loanedEquipments = equipment.filter(e => e.status === "امانت داده شده");
 
             document.getElementById("dashboardGreeting").textContent = isAdmin() ? "داشبورد مدیر رسانه" : "داشبورد " + currentUser
                 .role;
@@ -1977,20 +2052,20 @@
             const kpis = document.getElementById("dashboardKpis");
             if (isAdmin()) {
                 kpis.innerHTML = `
-                <div class="kpi"><strong>${total}</strong><span>کل وظایف</span></div>
-                <div class="kpi"><strong>${done}</strong><span>انجام شده</span></div>
-                <div class="kpi"><strong>${progress}</strong><span>در حال انجام</span></div>
-                <div class="kpi"><strong>${overdue}</strong><span>عقب‌افتاده</span></div>`;
+                    <div class="kpi"><strong>${total}</strong><span>کل تسک‌ها</span></div>
+                    <div class="kpi"><strong>${done}</strong><span>انجام شده</span></div>
+                    <div class="kpi"><strong>${progress}</strong><span>در حال انجام</span></div>
+                    <div class="kpi"><strong>${overdue}</strong><span>عقب‌افتاده</span></div>`;
             } else {
                 const mine = tasks.filter(t => t.assignedTo === currentUser.role);
                 const mineDone = mine.filter(t => t.status === "DONE").length;
                 const mineOpen = mine.filter(t => t.status !== "DONE").length;
                 const mineCritical = mine.filter(t => t.priority === "CRITICAL" && t.status !== "DONE").length;
                 kpis.innerHTML = `
-                <div class="kpi"><strong>${mine.length}</strong><span>کل کارهای من</span></div>
-                <div class="kpi"><strong>${mineOpen}</strong><span>باز</span></div>
-                <div class="kpi"><strong>${mineDone}</strong><span>انجام‌شده</span></div>
-                <div class="kpi"><strong>${mineCritical}</strong><span>بحرانی</span></div>`;
+                    <div class="kpi"><strong>${mine.length}</strong><span>کل کارهای من</span></div>
+                    <div class="kpi"><strong>${mineOpen}</strong><span>باز</span></div>
+                    <div class="kpi"><strong>${mineDone}</strong><span>انجام‌شده</span></div>
+                    <div class="kpi"><strong>${mineCritical}</strong><span>بحرانی</span></div>`;
             }
 
             if (isAdmin()) {
@@ -2003,12 +2078,23 @@
                 renderDashboardAlerts(overdue);
                 renderManagerPerformance();
                 document.getElementById("dashboardProjects").innerHTML = `
-                <div class="project-status">
-                <div class="row"><span>پروژه‌های فعال</span><strong class="green">${activeProjects}</strong></div>
-                <div class="row"><span>پروژه‌های عقب‌مانده</span><strong class="red">${delayedProjects}</strong></div>
-                <div class="row"><span>نیروهای فعال</span><strong>${peopleActive}</strong></div>
-                <div class="row"><span>نیازمند پیگیری تجهیزات</span><strong class="red">${equipment.filter(e => e.status !== "سالم" && e.status !== "امانت داده شده").length}</strong></div>
-                </div>`;
+                    <div class="project-status">
+                    <div class="row"><span>پروژه‌های فعال</span><strong class="green">${activeProjects}</strong></div>
+                    <div class="row"><span>پروژه‌های عقب‌مانده</span><strong class="red">${delayedProjects}</strong></div>
+                    <div class="row"><span>نیروهای فعال</span><strong>${peopleActive}</strong></div>
+                    <div class="row"><span>نیازمند پیگیری تجهیزات</span><strong class="red">${equipment.filter(e => e.status !== "سالم" && e.status !== "امانت داده شده").length}</strong></div>
+                    </div>`;
+
+                // پنل تجهیزات امانت داده شده
+                const loanedHTML = loanedEquipments.length ? loanedEquipments.map(e =>
+                    `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px;">
+                        <span><strong>${escapeHTML(e.code)}</strong> - ${escapeHTML(e.name)}</span>
+                        <span>تحویل به: ${escapeHTML(e.loanTo||"-")}</span>
+                        <span>بازگشت: ${escapeHTML(e.returnDate?toPersianDateShort(e.returnDate):"-")}</span>
+                    </div>`
+                ).join("") : `<div class="empty">هیچ تجهیزی امانت داده نشده است.</div>`;
+                document.getElementById("loanedEquipmentList").innerHTML = loanedHTML;
+
             } else {
                 document.getElementById("adminDashboard").style.display = "none";
                 document.getElementById("employeeDashboard").style.display = "block";
@@ -2064,11 +2150,11 @@
             const progress = mine.filter(t => t.status === "IN_PROGRESS").length;
             const todo = mine.filter(t => t.status === "TODO").length;
             document.getElementById("employeeTaskSummary").innerHTML = `
-            <div class="project-status">
-            <div class="row"><span>انجام نشده</span><strong>${todo}</strong></div>
-            <div class="row"><span>در حال انجام</span><strong class="blue">${progress}</strong></div>
-            <div class="row"><span>انجام شده</span><strong class="green">${done}</strong></div>
-            </div>`;
+                <div class="project-status">
+                <div class="row"><span>انجام نشده</span><strong>${todo}</strong></div>
+                <div class="row"><span>در حال انجام</span><strong class="blue">${progress}</strong></div>
+                <div class="row"><span>انجام شده</span><strong class="green">${done}</strong></div>
+                </div>`;
             const urgent = mine.filter(t => t.status !== "DONE" && (t.priority === "CRITICAL" || t.priority === "HIGH" ||
                 deadlineState(t.deadline).cls === "deadline-overdue" || deadlineState(t.deadline).cls ===
                 "deadline-near"));
@@ -2089,23 +2175,23 @@
                 return (!q || text.includes(q)) && (!status || p.status === status) && (!dept || p.dept === dept);
             });
             document.getElementById("projectsBody").innerHTML = arr.length ? arr.map(p => `
-                <tr>
-                <td><strong>${escapeHTML(p.name)}</strong></td>
-                <td>${escapeHTML(p.type||"-")}</td>
-                <td>${escapeHTML(p.dept)}</td>
-                <td>${escapeHTML(p.manager||"-")}</td>
-                <td>${escapeHTML(p.start||"-")}</td>
-                <td>${escapeHTML(p.deadline||"-")}</td>
-                <td>${projectStatusBadge(p.status)}</td>
-                <td>${p.progress}%<div class="progress"><div style="width:${p.progress}%"></div></div></td>
-                <td>
-                <button class="btn btn-info" onclick="viewProject('${p.id}')">مشاهده</button>
-                ${isAdmin()?`
-                <button class="btn btn-warning" onclick="editProject('${p.id}')">ویرایش</button>
-                <button class="btn btn-danger" onclick="deleteProject('${p.id}')">حذف</button>
-                `:""}
-                </td>
-                </tr>`).join("") : `<tr><td colspan="9" class="empty">پروژه‌ای وجود ندارد.</td></tr>`;
+                    <tr>
+                    <td><strong>${escapeHTML(p.name)}</strong></td>
+                    <td>${escapeHTML(p.type||"-")}</td>
+                    <td>${escapeHTML(p.dept)}</td>
+                    <td>${escapeHTML(p.manager||"-")}</td>
+                    <td>${escapeHTML(p.start?toPersianDateShort(p.start):"-")}</td>
+                    <td>${escapeHTML(p.deadline?toPersianDateShort(p.deadline):"-")}</td>
+                    <td>${projectStatusBadge(p.status)}</td>
+                    <td>${p.progress}%<div class="progress"><div style="width:${p.progress}%"></div></div></td>
+                    <td>
+                    <button class="btn btn-info" onclick="viewProject('${p.id}')">مشاهده</button>
+                    ${isAdmin()?`
+                    <button class="btn btn-warning" onclick="editProject('${p.id}')">ویرایش</button>
+                    <button class="btn btn-danger" onclick="deleteProject('${p.id}')">حذف</button>
+                    `:""}
+                    </td>
+                    </tr>`).join("") : `<tr><td colspan="9" class="empty">پروژه‌ای وجود ندارد.</td></tr>`;
         }
 
         function projectStatusBadge(status) {
@@ -2188,7 +2274,7 @@
             const p = projects.find(x => x.id === id);
             if (!p) return;
             alert(
-                `پروژه: ${p.name}\n\nنوع: ${p.type||"-"}\nبخش: ${p.dept}\nمسئول: ${p.manager||"-"}\nشروع: ${p.start||"-"}\nددلاین: ${p.deadline||"-"}\nوضعیت: ${p.status}\nپیشرفت: ${p.progress}%\n\nتوضیحات:\n${p.desc||"توضیحی ثبت نشده است."}`
+                `پروژه: ${p.name}\n\nنوع: ${p.type||"-"}\nبخش: ${p.dept}\nمسئول: ${p.manager||"-"}\nشروع: ${p.start?toPersianDate(p.start):"-"}\nددلاین: ${p.deadline?toPersianDate(p.deadline):"-"}\nوضعیت: ${p.status}\nپیشرفت: ${p.progress}%\n\nتوضیحات:\n${p.desc||"توضیحی ثبت نشده است."}`
                 );
         }
 
@@ -2224,34 +2310,36 @@
                 });
             }
             document.getElementById("reportsBody").innerHTML = arr.length ? arr.map(r => `
-                <tr>
-                <td>${escapeHTML(r.manager)}</td>
-                <td>${escapeHTML(r.dept)}</td>
-                <td>${escapeHTML(r.week)}</td>
-                <td>${r.planned}</td>
-                <td>${r.completed}</td>
-                <td>${r.delayed}</td>
-                <td>${r.quality}/10</td>
-                <td><strong>${r.score}%</strong></td>
-                <td>${r.approved ? '<span class="badge badge-green">تأیید شده</span>' : r.rejected ? '<span class="badge badge-red">رد شده</span>' : '<span class="badge badge-yellow">در انتظار تأیید</span>'}</td>
-                <td>
-                <button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
-                ${isAdmin()?`
-                <button class="btn btn-warning" onclick="editReport('${r.id}')">ویرایش</button>
-                ${!r.approved && !r.rejected ? `<button class="btn btn-purple" onclick="rejectReportFromList('${r.id}')">رد با نظر</button>` : ''}
-                <button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>
-                `:""}
-                </td>
-                </tr>`).join("") : `<tr><td colspan="10" class="empty">گزارشی ثبت نشده است.</td></tr>`;
+                    <tr>
+                    <td>${escapeHTML(r.manager)}</td>
+                    <td>${escapeHTML(r.dept)}</td>
+                    <td>${escapeHTML(r.week+" "+r.month)}</td>
+                    <td>${r.planned}</td>
+                    <td>${r.completed}</td>
+                    <td>${r.delayed}</td>
+                    <td>${r.quality}/10</td>
+                    <td><strong>${r.score}%</strong></td>
+                    <td>${r.approved ? '<span class="badge badge-green">تأیید شده</span>' : r.rejected ? '<span class="badge badge-red">رد شده</span>' : '<span class="badge badge-yellow">در انتظار تأیید</span>'}</td>
+                    <td>
+                    <button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
+                    ${isAdmin()?`
+                    <button class="btn btn-warning" onclick="editReport('${r.id}')">ویرایش</button>
+                    ${!r.approved && !r.rejected ? `<button class="btn btn-purple" onclick="rejectReportFromList('${r.id}')">رد با نظر</button>` : ''}
+                    <button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>
+                    `:""}
+                    </td>
+                    </tr>`).join("") : `<tr><td colspan="10" class="empty">گزارشی ثبت نشده است.</td></tr>`;
         }
 
         function openReportModal() {
             editingReport = null;
             document.getElementById("rManager").value = currentUser.role;
             document.getElementById("rDept").value = currentUser.dept === "all" ? "مدیریت رسانه" : currentUser.dept;
-            ["rDate", "rWeek", "rDoneList", "rDelayReason", "rIssues", "rSuggestions"].forEach(id => document.getElementById(
-                id).value = "");
+            ["rDate", "rDoneList", "rDelayReason", "rIssues", "rSuggestions"].forEach(id => document.getElementById(id)
+                .value = "");
             ["rPlanned", "rCompleted", "rDelayed", "rQuality"].forEach(id => document.getElementById(id).value = 0);
+            document.getElementById("rWeek").value = "";
+            document.getElementById("rMonth").value = getCurrentPersianMonth();
             document.getElementById("deleteReportBtn").style.display = "none";
             document.getElementById("approveReportBtn").style.display = "none";
             document.getElementById("rejectReportBtn").style.display = "none";
@@ -2266,18 +2354,18 @@
             const manager = editingReport ? reports.find(r => r.id === editingReport)?.manager : currentUser.role;
             const arr = tasks.filter(t => t.assignedTo === manager);
             document.getElementById("reportTasks").innerHTML = arr.length ? arr.map(t => `
-                <label class="check-item">
-                <input type="checkbox" data-task="${t.id}" ${selected.includes(t.id)?"checked":""}>
-                <span>
-                <strong>${escapeHTML(t.title)}</strong>
-                <br>
-                <small>${priorityBadgeText(t.priority)} — ${statusText(t.status)} — ددلاین: ${escapeHTML(t.deadline?new Date(t.deadline).toLocaleString("fa-IR"):"-")}</small>
-                </span>
-                </label>`).join("") : `<div class="empty">برای این مدیر وظیفه‌ای ثبت نشده است.</div>`;
+                    <label class="check-item">
+                    <input type="checkbox" data-task="${t.id}" ${selected.includes(t.id)?"checked":""}>
+                    <span>
+                    <strong>${escapeHTML(t.title)}</strong>
+                    <br>
+                    <small>${priorityBadgeText(t.priority)} — ${statusText(t.status)} — ددلاین: ${escapeHTML(t.deadline?toPersianDate(t.deadline):"-")}</small>
+                    </span>
+                    </label>`).join("") : `<div class="empty">برای این مدیر وظیفه‌ای ثبت نشده است.</div>`;
         }
 
         function priorityBadgeText(priority) {
-            const map = { CRITICAL: "بحرانی", HIGH: "زیاد", MEDIUM: "متوسط", LOW: "کم" };
+            const map = { CRITICAL: "🔴 بحرانی", HIGH: "🟠 بالا", MEDIUM: "🟡 متوسط", LOW: "🟢 پایین" };
             return map[priority] || "متوسط";
         }
 
@@ -2290,6 +2378,7 @@
             document.getElementById("rDept").value = r.dept;
             document.getElementById("rDate").value = r.date;
             document.getElementById("rWeek").value = r.week;
+            document.getElementById("rMonth").value = r.month || "";
             document.getElementById("rPlanned").value = r.planned;
             document.getElementById("rCompleted").value = r.completed;
             document.getElementById("rDelayed").value = r.delayed;
@@ -2300,6 +2389,7 @@
             document.getElementById("rSuggestions").value = r.suggestions || "";
             renderReportTasks(r.taskIds || []);
 
+            // نمایش فیدبک اگر گزارش رد شده باشد
             if (r.rejected && r.feedback) {
                 document.getElementById("reportFeedbackContainer").style.display = "flex";
                 document.getElementById("reportFeedbackDisplay").textContent = r.feedback;
@@ -2307,18 +2397,18 @@
                 document.getElementById("reportFeedbackContainer").style.display = "none";
             }
 
+            // نمایش دکمه‌ها بر اساس وضعیت
             const isRejected = r.rejected;
             const isApproved = r.approved;
             document.getElementById("deleteReportBtn").style.display = isAdmin() ? "" : "none";
-            document.getElementById("approveReportBtn").style.display = (isAdmin() && !isApproved && !isRejected) ? "" :
-                "none";
+            document.getElementById("approveReportBtn").style.display = (isAdmin() && !isApproved) ? "" : "none";
             document.getElementById("rejectReportBtn").style.display = (isAdmin() && !isApproved && !isRejected) ? "" :
                 "none";
-            document.getElementById("saveReportBtn").style.display = (isAdmin() || (!isApproved && !isRejected)) ? "" :
-                "none";
+            // مدیر تخصصی می‌تواند گزارش رد شده را ویرایش کند
+            document.getElementById("saveReportBtn").style.display = (isAdmin() || (!isApproved)) ? "" : "none";
 
             document.getElementById("reportModalTitle").textContent = isApproved ? "گزارش تأییدشده" : isRejected ?
-                "گزارش رد شده" : "مشاهده / ویرایش گزارش";
+                "گزارش رد شده (قابل ویرایش)" : "مشاهده / ویرایش گزارش";
             document.getElementById("reportModal").classList.add("show");
         }
 
@@ -2329,6 +2419,7 @@
             if (editingReport && !isAdmin()) {
                 const old = reports.find(r => r.id === editingReport);
                 if (old && old.approved) { showToast("❌ گزارش تأیید شده و قابل ویرایش نیست.", "error"); return; }
+                // اگر گزارش رد شده بود، وضعیت رد را پاک کن تا دوباره بررسی شود
                 if (old && old.rejected) {
                     old.rejected = false;
                     old.feedback = "";
@@ -2337,12 +2428,17 @@
             const manager = document.getElementById("rManager").value;
             if (!isAdmin() && manager !== currentUser.role) { showToast("❌ دسترسی ندارید.", "error"); return; }
             const taskIds = [...document.querySelectorAll("#reportTasks input[data-task]:checked")].map(x => x.dataset.task);
+            const week = document.getElementById("rWeek").value;
+            const month = document.getElementById("rMonth").value;
+            if (!week || !month) { showToast("❌ لطفاً هفته و ماه را انتخاب کنید.", "error"); return; }
+
             const r = {
                 id: editingReport || uid(),
                 manager: manager,
                 dept: document.getElementById("rDept").value,
                 date: document.getElementById("rDate").value,
-                week: document.getElementById("rWeek").value,
+                week: week,
+                month: month,
                 planned: Number(document.getElementById("rPlanned").value) || 0,
                 completed: Number(document.getElementById("rCompleted").value) || 0,
                 delayed: Number(document.getElementById("rDelayed").value) || 0,
@@ -2355,13 +2451,16 @@
                 approved: editingReport ? (reports.find(x => x.id === editingReport)?.approved || false) : false,
                 rejected: editingReport ? (reports.find(x => x.id === editingReport)?.rejected || false) : false,
                 feedback: editingReport ? (reports.find(x => x.id === editingReport)?.feedback || "") : "",
-                month: currentMonth
+                monthCycle: currentMonth
             };
             r.score = calculateScore(r.planned, r.completed, r.quality, r.delayed);
+
             if (editingReport) {
                 const i = reports.findIndex(x => x.id === editingReport);
-                if (i >= 0) { const old = reports[i];
-                    reports[i] = { ...old, ...r }; }
+                if (i >= 0) {
+                    const old = reports[i];
+                    reports[i] = { ...old, ...r };
+                }
             } else {
                 reports.push(r);
             }
@@ -2385,7 +2484,7 @@
             r.feedback = "";
             r.approvedBy = currentUser.role;
             r.approvedDate = new Date().toLocaleDateString("fa-IR");
-            r.month = currentMonth;
+            r.monthCycle = currentMonth;
             logActivity("تأیید و آرشیو گزارش " + r.manager, null);
             saveAll();
             renderReports();
@@ -2494,6 +2593,7 @@
                                 dept: newReport.dept || "",
                                 date: newReport.date || "",
                                 week: newReport.week || "",
+                                month: newReport.month || "",
                                 planned: Number(newReport.planned) || 0,
                                 completed: Number(newReport.completed) || 0,
                                 delayed: Number(newReport.delayed) || 0,
@@ -2509,7 +2609,7 @@
                                 approvedBy: newReport.approvedBy || "",
                                 approvedDate: newReport.approvedDate || "",
                                 score: Number(newReport.score) || 0,
-                                month: newReport.month || currentMonth
+                                monthCycle: newReport.monthCycle || currentMonth
                             });
                             addedCount++;
                         } else { skippedCount++; }
@@ -2535,22 +2635,22 @@
             const manager = document.getElementById("archiveManagerFilter")?.value || "";
             const search = (document.getElementById("archiveSearch")?.value || "").toLowerCase();
             arr = arr.filter(r => {
-                const text = (r.manager + " " + r.dept + " " + r.week).toLowerCase();
+                const text = (r.manager + " " + r.dept + " " + r.week + " " + r.month).toLowerCase();
                 return (!manager || r.manager === manager) && (!search || text.includes(search));
             });
             document.getElementById("archiveBody").innerHTML = arr.length ? arr.map(r => `
-                <tr>
-                <td>${escapeHTML(r.manager)}</td>
-                <td>${escapeHTML(r.dept)}</td>
-                <td>${escapeHTML(r.week)}</td>
-                <td><strong>${r.score}%</strong></td>
-                <td>${escapeHTML(r.approvedBy||"-")}</td>
-                <td>${escapeHTML(r.approvedDate||"-")}</td>
-                <td>
-                <button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
-                ${isAdmin()?`<button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>`:""}
-                </td>
-                </tr>`).join("") : `<tr><td colspan="7" class="empty">آرشیوی وجود ندارد.</td></tr>`;
+                    <tr>
+                    <td>${escapeHTML(r.manager)}</td>
+                    <td>${escapeHTML(r.dept)}</td>
+                    <td>${escapeHTML(r.week+" "+r.month)}</td>
+                    <td><strong>${r.score}%</strong></td>
+                    <td>${escapeHTML(r.approvedBy||"-")}</td>
+                    <td>${escapeHTML(r.approvedDate||"-")}</td>
+                    <td>
+                    <button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
+                    ${isAdmin()?`<button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>`:""}
+                    </td>
+                    </tr>`).join("") : `<tr><td colspan="7" class="empty">آرشیوی وجود ندارد.</td></tr>`;
         }
 
         // ============================================================
@@ -2611,14 +2711,14 @@
         function renderPeople() {
             let arr = isAdmin() ? people : people.filter(p => p.dept === currentUser.dept);
             document.getElementById("peopleBody").innerHTML = arr.length ? arr.map((p, i) => `
-                <tr>
-                <td>${escapeHTML(p.name)}</td>
-                <td>${escapeHTML(p.role||"-")}</td>
-                <td>${escapeHTML(p.dept||"-")}</td>
-                <td>${p.status==="فعال"?'<span class="badge badge-green">فعال</span>':'<span class="badge badge-gray">غیرفعال</span>'}</td>
-                <td>${escapeHTML(p.skills||"-")}</td>
-                <td>${isAdmin()?`<button class="btn btn-danger" onclick="deletePerson(${i})">حذف</button>`:"-"}</td>
-                </tr>`).join("") : `<tr><td colspan="6" class="empty">نیرویی ثبت نشده است.</td></tr>`;
+                    <tr>
+                    <td>${escapeHTML(p.name)}</td>
+                    <td>${escapeHTML(p.role||"-")}</td>
+                    <td>${escapeHTML(p.dept||"-")}</td>
+                    <td>${p.status==="فعال"?'<span class="badge badge-green">فعال</span>':'<span class="badge badge-gray">غیرفعال</span>'}</td>
+                    <td>${escapeHTML(p.skills||"-")}</td>
+                    <td>${isAdmin()?`<button class="btn btn-danger" onclick="deletePerson(${i})">حذف</button>`:"-"}</td>
+                    </tr>`).join("") : `<tr><td colspan="6" class="empty">نیرویی ثبت نشده است.</td></tr>`;
         }
 
         function openPersonModal() {
@@ -2696,30 +2796,35 @@
             document.getElementById("eqMain").textContent = equipment.filter(x => x.type === "main").length;
             document.getElementById("eqSub").textContent = equipment.filter(x => x.type === "sub").length;
             document.getElementById("eqAudio").textContent = equipment.filter(x => x.category === "صوت").length;
+            const loaned = equipment.filter(x => x.status === "امانت داده شده");
+            document.getElementById("eqLoaned").textContent = loaned.length;
+            // نیازمند پیگیری: همه به جز سالم و امانت داده شده
             document.getElementById("eqProblem").textContent = equipment.filter(x => x.status !== "سالم" && x.status !==
                 "امانت داده شده").length;
         }
 
         function equipmentRow(e) {
+            const loanInfo = e.status === "امانت داده شده" && e.loanTo ?
+                `<br><small>امانت به: ${escapeHTML(e.loanTo)}</small>` : '';
             return `<tr class="${e.type === "main" ? "main-equipment" : "sub-equipment"}">
-                <td><strong>${escapeHTML(e.code)}</strong></td>
-                <td>${e.type === "sub" ? "↳ " : ""}${escapeHTML(e.name)}</td>
-                <td>${escapeHTML(e.category)}</td>
-                <td>${escapeHTML(e.parent || "-")}</td>
-                <td>${equipmentStatusBadge(e.status)}</td>
-                <td>${escapeHTML(e.location || "-")}</td>
-                <td>${escapeHTML(e.checkDate || "-")}</td>
-                <td>${escapeHTML(e.description || "-")}</td>
-                <td>
-                ${isAdmin() ? `
-                <button class="btn btn-warning" onclick="editEquipment('${e.code}')">ویرایش</button>
-                <button class="btn btn-danger" onclick="deleteEquipment('${e.code}')">حذف</button>
-                ` : `
-                ${e.status === "درخواست امانت" ? `<span class="badge badge-purple">در انتظار تأیید</span>` : ''}
-                ${e.status === "سالم" && e.type === "main" ? `<button class="btn btn-info" onclick="requestLoan('${e.code}')">درخواست امانت</button>` : ''}
-                `}
-                </td>
-                </tr>`;
+                    <td><strong>${escapeHTML(e.code)}</strong></td>
+                    <td>${e.type === "sub" ? "↳ " : ""}${escapeHTML(e.name)}${loanInfo}</td>
+                    <td>${escapeHTML(e.category)}</td>
+                    <td>${escapeHTML(e.parent || "-")}</td>
+                    <td>${equipmentStatusBadge(e.status)}</td>
+                    <td>${escapeHTML(e.location || "-")}</td>
+                    <td>${escapeHTML(e.checkDate?toPersianDateShort(e.checkDate):"-")}</td>
+                    <td>${escapeHTML(e.description || "-")}</td>
+                    <td>
+                    ${isAdmin() ? `
+                    <button class="btn btn-warning" onclick="editEquipment('${e.code}')">ویرایش</button>
+                    <button class="btn btn-danger" onclick="deleteEquipment('${e.code}')">حذف</button>
+                    ` : `
+                    ${e.status === "درخواست امانت" ? `<span class="badge badge-purple">در انتظار تأیید</span>` : ''}
+                    ${e.status === "سالم" && e.type === "main" ? `<button class="btn btn-info" onclick="requestLoan('${e.code}')">درخواست امانت</button>` : ''}
+                    `}
+                    </td>
+                    </tr>`;
         }
 
         function equipmentStatusBadge(s) {
@@ -2742,9 +2847,12 @@
             const name = prompt("نام گیرنده را وارد کنید:", "");
             if (name === null) return;
             if (name.trim() === "") { showToast("❌ نام گیرنده الزامی است.", "error"); return; }
+            const returnDate = prompt("تاریخ بازگشت (به صورت شمسی مثلاً 1405/01/15) را وارد کنید:", "");
+            if (returnDate === null) return;
             item.status = "درخواست امانت";
             item.loanTo = name.trim();
             item.loanDate = new Date().toISOString().slice(0, 10);
+            item.returnDate = returnDate.trim() || "";
             logActivity("درخواست امانت تجهیز " + item.name + " توسط " + name.trim(), null);
             saveAll();
             renderEquipment();
@@ -2850,7 +2958,7 @@
         function startNewMonth() {
             if (!isAdmin()) return;
             if (!confirm("ماه جدید شروع شود؟\n\nآرشیو گزارش‌ها و پروژه‌ها حذف نخواهند شد.")) return;
-            const m = prompt("ماه جدید را وارد کنید:", currentMonth);
+            const m = prompt("ماه جدید را وارد کنید (مثال: 1405/08):", currentMonth);
             if (!m) return;
             const oldMonth = currentMonth;
             currentMonth = m.trim();
@@ -2919,13 +3027,13 @@
             if (!isAdmin()) return;
             const arr = activityLog;
             document.getElementById("activityList").innerHTML = arr.length ? arr.slice(0, 150).map(a => `
-                <div class="activity-item">
-                <div class="activity-icon">🕘</div>
-                <div class="activity-content">
-                <strong>${escapeHTML(a.action)}</strong>
-                <small>کاربر: ${escapeHTML(a.user)} — ${escapeHTML(new Date(a.time).toLocaleString("fa-IR"))}</small>
-                </div>
-                </div>`).join("") : `<div class="empty">لاگ فعالیتی ثبت نشده است.</div>`;
+                    <div class="activity-item">
+                    <div class="activity-icon">🕘</div>
+                    <div class="activity-content">
+                    <strong>${escapeHTML(a.action)}</strong>
+                    <small>کاربر: ${escapeHTML(a.user)} — ${escapeHTML(new Date(a.time).toLocaleString("fa-IR"))}</small>
+                    </div>
+                    </div>`).join("") : `<div class="empty">لاگ فعالیتی ثبت نشده است.</div>`;
         }
 
         function exportActivity() {
@@ -2996,5 +3104,6 @@
         // ============================================================
         checkSession();
     </script>
+
 </body>
 </html>
