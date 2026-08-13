@@ -572,6 +572,13 @@
             }
         }
         @media(max-width:600px) {
+            .modal { padding:8px; align-items:flex-start; }
+            .modal-box { width:100%; max-height:calc(100vh - 16px); border-radius:12px; padding:14px; margin-top:0; }
+            .modal-head { position:sticky; top:0; background:#fff; z-index:2; padding-bottom:10px; }
+            .form-grid { grid-template-columns:1fr !important; gap:10px; }
+            .form-group.full { grid-column:1; }
+            .modal-actions { position:sticky; bottom:0; background:#fff; padding-top:10px; }
+            .modal-actions .btn { flex:1; min-width:110px; }
             .content {
                 padding: 12px;
             }
@@ -609,14 +616,24 @@
             display: flex;
         }
         .modal-box {
-            width: 100%;
+            width: min(780px, 100%);
             max-width: 780px;
-            max-height: 92vh;
-            overflow: auto;
+            max-height: calc(100vh - 30px);
+            overflow-x: hidden;
+            overflow-y: auto;
+            overscroll-behavior: contain;
             background: #fff;
             border-radius: 16px;
             padding: 22px;
         }
+        .modal-box * { max-width: 100%; }
+        .modal-box .form-grid { min-width: 0; }
+        .loan-request-card { border:1px solid var(--border); border-radius:12px; padding:12px; margin-bottom:10px; background:#fafbfc; }
+        .loan-request-items { display:grid; gap:7px; margin-top:10px; }
+        .loan-request-item { display:flex; align-items:center; gap:8px; padding:9px; background:#fff; border:1px solid #e5e8ea; border-radius:8px; }
+        .loan-request-item span { flex:1; font-size:10px; }
+        .loan-request-item select { padding:6px; border:1px solid #ddd; border-radius:7px; font-size:10px; }
+        .loan-actions { display:flex; gap:7px; flex-wrap:wrap; margin-top:10px; }
         .modal-head {
             display: flex;
             align-items: center;
@@ -1128,6 +1145,10 @@
                             <h3>📦 تجهیزات امانت داده شده</h3>
                             <div id="loanedEquipmentList"></div>
                         </div>
+                        <div class="panel">
+                            <h3>📋 درخواست‌های امانت تجهیزات</h3>
+                            <div id="equipmentRequestsList"></div>
+                        </div>
                     </div>
                     <div id="employeeDashboard">
                         <div class="panel daily-focus">
@@ -1138,6 +1159,7 @@
                             <div class="panel"><h3>📌 کارهای من</h3><div id="employeeTaskSummary"></div></div>
                             <div class="panel"><h3>⏰ کارهای فوری</h3><div id="employeeUrgent"></div></div>
                         </div>
+                        <div class="panel"><h3>🎒 تجهیزاتی که در اختیار من است</h3><div id="employeeLoanedEquipment"></div></div>
                     </div>
                 </section>
 
@@ -1261,7 +1283,10 @@
                 <section id="page-equipment" class="page">
                     <div class="page-title">
                         <div><h2>📦 مدیریت تجهیزات</h2><p>ثبت، کنترل، وضعیت، محل نگهداری و امانت تجهیزات</p></div>
-                        <button class="btn btn-success admin-only" onclick="openEquipmentModal()">➕ افزودن تجهیز</button>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+                            <button class="btn btn-info" onclick="openEquipmentRequestModal()">📋 درخواست تجهیزات</button>
+                            <button class="btn btn-success admin-only" onclick="openEquipmentModal()">➕ افزودن تجهیز</button>
+                        </div>
                     </div>
                     <div class="equipment-summary">
                         <div class="card"><div class="num" id="eqMain">0</div><div class="label">تجهیزات اصلی</div></div>
@@ -1294,7 +1319,7 @@
 
                 <!-- ===== MONTHLY ===== -->
                 <section id="page-monthly" class="page">
-                    <div class="page-title"><div><h2>🗓 مدیریت ماهانه</h2><p>کنترل چرخه عملیاتی ماه</p></div><button class="btn btn-success admin-only" onclick="startNewMonth()">🔄 شروع ماه جدید</button></div>
+                    <div class="page-title"><div><h2>🗓 مدیریت ماهانه</h2><p>کنترل چرخه عملیاتی ماه</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary admin-only" onclick="backupAllData()">💾 پشتیبان کامل</button><button class="btn btn-info admin-only" onclick="document.getElementById('restoreFileInput').click()">♻️ بازیابی</button><input id="restoreFileInput" type="file" accept=".json,application/json" style="display:none" onchange="restoreAllData(event)"><button class="btn btn-success admin-only" onclick="startNewMonth()">🔄 شروع ماه جدید</button></div></div>
                     <div class="month-card">
                         <div><div style="color:#777;font-size:11px">ماه فعال سامانه</div><div class="month-value" id="currentMonth">1405/07</div><div id="monthInfo" style="color:#777;font-size:10px;margin-top:7px"></div></div>
                         <div><span class="badge badge-blue">چرخه فعال</span></div>
@@ -1330,8 +1355,8 @@
                 <div class="form-group"><label>نوع پروژه</label><input id="pType" placeholder="مستند / رویداد / پادکست..."></div>
                 <div class="form-group"><label>بخش</label><select id="pDept"><option>تولید</option><option>پس‌تولید</option><option>انتشار</option></select></div>
                 <div class="form-group"><label>مسئول</label><input id="pManager"></div>
-                <div class="form-group"><label>تاریخ شروع</label><input id="pStart" type="date"></div>
-                <div class="form-group"><label>ددلاین</label><input id="pDeadline" type="date"></div>
+                <div class="form-group"><label>تاریخ شروع</label><input id="pStart" type="text" placeholder="۱۴۰۵/۰۶/۳۰"></div>
+                <div class="form-group"><label>ددلاین</label><input id="pDeadline" type="text" placeholder="۱۴۰۵/۰۶/۳۰"></div>
                 <div class="form-group"><label>وضعیت</label><select id="pStatus"><option>فعال</option><option>عقب‌مانده</option><option>تکمیل‌شده</option><option>متوقف‌شده</option></select></div>
                 <div class="form-group"><label>درصد پیشرفت</label><input id="pProgress" type="number" min="0" max="100" value="0"></div>
                 <div class="form-group full"><label>توضیحات</label><textarea id="pDesc"></textarea></div>
@@ -1347,9 +1372,9 @@
             <div class="form-grid">
                 <div class="form-group full"><label>عنوان وظیفه</label><input id="tTitle"></div>
                 <div class="form-group full"><label>توضیحات</label><textarea id="tDesc"></textarea></div>
-                <div class="form-group"><label>مسئول</label><select id="tManager"></select></div>
+                <div class="form-group"><label>مسئول</label><select id="tManager"></select></div><div class="form-group"><label>پروژه مرتبط</label><select id="tProject"><option value="">بدون پروژه</option></select></div>
                 <div class="form-group"><label>اولویت</label><select id="tPriority"><option value="LOW">🟢 کم</option><option value="MEDIUM" selected>🟡 متوسط</option><option value="HIGH">🟠 زیاد</option><option value="CRITICAL">🔴 بحرانی</option></select></div>
-                <div class="form-group"><label>ددلاین</label><input id="tDeadline" type="datetime-local"></div>
+                <div class="form-group"><label>ددلاین</label><input id="tDeadline" type="text" placeholder="۱۴۰۵/۰۶/۳۰ ۱۸:۰۰"></div>
                 <div class="form-group"><label>وضعیت اولیه</label><select id="tStatus"><option value="TODO">انجام نشده</option><option value="IN_PROGRESS">در حال انجام</option></select></div>
             </div>
             <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal('taskModal')">انصراف</button><button class="btn btn-success" onclick="saveTask()">💾 ثبت وظیفه</button></div>
@@ -1363,7 +1388,7 @@
             <div class="form-grid">
                 <div class="form-group"><label>مدیر</label><input id="rManager" readonly></div>
                 <div class="form-group"><label>بخش</label><input id="rDept" readonly></div>
-                <div class="form-group"><label>تاریخ گزارش</label><input id="rDate" type="date"></div>
+                <div class="form-group"><label>تاریخ گزارش</label><input id="rDate" type="text" placeholder="۱۴۰۵/۰۶/۳۰"></div>
                 <div class="form-group"><label>هفته</label>
                     <select id="rWeek">
                         <option value="">انتخاب هفته</option>
@@ -1391,7 +1416,7 @@
                     </select>
                 </div>
                 <div class="form-group"><label>کارهای برنامه‌ریزی‌شده</label><input id="rPlanned" type="number" min="0"></div>
-                <div class="form-group"><label>کارهای انجام‌شده</label><input id="rCompleted" type="number" min="0"></div>
+                <div class="form-group"><label>کارهای انجام‌شده</label><select id="rCompleted"><option value="0">۰ از ۰</option></select></div>
                 <div class="form-group"><label>کارهای با تأخیر</label><input id="rDelayed" type="number" min="0"></div>
                 <div class="form-group"><label>کیفیت از ۱۰</label><input id="rQuality" type="number" min="0" max="10"></div>
                 <div class="form-group full"><label>کارهای انجام‌شده / خروجی‌ها</label><textarea id="rDoneList"></textarea></div>
@@ -1413,6 +1438,20 @@
                 <button id="rejectReportBtn" class="btn btn-warning admin-only" onclick="rejectReport()">✗ رد با نظر</button>
                 <button id="deleteReportBtn" class="btn btn-danger admin-only" onclick="deleteReport()">🗑 حذف گزارش</button>
             </div>
+        </div>
+    </div>
+
+    <!-- EQUIPMENT REQUEST MODAL -->
+    <div id="equipmentRequestModal" class="modal">
+        <div class="modal-box">
+            <div class="modal-head"><h3>📋 درخواست تجهیزات</h3><button class="close-btn" onclick="closeModal('equipmentRequestModal')">×</button></div>
+            <div class="form-grid">
+                <div class="form-group"><label>درخواست‌کننده</label><input id="loanRequester" readonly></div>
+                <div class="form-group"><label>تاریخ بازگشت</label><input id="loanRequestReturnDate" type="text" placeholder="مثلاً ۱۴۰۵/۰۶/۳۰"></div>
+                <div class="form-group full"><label>توضیحات درخواست</label><textarea id="loanRequestNote" placeholder="برای چه کاری و چه مدت نیاز دارید؟"></textarea></div>
+                <div class="form-group full"><div class="checklist"><div class="checklist-title">انتخاب تجهیزات موردنیاز</div><div id="loanEquipmentChoices"></div></div></div>
+            </div>
+            <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal('equipmentRequestModal')">انصراف</button><button class="btn btn-success" onclick="submitEquipmentRequest()">📨 ارسال درخواست</button></div>
         </div>
     </div>
 
@@ -1443,10 +1482,10 @@
                 <div class="form-group" id="parentGroup"><label>وابسته به</label><select id="eParent"><option value="">بدون وابستگی</option></select></div>
                 <div class="form-group"><label>وضعیت</label><select id="eStatus"><option>سالم</option><option>نیازمند بررسی</option><option>نیازمند تعمیر</option><option>خراب</option><option>مفقود</option><option>درخواست امانت</option><option>امانت داده شده</option></select></div>
                 <div class="form-group"><label>محل نگهداری</label><input id="eLocation" placeholder="انبار، استودیو، ..."></div>
-                <div class="form-group"><label>آخرین بررسی</label><input id="eCheck" type="date"></div>
+                <div class="form-group"><label>آخرین بررسی</label><input id="eCheck" type="text" placeholder="۱۴۰۵/۰۶/۳۰"></div>
                 <div class="form-group"><label>تحویل به</label><input id="eLoanTo" placeholder="نام شخص"></div>
-                <div class="form-group"><label>تاریخ تحویل</label><input id="eLoanDate" type="date"></div>
-                <div class="form-group"><label>تاریخ بازگشت</label><input id="eReturnDate" type="date"></div>
+                <div class="form-group"><label>تاریخ تحویل</label><input id="eLoanDate" type="text" placeholder="۱۴۰۵/۰۶/۳۰"></div>
+                <div class="form-group"><label>تاریخ بازگشت</label><input id="eReturnDate" type="text" placeholder="۱۴۰۵/۰۶/۳۰"></div>
                 <div class="form-group full"><label>توضیحات</label><textarea id="eDesc" placeholder="توضیحات اضافی..."></textarea></div>
             </div>
             <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal('equipmentModal')">انصراف</button><button class="btn btn-success" onclick="saveEquipment()">💾 ذخیره تجهیز</button></div>
@@ -1471,37 +1510,65 @@
         // ============================================================
         // PERSIAN DATE HELPERS
         // ============================================================
+        function jalaliToGregorian(jy, jm, jd) {
+            jy = Number(jy); jm = Number(jm); jd = Number(jd);
+            let gy = jy <= 979 ? 621 : 1600;
+            jy -= jy <= 979 ? 0 : 979;
+            let days = 365 * jy + Math.floor(jy / 33) * 8 + Math.floor((jy % 33 + 3) / 4) + 78 + jd + (jm < 7 ? (jm - 1) * 31 : (jm - 7) * 30 + 186);
+            gy += 400 * Math.floor(days / 146097); days %= 146097;
+            if (days > 36524) { gy += 100 * Math.floor(--days / 36524); days %= 36524; if (days >= 365) days++; }
+            gy += 4 * Math.floor(days / 1461); days %= 1461;
+            if (days > 365) { gy += Math.floor((days - 1) / 365); days = (days - 1) % 365; }
+            const gd = days + 1;
+            const leap = (gy % 4 === 0 && gy % 100 !== 0) || gy % 400 === 0;
+            const gDays = [0,31,leap?29:28,31,30,31,30,31,31,30,31,30,31];
+            let gm=1, rem=gd; while (rem > gDays[gm]) { rem -= gDays[gm]; gm++; }
+            return new Date(gy, gm - 1, rem);
+        }
+
+        function parseDateInput(value) {
+            if (!value) return null;
+            const v = String(value).trim().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+            const m = v.match(/^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})(?:[ T](\d{1,2}):(\d{2}))?$/);
+            if (!m) { const d = new Date(value); return isNaN(d) ? null : d; }
+            const y=+m[1], mo=+m[2], day=+m[3];
+            let d;
+            if (y >= 1300 && y <= 1600) d = jalaliToGregorian(y,mo,day);
+            else d = new Date(y,mo-1,day);
+            if (m[4]) d.setHours(+m[4], +m[5], 0, 0);
+            return isNaN(d) ? null : d;
+        }
+
         function toPersianDate(dateStr) {
-            if (!dateStr) return '-';
-            try {
-                const date = new Date(dateStr);
-                if (isNaN(date.getTime())) return dateStr;
-                const formatter = new Intl.DateTimeFormat('fa-IR', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-                return formatter.format(date);
-            } catch {
-                return dateStr;
-            }
+            const date = parseDateInput(dateStr);
+            if (!date) return dateStr || '-';
+            return new Intl.DateTimeFormat('fa-IR-u-ca-persian', {year:'numeric',month:'long',day:'numeric'}).format(date);
         }
 
         function toPersianDateShort(dateStr) {
-            if (!dateStr) return '-';
-            try {
-                const date = new Date(dateStr);
-                if (isNaN(date.getTime())) return dateStr;
-                const formatter = new Intl.DateTimeFormat('fa-IR', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit'
-                });
-                return formatter.format(date);
-            } catch {
-                return dateStr;
-            }
+            const date = parseDateInput(dateStr);
+            if (!date) return dateStr || '-';
+            const parts = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
+            const get = t => parts.find(x=>x.type===t)?.value || '';
+            return `${get('year')}/${get('month')}/${get('day')}`;
         }
+
+        function toGregorianISO(value) {
+            const d=parseDateInput(value);
+            if(!d) return '';
+            const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');
+            return `${y}-${m}-${day}`;
+        }
+
+        function toGregorianDateTime(value) {
+            const d=parseDateInput(value);
+            if(!d) return '';
+            const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');
+            const hh=String(d.getHours()).padStart(2,'0'),mm=String(d.getMinutes()).padStart(2,'0');
+            return `${y}-${m}-${day}T${hh}:${mm}`;
+        }
+
+        function todayPersianInput() { return toPersianDateShort(new Date()); }
 
         function getCurrentPersianMonth() {
             const formatter = new Intl.DateTimeFormat('fa-IR', { month: 'long' });
@@ -1621,6 +1688,9 @@
         let equipment = JSON.parse(localStorage.getItem("basair_equipment") || "null");
         let notifications = JSON.parse(localStorage.getItem("basair_notifications") || "[]");
         let activityLog = JSON.parse(localStorage.getItem("basair_activity") || "[]");
+        let loanRequests = JSON.parse(localStorage.getItem("basair_loan_requests") || "[]");
+        let loanHistory = JSON.parse(localStorage.getItem("basair_loan_history") || "[]");
+        const DATA_SCHEMA_VERSION = 4;
         let currentMonth = localStorage.getItem("basair_month") || "1405/07";
 
         // ============================================================
@@ -1797,6 +1867,9 @@
             localStorage.setItem("basair_tasks", JSON.stringify(tasks));
             localStorage.setItem("basair_people", JSON.stringify(people));
             localStorage.setItem("basair_equipment", JSON.stringify(equipment));
+            localStorage.setItem("basair_loan_requests", JSON.stringify(loanRequests));
+            localStorage.setItem("basair_loan_history", JSON.stringify(loanHistory));
+            localStorage.setItem("basair_schema_version", String(DATA_SCHEMA_VERSION));
             localStorage.setItem("basair_notifications", JSON.stringify(notifications));
             localStorage.setItem("basair_activity", JSON.stringify(activityLog));
             localStorage.setItem("basair_month", currentMonth);
@@ -1846,7 +1919,8 @@
         // ============================================================
         function deadlineState(deadline) {
             if (!deadline) return { cls: "deadline-good", text: "بدون ددلاین" };
-            const time = new Date(deadline).getTime();
+            const parsedDeadline = parseDateInput(deadline);
+            const time = parsedDeadline ? parsedDeadline.getTime() : NaN;
             if (isNaN(time)) return { cls: "deadline-good", text: deadline };
             const diff = time - Date.now();
             if (diff < 0) return { cls: "deadline-overdue", text: "گذشته" };
@@ -1972,7 +2046,7 @@
                 createdBy: currentUser.role,
                 priority: document.getElementById("tPriority").value,
                 status: document.getElementById("tStatus").value,
-                deadline: document.getElementById("tDeadline").value,
+                deadline: toGregorianDateTime(document.getElementById("tDeadline").value),
                 createdAt: nowISO(),
                 completedAt: "",
                 cycle: currentMonth
@@ -2082,7 +2156,7 @@
                     <div class="row"><span>پروژه‌های فعال</span><strong class="green">${activeProjects}</strong></div>
                     <div class="row"><span>پروژه‌های عقب‌مانده</span><strong class="red">${delayedProjects}</strong></div>
                     <div class="row"><span>نیروهای فعال</span><strong>${peopleActive}</strong></div>
-                    <div class="row"><span>نیازمند پیگیری تجهیزات</span><strong class="red">${equipment.filter(e => e.status !== "سالم" && e.status !== "امانت داده شده").length}</strong></div>
+                    <div class="row"><span>نیازمند پیگیری تجهیزات</span><strong class="red">${equipment.filter(e => e.status !== "سالم").length}</strong></div>
                     </div>`;
 
                 // پنل تجهیزات امانت داده شده
@@ -2094,11 +2168,14 @@
                     </div>`
                 ).join("") : `<div class="empty">هیچ تجهیزی امانت داده نشده است.</div>`;
                 document.getElementById("loanedEquipmentList").innerHTML = loanedHTML;
+                renderEquipmentRequests();
 
             } else {
                 document.getElementById("adminDashboard").style.display = "none";
                 document.getElementById("employeeDashboard").style.display = "block";
                 renderEmployeeDashboard();
+                const mineLoaned=equipment.filter(e=>e.status==='امانت داده شده' && e.loanTo===currentUser.role);
+                document.getElementById('employeeLoanedEquipment').innerHTML=mineLoaned.length?mineLoaned.map(e=>`<div class="task-card"><strong>${escapeHTML(e.code)} — ${escapeHTML(e.name)}</strong><div class="task-meta"><span class="badge badge-blue">امانت</span><span class="deadline deadline-good">بازگشت: ${escapeHTML(e.returnDate?toPersianDateShort(e.returnDate):'-')}</span></div></div>`).join(''):'<div class="empty">تجهیزی به شما امانت داده نشده است.</div>';
             }
         }
 
@@ -2221,8 +2298,8 @@
                 type: document.getElementById("pType").value.trim(),
                 dept: document.getElementById("pDept").value,
                 manager: document.getElementById("pManager").value.trim(),
-                start: document.getElementById("pStart").value.trim(),
-                deadline: document.getElementById("pDeadline").value.trim(),
+                start: toGregorianISO(document.getElementById("pStart").value.trim()),
+                deadline: toGregorianISO(document.getElementById("pDeadline").value.trim()),
                 status: document.getElementById("pStatus").value,
                 progress: Math.min(100, Math.max(0, Number(document.getElementById("pProgress").value) || 0)),
                 desc: document.getElementById("pDesc").value.trim()
@@ -2248,8 +2325,8 @@
             document.getElementById("pType").value = p.type;
             document.getElementById("pDept").value = p.dept;
             document.getElementById("pManager").value = p.manager;
-            document.getElementById("pStart").value = p.start;
-            document.getElementById("pDeadline").value = p.deadline;
+            document.getElementById("pStart").value = p.start ? toPersianDateShort(p.start) : "";
+            document.getElementById("pDeadline").value = p.deadline ? toPersianDateShort(p.deadline) : "";
             document.getElementById("pStatus").value = p.status;
             document.getElementById("pProgress").value = p.progress;
             document.getElementById("pDesc").value = p.desc || "";
@@ -2324,6 +2401,7 @@
                     <button class="btn btn-info" onclick="openReport('${r.id}')">مشاهده</button>
                     ${isAdmin()?`
                     <button class="btn btn-warning" onclick="editReport('${r.id}')">ویرایش</button>
+                    ${!r.approved ? `<button class="btn btn-success" onclick="approveReportFromList('${r.id}')">✓ تأیید</button>` : ''}
                     ${!r.approved && !r.rejected ? `<button class="btn btn-purple" onclick="rejectReportFromList('${r.id}')">رد با نظر</button>` : ''}
                     <button class="btn btn-danger" onclick="removeReport('${r.id}')">حذف</button>
                     `:""}
@@ -2350,18 +2428,43 @@
             document.getElementById("reportModal").classList.add("show");
         }
 
+        function reportEligibleTasks(manager) {
+            const now = new Date();
+            const start = new Date(now.getFullYear(), now.getMonth(), now.getDate()-2);
+            return tasks.filter(t => {
+                if (t.assignedTo !== manager) return false;
+                const created = parseDateInput(t.createdAt);
+                // وظایف امروز و دیروز هنوز وارد تعهدات اجباری گزارش نمی‌شوند.
+                if (created && created >= start) return false;
+                return true;
+            });
+        }
+
+        function updateReportCompletedOptions(selectedValue=null) {
+            const manager=document.getElementById('rManager').value;
+            const arr=reportEligibleTasks(manager);
+            const total=arr.length;
+            const selected=Number(selectedValue ?? document.getElementById('rCompleted').value ?? 0);
+            const el=document.getElementById('rCompleted');
+            el.innerHTML=Array.from({length:total+1},(_,i)=>`<option value="${i}">${i} از ${total}</option>`).join('');
+            el.value=String(Math.min(selected,total));
+            document.getElementById('rPlanned').value=total;
+        }
+
         function renderReportTasks(selected) {
             const manager = editingReport ? reports.find(r => r.id === editingReport)?.manager : currentUser.role;
-            const arr = tasks.filter(t => t.assignedTo === manager);
+            const arr = reportEligibleTasks(manager);
             document.getElementById("reportTasks").innerHTML = arr.length ? arr.map(t => `
                     <label class="check-item">
-                    <input type="checkbox" data-task="${t.id}" ${selected.includes(t.id)?"checked":""}>
-                    <span>
-                    <strong>${escapeHTML(t.title)}</strong>
-                    <br>
-                    <small>${priorityBadgeText(t.priority)} — ${statusText(t.status)} — ددلاین: ${escapeHTML(t.deadline?toPersianDate(t.deadline):"-")}</small>
-                    </span>
-                    </label>`).join("") : `<div class="empty">برای این مدیر وظیفه‌ای ثبت نشده است.</div>`;
+                    <input type="checkbox" data-task="${t.id}" ${selected.includes(t.id)?"checked":""} onchange="syncReportCompletedFromTasks()">
+                    <span><strong>${escapeHTML(t.title)}</strong><br><small>${priorityBadgeText(t.priority)} — ${statusText(t.status)} — ددلاین: ${escapeHTML(t.deadline?toPersianDate(t.deadline):"-")}</small></span>
+                    </label>`).join("") : `<div class="empty">وظیفه‌ای که حداقل دو روز از ثبت آن گذشته باشد برای این گزارش وجود ندارد.</div>`;
+            updateReportCompletedOptions(selected.length);
+        }
+
+        function syncReportCompletedFromTasks(){
+            const count=document.querySelectorAll('#reportTasks input[data-task]:checked').length;
+            document.getElementById('rCompleted').value=String(count);
         }
 
         function priorityBadgeText(priority) {
@@ -2376,7 +2479,7 @@
             editingReport = id;
             document.getElementById("rManager").value = r.manager;
             document.getElementById("rDept").value = r.dept;
-            document.getElementById("rDate").value = r.date;
+            document.getElementById("rDate").value = r.date ? toPersianDateShort(r.date) : todayPersianInput();
             document.getElementById("rWeek").value = r.week;
             document.getElementById("rMonth").value = r.month || "";
             document.getElementById("rPlanned").value = r.planned;
@@ -2405,7 +2508,7 @@
             document.getElementById("rejectReportBtn").style.display = (isAdmin() && !isApproved && !isRejected) ? "" :
                 "none";
             // مدیر تخصصی می‌تواند گزارش رد شده را ویرایش کند
-            document.getElementById("saveReportBtn").style.display = (isAdmin() || (!isApproved)) ? "" : "none";
+            document.getElementById("saveReportBtn").style.display = (isAdmin() || (!isApproved && !isAdmin())) ? "" : "none";
 
             document.getElementById("reportModalTitle").textContent = isApproved ? "گزارش تأییدشده" : isRejected ?
                 "گزارش رد شده (قابل ویرایش)" : "مشاهده / ویرایش گزارش";
@@ -2436,11 +2539,11 @@
                 id: editingReport || uid(),
                 manager: manager,
                 dept: document.getElementById("rDept").value,
-                date: document.getElementById("rDate").value,
+                date: toGregorianISO(document.getElementById("rDate").value),
                 week: week,
                 month: month,
                 planned: Number(document.getElementById("rPlanned").value) || 0,
-                completed: Number(document.getElementById("rCompleted").value) || 0,
+                completed: document.querySelectorAll("#reportTasks input[data-task]:checked").length || Number(document.getElementById("rCompleted").value) || 0,
                 delayed: Number(document.getElementById("rDelayed").value) || 0,
                 quality: Number(document.getElementById("rQuality").value) || 0,
                 doneList: document.getElementById("rDoneList").value,
@@ -2514,6 +2617,12 @@
             renderNotifications();
             closeModal("reportModal");
             showToast("✅ گزارش رد شد. مدیر تخصصی می‌تواند آن را ویرایش کند.", "warning");
+        }
+
+        function approveReportFromList(id) {
+            if (!isAdmin()) return;
+            editingReport = id;
+            approveReport();
         }
 
         function rejectReportFromList(id) {
@@ -2799,8 +2908,8 @@
             const loaned = equipment.filter(x => x.status === "امانت داده شده");
             document.getElementById("eqLoaned").textContent = loaned.length;
             // نیازمند پیگیری: همه به جز سالم و امانت داده شده
-            document.getElementById("eqProblem").textContent = equipment.filter(x => x.status !== "سالم" && x.status !==
-                "امانت داده شده").length;
+            document.getElementById("eqProblem").textContent = equipment.filter(x => x.status !== "سالم").length;
+            renderEquipmentRequests();
         }
 
         function equipmentRow(e) {
@@ -2840,24 +2949,46 @@
             return map[s] || `<span class="badge badge-blue">${escapeHTML(s)}</span>`;
         }
 
-        function requestLoan(code) {
-            if (isAdmin()) { showToast("❌ شما مدیر اصلی هستید و می‌توانید مستقیماً وضعیت را تغییر دهید.", "info"); return; }
-            const item = equipment.find(x => x.code === code);
-            if (!item) return;
-            const name = prompt("نام گیرنده را وارد کنید:", "");
-            if (name === null) return;
-            if (name.trim() === "") { showToast("❌ نام گیرنده الزامی است.", "error"); return; }
-            const returnDate = prompt("تاریخ بازگشت (به صورت شمسی مثلاً 1405/01/15) را وارد کنید:", "");
-            if (returnDate === null) return;
-            item.status = "درخواست امانت";
-            item.loanTo = name.trim();
-            item.loanDate = new Date().toISOString().slice(0, 10);
-            item.returnDate = returnDate.trim() || "";
-            logActivity("درخواست امانت تجهیز " + item.name + " توسط " + name.trim(), null);
-            saveAll();
-            renderEquipment();
-            updateDashboard();
-            showToast("✅ درخواست امانت ثبت شد. منتظر تأیید مدیر اصلی باشید.", "success");
+        function openEquipmentRequestModal(){
+            if(isAdmin()){ showToast('مدیر اصلی می‌تواند درخواست‌ها را بررسی و تأیید کند.','info'); return; }
+            document.getElementById('loanRequester').value=currentUser.role;
+            document.getElementById('loanRequestReturnDate').value=todayPersianInput();
+            document.getElementById('loanRequestNote').value='';
+            const available=equipment.filter(e=>e.status==='سالم');
+            document.getElementById('loanEquipmentChoices').innerHTML=available.length ? available.map(e=>`<label class="check-item"><input type="checkbox" value="${escapeHTML(e.code)}"><span><strong>${escapeHTML(e.code)} — ${escapeHTML(e.name)}</strong><br><small>${escapeHTML(e.category)} — ${escapeHTML(e.location||'انبار')}</small></span></label>`).join('') : '<div class="empty">تجهیز سالمی برای درخواست وجود ندارد.</div>';
+            document.getElementById('equipmentRequestModal').classList.add('show');
+        }
+
+        function submitEquipmentRequest(){
+            if(isAdmin()) return;
+            const codes=[...document.querySelectorAll('#loanEquipmentChoices input:checked')].map(x=>x.value);
+            if(!codes.length){showToast('❌ حداقل یک تجهیز را انتخاب کنید.','error');return;}
+            const request={id:uid(),requester:currentUser.role,requesterDept:currentUser.dept,requestedAt:nowISO(),returnDate:toGregorianISO(document.getElementById('loanRequestReturnDate').value),note:document.getElementById('loanRequestNote').value.trim(),status:'pending',items:codes.map(code=>({code,decision:'pending'}))};
+            loanRequests.unshift(request);
+            saveAll(); renderEquipment(); updateDashboard(); renderNotifications(); closeModal('equipmentRequestModal');
+            showToast('✅ درخواست تجهیزات برای مدیر رسانه ارسال شد.','success');
+        }
+
+        function renderEquipmentRequests(){
+            const el=document.getElementById('equipmentRequestsList'); if(!el) return;
+            let arr=isAdmin()?loanRequests.filter(r=>r.status==='pending'):loanRequests.filter(r=>r.requester===currentUser.role && r.status!=='completed');
+            if(!arr.length){el.innerHTML='<div class="empty">درخواستی وجود ندارد.</div>';return;}
+            el.innerHTML=arr.slice(0,20).map(r=>{
+                const items=r.items.map((it,i)=>{const e=equipment.find(x=>x.code===it.code); return `<div class="loan-request-item"><span><strong>${escapeHTML(it.code)}</strong> — ${escapeHTML(e?.name||'تجهیز حذف‌شده')}</span>${isAdmin()?`<select id="loanDecision_${r.id}_${i}"><option value="pending">انتخاب تصمیم</option><option value="approve">✓ قبول</option><option value="reject">✗ رد</option></select>`:`<span class="badge ${it.decision==='approve'?'badge-green':it.decision==='reject'?'badge-red':'badge-yellow'}">${it.decision==='approve'?'تأیید شده':it.decision==='reject'?'رد شده':'در انتظار'}</span>`}</div>`}).join('');
+                return `<div class="loan-request-card"><div><strong>درخواست ${escapeHTML(r.requester)}</strong> <span class="badge badge-gray">${toPersianDate(r.requestedAt)}</span></div><div style="font-size:10px;color:#777;margin-top:5px">بازگشت: ${escapeHTML(r.returnDate?toPersianDateShort(r.returnDate):'-')} ${r.note?'— '+escapeHTML(r.note):''}</div><div class="loan-request-items">${items}</div>${isAdmin()?`<div class="loan-actions"><button class="btn btn-success" onclick="decideLoanRequest('${r.id}')">ثبت تصمیم و تحویل</button><button class="btn btn-danger" onclick="rejectAllLoanRequest('${r.id}')">رد کامل درخواست</button></div>`:''}</div>`;
+            }).join('');
+        }
+
+        function decideLoanRequest(id){
+            if(!isAdmin())return; const r=loanRequests.find(x=>x.id===id); if(!r)return;
+            let approved=0; r.items.forEach((it,i)=>{const v=document.getElementById(`loanDecision_${id}_${i}`)?.value||'pending'; it.decision=v; if(v==='approve'){const e=equipment.find(x=>x.code===it.code); if(e){e.status='امانت داده شده';e.loanTo=r.requester;e.loanDate=toGregorianISO(todayPersianInput());e.returnDate=r.returnDate||'';e.loanRequestId=r.id;approved++;}}});
+            if(r.items.some(it=>it.decision==='pending')){showToast('❌ برای همه تجهیزات تصمیم بگیرید.','error');return;}
+            r.status=approved?'completed':'rejected'; r.decidedBy=currentUser.role; r.decidedAt=nowISO();
+            logActivity(`بررسی درخواست امانت ${r.requester} — ${approved} تجهیز تأیید شد`,null); saveAll(); renderEquipment(); updateDashboard(); renderNotifications(); showToast(approved?`✅ ${approved} تجهیز به ${r.requester} امانت داده شد.`:'درخواست رد شد.','success');
+        }
+
+        function rejectAllLoanRequest(id){
+            if(!isAdmin())return; const r=loanRequests.find(x=>x.id===id); if(!r)return; r.items.forEach(it=>it.decision='reject'); r.status='rejected'; r.decidedBy=currentUser.role; r.decidedAt=nowISO(); saveAll(); renderEquipment(); updateDashboard(); renderNotifications(); showToast('درخواست امانت رد شد.','warning');
         }
 
         function openEquipmentModal(code = null) {
@@ -2876,10 +3007,10 @@
                 document.getElementById("eParent").value = e.parent;
                 document.getElementById("eStatus").value = e.status;
                 document.getElementById("eLocation").value = e.location || "";
-                document.getElementById("eCheck").value = e.checkDate || "";
+                document.getElementById("eCheck").value = e.checkDate ? toPersianDateShort(e.checkDate) : "";
                 document.getElementById("eLoanTo").value = e.loanTo || "";
-                document.getElementById("eLoanDate").value = e.loanDate || "";
-                document.getElementById("eReturnDate").value = e.returnDate || "";
+                document.getElementById("eLoanDate").value = e.loanDate ? toPersianDateShort(e.loanDate) : "";
+                document.getElementById("eReturnDate").value = e.returnDate ? toPersianDateShort(e.returnDate) : "";
                 document.getElementById("eDesc").value = e.description || "";
                 toggleEquipmentParent();
             } else {
@@ -2906,10 +3037,10 @@
                 parent: document.getElementById("eParent").value,
                 status: document.getElementById("eStatus").value,
                 location: document.getElementById("eLocation").value.trim(),
-                checkDate: document.getElementById("eCheck").value.trim(),
+                checkDate: toGregorianISO(document.getElementById("eCheck").value.trim()),
                 loanTo: document.getElementById("eLoanTo").value.trim(),
-                loanDate: document.getElementById("eLoanDate").value.trim(),
-                returnDate: document.getElementById("eReturnDate").value.trim(),
+                loanDate: toGregorianISO(document.getElementById("eLoanDate").value.trim()),
+                returnDate: toGregorianISO(document.getElementById("eReturnDate").value.trim()),
                 description: document.getElementById("eDesc").value.trim()
             };
             if (!e.code || !e.name) { showToast("❌ کد و نام تجهیز الزامی است.", "error"); return; }
@@ -2995,7 +3126,7 @@
                     text: `⏳ ددلاین وظیفه «${t.title}» نزدیک است.` });
             });
             equipment.filter(e => e.status === "امانت داده شده" && e.returnDate).forEach(e => {
-                const returnDate = new Date(e.returnDate);
+                const returnDate = parseDateInput(e.returnDate);
                 const today = new Date();
                 const diff = (returnDate - today) / (1000 * 60 * 60 * 24);
                 if (diff < 0) {
@@ -3031,7 +3162,7 @@
                     <div class="activity-icon">🕘</div>
                     <div class="activity-content">
                     <strong>${escapeHTML(a.action)}</strong>
-                    <small>کاربر: ${escapeHTML(a.user)} — ${escapeHTML(new Date(a.time).toLocaleString("fa-IR"))}</small>
+                    <small>کاربر: ${escapeHTML(a.user)} — ${escapeHTML(new Intl.DateTimeFormat("fa-IR-u-ca-persian",{dateStyle:"short",timeStyle:"short"}).format(new Date(a.time)))}</small>
                     </div>
                     </div>`).join("") : `<div class="empty">لاگ فعالیتی ثبت نشده است.</div>`;
         }
@@ -3071,10 +3202,378 @@
             setTimeout(() => URL.revokeObjectURL(url), 500);
         }
 
+
+        // ============================================================
+        // FINAL HARDENING / OPERATIONAL QUALITY PASS
+        // ============================================================
+        function normalizeLegacyData() {
+            projects = Array.isArray(projects) ? projects : [];
+            tasks = Array.isArray(tasks) ? tasks : [];
+            reports = Array.isArray(reports) ? reports : [];
+            loanRequests = Array.isArray(loanRequests) ? loanRequests : [];
+            loanHistory = Array.isArray(loanHistory) ? loanHistory : [];
+            tasks.forEach(t => {
+                if (!t.id) t.id = uid();
+                if (!t.createdAt) t.createdAt = nowISO();
+                if (!("projectId" in t)) t.projectId = "";
+                if (!("weight" in t)) t.weight = 1;
+                if (!("createdBy" in t)) t.createdBy = "";
+            });
+            projects.forEach(p => {
+                if (!("taskIds" in p)) p.taskIds = [];
+            });
+            reports.forEach(r => {
+                if (!Array.isArray(r.taskIds)) r.taskIds = [];
+                if (!("version" in r)) r.version = 1;
+                if (!("history" in r)) r.history = [];
+            });
+            saveAll();
+        }
+
+        function reportKey(r) {
+            return `${r.manager}__${r.month}__${r.week}`;
+        }
+
+        function syncProjectProgress(projectId) {
+            if (!projectId) return;
+            const p = projects.find(x => x.id === projectId);
+            if (!p) return;
+            const arr = tasks.filter(t => t.projectId === projectId);
+            if (!arr.length) return;
+            const totalWeight = arr.reduce((a,t)=>a+(Number(t.weight)||1),0);
+            const doneWeight = arr.filter(t=>t.status==="DONE").reduce((a,t)=>a+(Number(t.weight)||1),0);
+            p.progress = Math.round(doneWeight / totalWeight * 100);
+            if (p.progress >= 100) p.status = "تکمیل‌شده";
+            else if (p.status === "تکمیل‌شده") p.status = "فعال";
+        }
+
+        function refreshAllViews() {
+            fillManagerFilters();
+            renderProjects(); renderTasks(); renderReports(); renderArchive();
+            renderPerformance(); renderEquipment(); renderEquipmentRequests();
+            renderNotifications(); renderActivity(); updateDashboard(); updateMonthly();
+        }
+
+        // Tasks: only the main manager assigns tasks; specialists execute them.
+        function openTaskModal() {
+            if (!isAdmin()) {
+                showToast("❌ ایجاد وظیفه فقط توسط مدیر رسانه انجام می‌شود.", "error");
+                return;
+            }
+            editingTask = null;
+            ["tTitle","tDesc","tDeadline"].forEach(id=>document.getElementById(id).value="");
+            document.getElementById("tPriority").value="MEDIUM";
+            document.getElementById("tStatus").value="TODO";
+            document.getElementById("tManager").innerHTML=managerList().map(m=>`<option value="${escapeHTML(m[0])}">${escapeHTML(m[0])}</option>`).join("");
+            document.getElementById("tProject").innerHTML='<option value="">بدون پروژه</option>'+projects.map(p=>`<option value="${escapeHTML(p.id)}">${escapeHTML(p.name)}</option>`).join("");
+            document.getElementById("taskModal").classList.add("show");
+        }
+
+        function saveTask() {
+            if (!isAdmin()) return;
+            const title=document.getElementById("tTitle").value.trim();
+            if(!title){showToast("❌ عنوان وظیفه را وارد کنید.","error");return;}
+            const assignedTo=document.getElementById("tManager").value;
+            const deadline=toGregorianDateTime(document.getElementById("tDeadline").value.trim());
+            const task={
+                id:uid(), title,
+                description:document.getElementById("tDesc").value.trim(),
+                assignedTo, createdBy:currentUser.role,
+                priority:document.getElementById("tPriority").value,
+                status:document.getElementById("tStatus").value,
+                deadline, createdAt:nowISO(), completedAt:"",
+                cycle:currentMonth, projectId:document.getElementById("tProject").value||"",
+                weight:1
+            };
+            tasks.push(task);
+            syncProjectProgress(task.projectId);
+            logActivity("ایجاد وظیفه: "+task.title,task.id);
+            saveAll(); refreshAllViews(); closeModal("taskModal");
+            showToast("✅ وظیفه با موفقیت ثبت شد.","success");
+        }
+
+        function changeTaskStatus(id,status) {
+            const t=tasks.find(x=>x.id===id); if(!t)return;
+            if(!isAdmin() && t.assignedTo!==currentUser.role)return;
+            const old=t.status;
+            t.status=status;
+            t.completedAt=status==="DONE"?(t.completedAt||nowISO()):"";
+            syncProjectProgress(t.projectId);
+            logActivity(`تغییر وضعیت وظیفه «${t.title}»: ${statusText(old)} → ${statusText(status)}`,id);
+            saveAll(); refreshAllViews();
+            showToast(`✅ وضعیت وظیفه «${t.title}» تغییر کرد.`,"info");
+        }
+
+        function reportEligibleTasks(manager) {
+            const now=new Date();
+            const cutoff=new Date(now.getFullYear(),now.getMonth(),now.getDate()-2);
+            return tasks.filter(t=>{
+                if(t.assignedTo!==manager || t.status==="CANCELLED") return false;
+                const created=parseDateInput(t.createdAt);
+                return !created || created < cutoff;
+            });
+        }
+
+        function updateReportCompletedOptions(selectedValue=null) {
+            const manager=document.getElementById("rManager").value;
+            const arr=reportEligibleTasks(manager);
+            const total=arr.length;
+            const selected=Number(selectedValue ?? 0);
+            const el=document.getElementById("rCompleted");
+            el.innerHTML=Array.from({length:total+1},(_,i)=>`<option value="${i}">${i} از ${total}</option>`).join("");
+            el.value=String(Math.min(selected,total));
+            document.getElementById("rPlanned").value=total;
+        }
+
+        function renderReportTasks(selected) {
+            const manager=document.getElementById("rManager").value || currentUser.role;
+            const arr=reportEligibleTasks(manager);
+            document.getElementById("reportTasks").innerHTML=arr.length?arr.map(t=>`
+                <label class="check-item">
+                <input type="checkbox" data-task="${t.id}" ${selected.includes(t.id)?"checked":""} onchange="syncReportCompletedFromTasks()">
+                <span><strong>${escapeHTML(t.title)}</strong>
+                <br><small>${priorityBadgeText(t.priority)} — ${statusText(t.status)} — ددلاین: ${escapeHTML(t.deadline?toPersianDate(t.deadline):"-")}</small></span>
+                </label>`).join(""):`<div class="empty">هیچ وظیفه‌ای که حداقل دو روز از ثبت آن گذشته باشد، مشمول این گزارش نیست.</div>`;
+            updateReportCompletedOptions(selected.length);
+        }
+
+        function syncReportCompletedFromTasks(){
+            const checked=[...document.querySelectorAll("#reportTasks input[data-task]:checked")].map(x=>x.dataset.task);
+            const eligible=reportEligibleTasks(document.getElementById("rManager").value);
+            document.getElementById("rCompleted").value=String(checked.length);
+            document.getElementById("rDoneList").value=eligible.filter(t=>checked.includes(t.id)).map(t=>`• ${t.title}`).join("\n");
+        }
+
+        function openReportModal() {
+            editingReport=null;
+            document.getElementById("rManager").value=currentUser.role;
+            document.getElementById("rDept").value=currentUser.dept==="all"?"مدیریت رسانه":currentUser.dept;
+            ["rDate","rDoneList","rDelayReason","rIssues","rSuggestions"].forEach(id=>document.getElementById(id).value="");
+            document.getElementById("rDate").value=todayPersianInput();
+            document.getElementById("rWeek").value="";
+            document.getElementById("rMonth").value=getCurrentPersianMonth();
+            document.getElementById("rQuality").value=0; document.getElementById("rDelayed").value=0;
+            document.getElementById("deleteReportBtn").style.display="none";
+            document.getElementById("approveReportBtn").style.display="none";
+            document.getElementById("rejectReportBtn").style.display="none";
+            document.getElementById("saveReportBtn").style.display="";
+            document.getElementById("reportFeedbackContainer").style.display="none";
+            renderReportTasks([]);
+            document.getElementById("reportModalTitle").textContent="ثبت گزارش هفتگی";
+            document.getElementById("reportModal").classList.add("show");
+        }
+
+        function openReport(id) {
+            const r=reports.find(x=>x.id===id); if(!r)return;
+            if(!isAdmin() && r.manager!==currentUser.role){showToast("❌ دسترسی ندارید.","error");return;}
+            editingReport=id;
+            document.getElementById("rManager").value=r.manager;
+            document.getElementById("rDept").value=r.dept;
+            document.getElementById("rDate").value=r.date?toPersianDateShort(r.date):todayPersianInput();
+            document.getElementById("rWeek").value=r.week; document.getElementById("rMonth").value=r.month||"";
+            document.getElementById("rPlanned").value=r.planned; document.getElementById("rCompleted").value=r.completed;
+            document.getElementById("rDelayed").value=r.delayed; document.getElementById("rQuality").value=r.quality;
+            document.getElementById("rDoneList").value=r.doneList||"";
+            document.getElementById("rDelayReason").value=r.delayReason||"";
+            document.getElementById("rIssues").value=r.issues||""; document.getElementById("rSuggestions").value=r.suggestions||"";
+            renderReportTasks(r.taskIds||[]);
+            if(r.rejected && r.feedback){document.getElementById("reportFeedbackContainer").style.display="flex";document.getElementById("reportFeedbackDisplay").textContent=r.feedback;}
+            else document.getElementById("reportFeedbackContainer").style.display="none";
+            document.getElementById("deleteReportBtn").style.display=isAdmin()?"":"none";
+            document.getElementById("approveReportBtn").style.display=isAdmin()&&!r.approved?"":"none";
+            document.getElementById("rejectReportBtn").style.display=isAdmin()&&!r.approved&&!r.rejected?"":"none";
+            document.getElementById("saveReportBtn").style.display=(!r.approved || isAdmin())?"":"none";
+            document.getElementById("reportModalTitle").textContent=r.approved?"گزارش تأییدشده (قفل شده)":r.rejected?"گزارش رد شده — قابل اصلاح":"مشاهده / ویرایش گزارش";
+            document.getElementById("reportModal").classList.add("show");
+        }
+
+        function saveReport() {
+            if(editingReport && !isAdmin()){
+                const old=reports.find(x=>x.id===editingReport);
+                if(old?.approved){showToast("❌ گزارش تأییدشده قفل است.","error");return;}
+                if(old?.rejected){old.rejected=false;old.feedback="";old.reopenedAt=nowISO();}
+            }
+            const manager=document.getElementById("rManager").value;
+            if(!isAdmin() && manager!==currentUser.role){showToast("❌ دسترسی ندارید.","error");return;}
+            const week=document.getElementById("rWeek").value, month=document.getElementById("rMonth").value;
+            if(!week||!month){showToast("❌ هفته و ماه را انتخاب کنید.","error");return;}
+            const duplicate=reports.find(x=>x.id!==editingReport && x.manager===manager && x.week===week && x.month===month && !x.deleted);
+            if(duplicate){showToast("❌ برای این مدیر، این هفته از این ماه قبلاً گزارش ثبت شده است.","error");return;}
+            const taskIds=[...document.querySelectorAll("#reportTasks input[data-task]:checked")].map(x=>x.dataset.task);
+            const planned=reportEligibleTasks(manager).length, completed=taskIds.length;
+            const delayed=Math.min(Number(document.getElementById("rDelayed").value)||0,planned);
+            const quality=Math.min(10,Math.max(0,Number(document.getElementById("rQuality").value)||0));
+            const old=editingReport?reports.find(x=>x.id===editingReport):null;
+            const r={
+                id:editingReport||uid(),manager,dept:document.getElementById("rDept").value,
+                date:toGregorianISO(document.getElementById("rDate").value.trim()),week,month,
+                planned,completed,delayed,quality,
+                doneList:document.getElementById("rDoneList").value.trim(),
+                delayReason:document.getElementById("rDelayReason").value.trim(),
+                issues:document.getElementById("rIssues").value.trim(),
+                suggestions:document.getElementById("rSuggestions").value.trim(),
+                taskIds,approved:old?!!old.approved:false,rejected:old?!!old.rejected:false,
+                feedback:old?.feedback||"",approvedBy:old?.approvedBy||"",approvedDate:old?.approvedDate||"",
+                monthCycle:currentMonth,version:(old?.version||0)+1
+            };
+            r.score=calculateScore(planned,completed,quality,delayed);
+            if(old && old.rejected){r.approved=false;r.rejected=false;r.feedback="";}
+            if(old){
+                const i=reports.findIndex(x=>x.id===editingReport);
+                r.history=[...(old.history||[]),{version:old.version||1,approved:old.approved,rejected:old.rejected,editedAt:nowISO(),score:old.score}];
+                reports[i]={...old,...r};
+            }else reports.push(r);
+            logActivity(editingReport?"ویرایش گزارش "+manager:"ثبت گزارش "+manager,null);
+            saveAll(); refreshAllViews(); closeModal("reportModal");
+            showToast(old?.rejected?"✅ اصلاحات ثبت شد و گزارش دوباره برای بررسی ارسال شد.":"✅ گزارش ذخیره شد.","success");
+        }
+
+        function approveReportFromList(id){ if(!isAdmin())return; editingReport=id; approveReport(); }
+        function rejectReportFromList(id){
+            if(!isAdmin())return;
+            const r=reports.find(x=>x.id===id); if(!r)return;
+            const feedback=prompt("علت رد گزارش را وارد کنید:","");
+            if(feedback===null)return;
+            if(!feedback.trim()){showToast("❌ نظر مدیر الزامی است.","error");return;}
+            r.approved=false;r.rejected=true;r.feedback=feedback.trim();r.rejectedBy=currentUser.role;r.rejectedAt=nowISO();
+            logActivity("رد گزارش "+r.manager+" با نظر: "+feedback.trim(),null);saveAll();refreshAllViews();
+            showToast("✅ گزارش رد شد؛ مدیر تخصصی اکنون می‌تواند اصلاح کند.","warning");
+        }
+
+        function approveReport(){
+            if(!isAdmin()||!editingReport)return;
+            const r=reports.find(x=>x.id===editingReport);if(!r)return;
+            if(r.approved){showToast("این گزارش قبلاً تأیید شده است.","info");return;}
+            r.approved=true;r.rejected=false;r.feedback="";r.approvedBy=currentUser.role;r.approvedDate=new Date().toLocaleDateString("fa-IR");r.approvedAt=nowISO();r.monthCycle=currentMonth;
+            logActivity("تأیید گزارش "+r.manager,null);saveAll();refreshAllViews();closeModal("reportModal");
+            showToast("✅ گزارش تأیید و قفل شد.","success");
+        }
+
+        // Project progress is derived from tasks whenever possible.
+        function saveProject() {
+            if(!isAdmin())return;
+            const id=editingProject||uid();
+            const old=projects.find(x=>x.id===id);
+            const p={id,name:document.getElementById("pName").value.trim(),type:document.getElementById("pType").value.trim(),
+                dept:document.getElementById("pDept").value,manager:document.getElementById("pManager").value.trim(),
+                start:toGregorianISO(document.getElementById("pStart").value.trim()),deadline:toGregorianISO(document.getElementById("pDeadline").value.trim()),
+                status:document.getElementById("pStatus").value,progress:Number(document.getElementById("pProgress").value)||0,desc:document.getElementById("pDesc").value.trim(),taskIds:old?.taskIds||[]};
+            if(!p.name){showToast("❌ نام پروژه الزامی است.","error");return;}
+            const related=tasks.filter(t=>t.projectId===id);
+            if(related.length){const tw=related.reduce((a,t)=>a+(Number(t.weight)||1),0),dw=related.filter(t=>t.status==="DONE").reduce((a,t)=>a+(Number(t.weight)||1),0);p.progress=Math.round(dw/tw*100);}
+            const i=projects.findIndex(x=>x.id===id); if(i>=0)projects[i]={...projects[i],...p};else projects.push(p);
+            logActivity(old?"ویرایش پروژه: "+p.name:"ایجاد پروژه: "+p.name,null);saveAll();refreshAllViews();closeModal("projectModal");
+            showToast("✅ پروژه ذخیره شد.","success");
+        }
+
+        function openProjectModal() {
+            if(!isAdmin())return;
+            editingProject=null;
+            ["pName","pType","pManager","pStart","pDeadline","pDesc"].forEach(id=>document.getElementById(id).value="");
+            document.getElementById("pDept").value="تولید";document.getElementById("pStatus").value="فعال";document.getElementById("pProgress").value=0;
+            document.getElementById("projectModalTitle").textContent="پروژه جدید";document.getElementById("projectModal").classList.add("show");
+        }
+
+        // Equipment: proper lifecycle with loan history and overdue return.
+        function decideLoanRequest(id){
+            if(!isAdmin())return;
+            const r=loanRequests.find(x=>x.id===id);if(!r)return;
+            const decisions=[];
+            r.items.forEach((it,i)=>{const v=document.getElementById(`loanDecision_${id}_${i}`)?.value||"pending";if(v==="pending")return;it.decision=v;decisions.push(v);});
+            if(decisions.length!==r.items.length){showToast("❌ برای تک‌تک اقلام باید قبول یا رد انتخاب شود.","error");return;}
+            let approved=0;
+            r.items.forEach(it=>{
+                const e=equipment.find(x=>x.code===it.code);
+                if(it.decision==="approve" && e && (e.status==="سالم" || e.status==="درخواست امانت")){
+                    e.status="امانت داده شده";e.loanTo=r.requester;e.loanDate=toGregorianISO(todayPersianInput());e.returnDate=r.returnDate||"";e.loanRequestId=r.id;approved++;
+                    loanHistory.unshift({id:uid(),requestId:r.id,code:e.code,name:e.name,borrower:r.requester,approvedBy:currentUser.role,loanDate:nowISO(),returnDue:e.returnDate,status:"active",returnedAt:""});
+                }
+            });
+            r.status=approved?"completed":"rejected";r.decidedBy=currentUser.role;r.decidedAt=nowISO();
+            logActivity(`بررسی درخواست امانت ${r.requester} — ${approved} تجهیز تأیید شد`,null);
+            saveAll();refreshAllViews();
+            showToast(approved?`✅ ${approved} تجهیز تأیید و وارد امانت‌های فعال شد.`:"درخواست رد شد.","success");
+        }
+
+        function returnEquipment(code){
+            if(!isAdmin())return;
+            const e=equipment.find(x=>x.code===code);if(!e||e.status!=="امانت داده شده")return;
+            if(!confirm(`بازگشت «${e.name}» از ${e.loanTo||"نامشخص"} ثبت شود؟`))return;
+            const h=loanHistory.find(x=>x.code===code&&x.status==="active");
+            if(h){h.status="returned";h.returnedAt=nowISO();}
+            e.status="سالم";e.location=e.location||"انبار";e.loanTo="";e.loanDate="";e.returnDate="";e.loanRequestId="";
+            logActivity("بازگشت تجهیز: "+e.name,null);saveAll();refreshAllViews();showToast("✅ بازگشت تجهیز ثبت شد.","success");
+        }
+
+        function renderEquipment() {
+            const q=(document.getElementById("eqSearch")?.value||"").toLowerCase(),status=document.getElementById("eqStatus")?.value||"",category=document.getElementById("eqCategory")?.value||"";
+            let html="";
+            equipment.filter(x=>x.type==="main").forEach(m=>{
+                const children=equipment.filter(x=>x.parent===m.code);
+                const match=x=>{const text=JSON.stringify(x).toLowerCase();return(!q||text.includes(q))&&(!status||x.status===status)&&(!category||x.category===category);};
+                if(match(m))html+=equipmentRow(m); children.forEach(c=>{if(match(c))html+=equipmentRow(c);});
+            });
+            document.getElementById("equipmentBody").innerHTML=html||`<tr><td colspan="9" class="empty">موردی پیدا نشد.</td></tr>`;
+            document.getElementById("eqMain").textContent=equipment.filter(x=>x.type==="main").length;
+            document.getElementById("eqSub").textContent=equipment.filter(x=>x.type==="sub").length;
+            document.getElementById("eqAudio").textContent=equipment.filter(x=>x.category==="صوت").length;
+            document.getElementById("eqLoaned").textContent=equipment.filter(x=>x.status==="امانت داده شده").length;
+            document.getElementById("eqProblem").textContent=equipment.filter(x=>x.status!=="سالم").length;
+            renderEquipmentRequests();
+        }
+
+        function equipmentRow(e){
+            const overdue=e.status==="امانت داده شده"&&e.returnDate&&deadlineState(e.returnDate).cls==="deadline-overdue";
+            const loanInfo=e.status==="امانت داده شده"&&e.loanTo?`<br><small>امانت به: ${escapeHTML(e.loanTo)} — بازگشت: ${escapeHTML(toPersianDateShort(e.returnDate))}</small>`:"";
+            return `<tr class="${e.type==="main"?"main-equipment":"sub-equipment"}">
+                <td><strong>${escapeHTML(e.code)}</strong></td><td>${e.type==="sub"?"↳ ":""}${escapeHTML(e.name)}${loanInfo}</td>
+                <td>${escapeHTML(e.category)}</td><td>${escapeHTML(e.parent||"-")}</td><td>${equipmentStatusBadge(e.status)} ${overdue?'<span class="badge badge-red">دیرکرد</span>':""}</td>
+                <td>${escapeHTML(e.location||"-")}</td><td>${escapeHTML(e.checkDate?toPersianDateShort(e.checkDate):"-")}</td><td>${escapeHTML(e.description||"-")}</td>
+                <td>${isAdmin()?`<button class="btn btn-warning" onclick="editEquipment('${e.code}')">ویرایش</button>${e.status==="امانت داده شده"?`<button class="btn btn-success" onclick="returnEquipment('${e.code}')">↩ بازگشت</button>`:""}<button class="btn btn-danger" onclick="deleteEquipment('${e.code}')">حذف</button>`:
+                `${e.status==="سالم"&&e.type==="main"?`<button class="btn btn-info" onclick="requestLoan('${e.code}')">درخواست امانت</button>`:""}`}</td></tr>`;
+        }
+
+        function backupAllData(){
+            if(!isAdmin())return;
+            const backup={schemaVersion:DATA_SCHEMA_VERSION,exportedAt:nowISO(),currentMonth,projects,reports,tasks,people,equipment,notifications,activityLog,loanRequests,loanHistory};
+            downloadJSON(backup,`basair-full-backup-${currentMonth.replace(/\//g,"-")}.json`);
+            showToast("✅ پشتیبان کامل سامانه ایجاد شد.","success");
+        }
+
+        function restoreAllData(event){
+            if(!isAdmin())return;
+            const file=event.target.files[0];if(!file)return;
+            const reader=new FileReader();
+            reader.onload=e=>{
+                try{
+                    const b=JSON.parse(e.target.result);
+                    if(!b || !Array.isArray(b.projects)||!Array.isArray(b.tasks)||!Array.isArray(b.equipment))throw new Error("ساختار پشتیبان معتبر نیست.");
+                    if(!confirm("تمام داده‌های فعلی با این پشتیبان جایگزین شوند؟"))return;
+                    projects=b.projects;reports=b.reports||[];tasks=b.tasks||[];people=b.people||[];equipment=b.equipment||[];
+                    notifications=b.notifications||[];activityLog=b.activityLog||[];loanRequests=b.loanRequests||[];loanHistory=b.loanHistory||[];currentMonth=b.currentMonth||currentMonth;
+                    normalizeLegacyData();refreshAllViews();showToast("✅ بازیابی با موفقیت انجام شد.","success");
+                }catch(err){showToast("❌ بازیابی ناموفق: "+err.message,"error");}
+                event.target.value="";
+            };
+            reader.readAsText(file);
+        }
+
+        function migrateAndAudit(){
+            normalizeLegacyData();
+            // Mark currently loaned items as active in history when legacy data had no history.
+            equipment.filter(e=>e.status==="امانت داده شده").forEach(e=>{
+                if(!loanHistory.some(h=>h.code===e.code&&h.status==="active")){
+                    loanHistory.push({id:uid(),requestId:e.loanRequestId||"",code:e.code,name:e.name,borrower:e.loanTo||"",approvedBy:"legacy",loanDate:e.loanDate||nowISO(),returnDue:e.returnDate||"",status:"active",returnedAt:""});
+                }
+            });
+            saveAll();
+        }
+
         // ============================================================
         // INITIALIZATION
         // ============================================================
         function initialize() {
+            migrateAndAudit();
             fillManagerFilters();
             renderProjects();
             renderReports();
@@ -3083,6 +3582,7 @@
             renderPerformance();
             renderPeople();
             renderEquipment();
+            renderEquipmentRequests();
             renderNotifications();
             renderActivity();
             updateDashboard();
