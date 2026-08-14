@@ -1035,6 +1035,7 @@
             padding-right: 28px;
         }
     </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -1051,6 +1052,10 @@
             <div class="login-logo">ب</div>
             <h1>سامانه مدیریت رسانه بصائر</h1>
             <p>رمز دسترسی مدیر یا مدیر تخصصی را وارد کنید.</p>
+            <div class="login-field">
+                <label>ایمیل</label>
+                <input id="loginEmail" type="email" autocomplete="username" placeholder="ایمیل حساب Supabase">
+            </div>
             <div class="login-field">
                 <label>رمز عبور</label>
                 <input id="loginPassword" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter') login()">
@@ -1605,7 +1610,7 @@
         function escapeHTML(v) { return String(v ?? "").replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;",
                 '"': "&quot;", "'": "&#039;" }[m])); }
 
-        function uid() { return Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8); }
+        function uid() { return crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8); }
 
         function nowISO() { return new Date().toISOString(); }
 
@@ -3600,8 +3605,407 @@
         });
 
         // ============================================================
-        // START
+        // SUPABASE CLOUD BACKEND
         // ============================================================
+        const SUPABASE_URL = "https://sqtoyzmdnnvbtkbuzjnz.supabase.co";
+        const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_gtCiI9eCh0OcIU1NVMHIGg_hWBuImUK";
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+        let cloudMode = false;
+        let cloudProfiles = [];
+        let cloudDepartments = [];
+
+        function cloudUuid(v) {
+            const s = String(v || "");
+            return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(s) ? s : crypto.randomUUID();
+        }
+
+        function cloudProfileForRole(role) {
+            return cloudProfiles.find(p => p.role === role) || cloudProfiles.find(p => p.full_name === role) || null;
+        }
+
+        function cloudDepartmentName(id) {
+            return cloudDepartments.find(d => d.id === id)?.name || "";
+        }
+
+        function cloudRoleName(id) {
+            return cloudProfiles.find(p => p.id === id)?.role || cloudProfiles.find(p => p.id === id)?.full_name || "";
+        }
+
+        function cloudDate(v) {
+            if (!v) return null;
+            const m = String(v).match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/);
+            if (m) {
+                const g = toGregorianISO(v);
+                return g || null;
+            }
+            return v;
+        }
+
+        async function cloudLoadData() {
+            const q = async (table, select="*") => {
+                const { data, error } = await supabaseClient.from(table).select(select);
+                if (error) throw error;
+                return data || [];
+            };
+
+            cloudDepartments = await q("departments");
+            const profileRows = await q("profiles");
+            cloudProfiles = profileRows;
+
+            const [projectRows, taskRows, reportRows, reportTaskRows, peopleRows, equipmentRows,
+                   requestRows, requestItemRows, notificationRows, activityRows] = await Promise.all([
+                q("projects"), q("tasks"), q("weekly_reports"), q("report_tasks"), q("people"), q("equipment"),
+                q("equipment_requests"), q("equipment_request_items"), q("notifications"), q("activity_logs")
+            ]);
+
+            let loanRows = [];
+            try { loanRows = await q("equipment_loans"); } catch (_) { loanRows = []; }
+            let loanHistoryRows = [];
+            try { loanHistoryRows = await q("equipment_loan_history"); } catch (_) { loanHistoryRows = []; }
+
+            projects = projectRows.map(p => ({
+                id:p.id, name:p.name||"", type:p.project_type||"", dept:p.department||"",
+                manager:cloudRoleName(p.manager_id), managerId:p.manager_id||"", start:p.start_date||"",
+                deadline:p.deadline||"", status:p.status||"فعال", progress:Number(p.manual_progress)||0,
+                desc:p.description||"", taskIds:[]
+            }));
+
+            tasks = taskRows.map(t => ({
+                id:t.id, title:t.title||"", description:t.description||"", desc:t.description||"",
+                assignedTo:cloudRoleName(t.assigned_to), assignedToId:t.assigned_to, createdBy:cloudRoleName(t.created_by),
+                createdById:t.created_by, projectId:t.project_id||"", priority:t.priority||"MEDIUM",
+                status:t.status||"TODO", deadline:t.deadline||"", createdAt:t.created_at||nowISO(),
+                completedAt:t.completed_at||"", cycle:currentMonth, weight:1
+            }));
+
+            reports = reportRows.map(r => {
+                const rt = reportTaskRows.filter(x=>x.report_id===r.id);
+                const completed = rt.filter(x=>x.completed).length;
+                const planned = rt.length;
+                const role = cloudRoleName(r.manager_id);
+                return {
+                    id:r.id, manager:role, managerId:r.manager_id, dept:departmentFromManager(role),
+                    date:r.period_start||r.created_at||"", week:String(r.week_number),
+                    month:`${r.jalali_year}/${String(r.jalali_month).padStart(2,"0")}`,
+                    planned, completed, delayed:Number(r.delayed_tasks)||0,
+                    quality:Number(r.quality_score)||0, doneList:rt.filter(x=>x.completed).map(x=>tasks.find(t=>t.id===x.task_id)?.title||"").filter(Boolean).map(x=>`• ${x}`).join("\n"),
+                    delayReason:"", issues:r.challenges||"", suggestions:r.next_week_plan||"",
+                    taskIds:rt.map(x=>x.task_id), approved:r.status==="APPROVED", rejected:r.status==="REJECTED",
+                    feedback:r.feedback||"", approvedBy:cloudRoleName(r.approved_by), approvedDate:r.approved_at||"",
+                    approvedAt:r.approved_at||"", rejectedAt:r.rejected_at||"", rejectedBy:cloudRoleName(r.rejected_by),
+                    score:0, monthCycle:`${r.jalali_year}/${String(r.jalali_month).padStart(2,"0")}`, version:r.version||1,
+                    history:[]
+                };
+            });
+
+            people = peopleRows.map(p=>({id:p.id,name:p.name||"",role:p.role||"",department:p.department||"",phone:p.phone||"",description:p.description||"",isActive:p.is_active!==false}));
+
+            const codeById = Object.fromEntries(equipmentRows.map(e=>[e.id,e.code]));
+            equipment = equipmentRows.map(e=>({
+                id:e.id, code:e.code, type:e.equipment_type||"main", name:e.name||"", category:e.category||"سایر",
+                parent:codeById[e.parent_id]||"", parentId:e.parent_id||"", status:e.status||"سالم", location:e.location||"",
+                checkDate:e.last_check_date||"", loanTo:"", loanDate:"", returnDate:"", description:e.description||""
+            }));
+
+            loanRequests = requestRows.map(r=>({
+                id:r.id, requester:cloudRoleName(r.requester_id), requesterId:r.requester_id,
+                requesterDept:departmentFromManager(cloudRoleName(r.requester_id)), requestedAt:r.requested_at||r.created_at,
+                returnDate:r.requested_return_date||"", note:r.note||"", status:(r.status||"PENDING").toLowerCase(),
+                decidedBy:cloudRoleName(r.decided_by), decidedAt:r.decided_at||"",
+                items:requestItemRows.filter(i=>i.request_id===r.id).map(i=>({
+                    id:i.id, equipmentId:i.equipment_id, code:codeById[i.equipment_id]||"",
+                    decision:(i.decision||"PENDING").toLowerCase()
+                }))
+            }));
+
+            loanHistory = loanHistoryRows.map(h=>({
+                id:h.id, loanId:h.loan_id, action:h.action, oldStatus:h.old_status, newStatus:h.new_status,
+                note:h.note||"", loanDate:h.created_at||""
+            }));
+
+            const activeLoans = loanRows.filter(l=>["ACTIVE","OVERDUE"].includes(l.status));
+            activeLoans.forEach(l=>{
+                const e=equipment.find(x=>x.id===l.equipment_id);
+                if(e){
+                    e.status="امانت داده شده";
+                    e.loanTo=cloudRoleName(l.borrower_id);
+                    e.loanDate=l.handed_over_at||"";
+                    e.returnDate=l.expected_return_date||"";
+                    e.loanId=l.id;
+                }
+            });
+
+            notifications = notificationRows.map(n=>({id:n.id,title:n.title,message:n.message||"",type:n.type,isRead:n.is_read,createdAt:n.created_at,entityId:n.entity_id}));
+            activityLog = activityRows.map(a=>({id:a.id,user:cloudRoleName(a.actor_id),action:a.action,taskId:a.entity_id,time:a.created_at}));
+            currentMonth = `${new Intl.DateTimeFormat("fa-IR-u-ca-persian",{year:"numeric"}).format(new Date())}/${String(Number(new Intl.DateTimeFormat("fa-IR-u-ca-persian",{month:"numeric"}).format(new Date()))).padStart(2,"0")}`;
+        }
+
+        async function cloudSaveAll() {
+            if (!cloudMode) {
+                localStorage.setItem("basair_projects",JSON.stringify(projects));
+                localStorage.setItem("basair_reports",JSON.stringify(reports));
+                localStorage.setItem("basair_tasks",JSON.stringify(tasks));
+                localStorage.setItem("basair_people",JSON.stringify(people));
+                localStorage.setItem("basair_equipment",JSON.stringify(equipment));
+                localStorage.setItem("basair_loan_requests",JSON.stringify(loanRequests));
+                localStorage.setItem("basair_loan_history",JSON.stringify(loanHistory));
+                localStorage.setItem("basair_notifications",JSON.stringify(notifications));
+                localStorage.setItem("basair_activity",JSON.stringify(activityLog));
+                localStorage.setItem("basair_month",currentMonth);
+                return;
+            }
+
+            const userId = (await supabaseClient.auth.getUser()).data.user?.id;
+            if (!userId) throw new Error("جلسه Supabase معتبر نیست.");
+
+            if (isAdmin()) {
+                const projectPayload = projects.map(p=>({
+                    id:cloudUuid(p.id), name:p.name, project_type:p.type||null, department:p.dept||null,
+                    manager_id:p.managerId||cloudProfileForRole(p.manager)?.id||null, start_date:cloudDate(p.start)||null,
+                    deadline:cloudDate(p.deadline)||null, description:p.desc||null, status:p.status||"فعال",
+                    manual_progress:Number(p.progress)||0, created_by:userId
+                }));
+                if(projectPayload.length){ const {error}=await supabaseClient.from("projects").upsert(projectPayload); if(error) throw error; }
+
+                const taskPayload = tasks.map(t=>({
+                    id:cloudUuid(t.id), title:t.title, description:t.description||null,
+                    assigned_to:t.assignedToId||cloudProfileForRole(t.assignedTo)?.id||userId,
+                    created_by:t.createdById||userId, project_id:t.projectId&&/^[0-9a-f-]{36}$/i.test(t.projectId)?t.projectId:null,
+                    priority:t.priority||"MEDIUM", status:t.status||"TODO", deadline:t.deadline||null,
+                    created_at:t.createdAt||nowISO(), completed_at:t.completedAt||null
+                }));
+                if(taskPayload.length){ const {error}=await supabaseClient.from("tasks").upsert(taskPayload); if(error) throw error; }
+
+                const peoplePayload=people.map(p=>({id:cloudUuid(p.id),name:p.name,role:p.role||null,department:p.department||null,phone:p.phone||null,description:p.description||null,is_active:p.isActive!==false}));
+                if(peoplePayload.length){const {error}=await supabaseClient.from("people").upsert(peoplePayload);if(error)throw error;}
+
+                const eqByCode={};
+                equipment.forEach(e=>eqByCode[e.code]=e);
+                const eqPayload=equipment.map(e=>({id:cloudUuid(e.id),code:e.code,equipment_type:e.type||"main",name:e.name,category:e.category,parent_id:e.parent?cloudUuid(eqByCode[e.parent]?.id):null,status:e.status||"سالم",location:e.location||null,last_check_date:cloudDate(e.checkDate)||null,description:e.description||null}));
+                if(eqPayload.length){const {error}=await supabaseClient.from("equipment").upsert(eqPayload);if(error)throw error;}
+            }
+
+            const reportPayload=reports.map(r=>{
+                const p=cloudProfileForRole(r.manager); return {
+                    id:cloudUuid(r.id), manager_id:r.managerId||p?.id||userId,
+                    jalali_year:Number((r.month||currentMonth).split("/")[0])||1405,
+                    jalali_month:Number((r.month||currentMonth).split("/")[1])||1,
+                    week_number:Number(r.week)||1, period_start:cloudDate(r.date)||null,
+                    summary:r.doneList||null,challenges:r.issues||null,next_week_plan:r.suggestions||null,
+                    quality_score:Number(r.quality)||0,delayed_tasks:Number(r.delayed)||0,
+                    status:r.approved?"APPROVED":r.rejected?"REJECTED":"PENDING",feedback:r.feedback||null,
+                    submitted_at:r.submittedAt||nowISO(),approved_at:r.approvedAt||null,rejected_at:r.rejectedAt||null,
+                    approved_by:r.approvedById||cloudProfileForRole(r.approvedBy)?.id||null,
+                    rejected_by:r.rejectedById||cloudProfileForRole(r.rejectedBy)?.id||null,version:Number(r.version)||1
+                };
+            });
+            if(reportPayload.length){const {error}=await supabaseClient.from("weekly_reports").upsert(reportPayload);if(error)throw error;}
+
+            for(const r of reports){
+                const rid=cloudUuid(r.id);
+                await supabaseClient.from("report_tasks").delete().eq("report_id",rid);
+                if(r.taskIds?.length){
+                    const rows=r.taskIds.map(tid=>({report_id:rid,task_id:cloudUuid(tid),completed:true}));
+                    const {error}=await supabaseClient.from("report_tasks").insert(rows); if(error) throw error;
+                }
+            }
+
+            for(const req of loanRequests){
+                const requesterId=req.requesterId||cloudProfileForRole(req.requester)?.id;
+                if(!requesterId) continue;
+                const statusMap={pending:"PENDING",completed:"APPROVED",rejected:"REJECTED"};
+                const {error}=await supabaseClient.from("equipment_requests").upsert({
+                    id:cloudUuid(req.id),requester_id:requesterId,requested_at:req.requestedAt||nowISO(),
+                    requested_return_date:cloudDate(req.returnDate)||null,note:req.note||null,status:statusMap[req.status]||"PENDING",
+                    decided_by:cloudProfileForRole(req.decidedBy)?.id||null,decided_at:req.decidedAt||null
+                });
+                if(error) throw error;
+                await supabaseClient.from("equipment_request_items").delete().eq("request_id",cloudUuid(req.id));
+                const rows=req.items.map(it=>({request_id:cloudUuid(req.id),equipment_id:it.equipmentId||cloudUuid(equipment.find(e=>e.code===it.code)?.id),decision:({pending:"PENDING",approve:"APPROVED",reject:"REJECTED"}[it.decision]||"PENDING")}));
+                if(rows.length){const {error:e2}=await supabaseClient.from("equipment_request_items").insert(rows);if(e2)throw e2;}
+            }
+        }
+
+        // Override the original synchronous storage function with a cloud-aware version.
+        saveAll = function(){
+            if (!cloudMode) {
+                localStorage.setItem("basair_projects",JSON.stringify(projects));
+                localStorage.setItem("basair_reports",JSON.stringify(reports));
+                localStorage.setItem("basair_tasks",JSON.stringify(tasks));
+                localStorage.setItem("basair_people",JSON.stringify(people));
+                localStorage.setItem("basair_equipment",JSON.stringify(equipment));
+                localStorage.setItem("basair_loan_requests",JSON.stringify(loanRequests));
+                localStorage.setItem("basair_loan_history",JSON.stringify(loanHistory));
+                localStorage.setItem("basair_notifications",JSON.stringify(notifications));
+                localStorage.setItem("basair_activity",JSON.stringify(activityLog));
+                localStorage.setItem("basair_month",currentMonth);
+                return;
+            }
+            cloudSaveAll().then(()=>showToast("☁️ اطلاعات در Supabase ذخیره شد.","success")).catch(err=>{
+                console.error(err); showToast("❌ ذخیره در Supabase ناموفق بود: "+(err.message||err),"error");
+            });
+        };
+
+        async function cloudInitialize() {
+            try {
+                await cloudLoadData();
+                migrateAndAudit();
+                fillManagerFilters(); renderProjects(); renderReports(); renderArchive(); renderTasks(); renderPerformance();
+                renderPeople(); renderEquipment(); renderEquipmentRequests(); renderNotifications(); renderActivity(); updateDashboard(); updateMonthly(); applyPermissions();
+            } catch(err) {
+                console.error(err);
+                showToast("❌ دریافت اطلاعات از Supabase ناموفق بود: "+(err.message||err),"error");
+            }
+        }
+
+        login = async function(){
+            const email=(document.getElementById("loginEmail")?.value||"").trim();
+            const pass=document.getElementById("loginPassword").value.trim();
+            const error=document.getElementById("loginError");
+            error.style.display="none";
+            if(!email){
+                // Backward-compatible local login until Supabase Auth users are created.
+                if(USERS[pass]){
+                    currentUser=USERS[pass]; cloudMode=false;
+                    sessionStorage.setItem("basair_user",pass);
+                    document.getElementById("loginPage").style.display="none"; document.getElementById("app").style.display="block";
+                    document.getElementById("currentRole").textContent=currentUser.role; document.getElementById("sidebarRole").textContent=currentUser.role;
+                    applyPermissions(); initialize(); logActivity("ورود محلی به سامانه",null); return;
+                }
+                error.textContent="ایمیل را وارد کنید تا از Supabase وارد شوید."; error.style.display="block"; return;
+            }
+            const {data,error:authError}=await supabaseClient.auth.signInWithPassword({email,password:pass});
+            if(authError){error.textContent=authError.message||"ورود ناموفق بود.";error.style.display="block";return;}
+            const uid=authDataId(data);
+            const {data:profile,error:profileError}=await supabaseClient.from("profiles").select("*, departments(name)").eq("id",uid).single();
+            if(profileError||!profile){await supabaseClient.auth.signOut();error.textContent="برای این حساب، پروفایل مدیریتی در Supabase ساخته نشده است.";error.style.display="block";return;}
+            currentUser={authId:uid,role:profile.role,dept:profile.role==="مدیر رسانه"?"all":cloudDepartmentName(profile.department_id),departmentId:profile.department_id,email};
+            cloudMode=true;
+            sessionStorage.setItem("basair_cloud","1");
+            document.getElementById("loginPage").style.display="none";document.getElementById("app").style.display="block";
+            document.getElementById("currentRole").textContent=currentUser.role;document.getElementById("sidebarRole").textContent=currentUser.role;
+            applyPermissions(); await cloudInitialize(); logActivity("ورود به سامانه",null);
+        };
+
+        function authDataId(data){ return data?.user?.id || null; }
+
+        logout = async function(){
+            if(cloudMode){ try{await supabaseClient.auth.signOut();}catch(_){} }
+            if(currentUser) logActivity("خروج از سامانه",null);
+            cloudMode=false; currentUser=null; sessionStorage.removeItem("basair_user"); sessionStorage.removeItem("basair_cloud");
+            document.getElementById("app").style.display="none";document.getElementById("loginPage").style.display="flex";
+            document.getElementById("loginPassword").value=""; if(document.getElementById("loginEmail"))document.getElementById("loginEmail").value="";
+        };
+
+        checkSession = async function(){
+            const {data}=await supabaseClient.auth.getSession();
+            if(data?.session?.user){
+                const uid=data.session.user.id;
+                const {data:profile}=await supabaseClient.from("profiles").select("*").eq("id",uid).single();
+                if(profile){
+                    cloudMode=true;
+                    cloudProfiles=[profile];
+                    try{cloudDepartments=await supabaseClient.from("departments").select("*").then(x=>x.data||[]);}catch(_){cloudDepartments=[];}
+                    currentUser={authId:uid,role:profile.role,dept:profile.role==="مدیر رسانه"?"all":cloudDepartmentName(profile.department_id),departmentId:profile.department_id,email:data.session.user.email||""};
+                    document.getElementById("loginPage").style.display="none";document.getElementById("app").style.display="block";
+                    document.getElementById("currentRole").textContent=currentUser.role;document.getElementById("sidebarRole").textContent=currentUser.role;
+                    applyPermissions(); await cloudInitialize(); return;
+                }
+            }
+            const pass=sessionStorage.getItem("basair_user");
+            if(pass&&USERS[pass]){currentUser=USERS[pass];cloudMode=false;document.getElementById("loginPage").style.display="none";document.getElementById("app").style.display="block";document.getElementById("currentRole").textContent=currentUser.role;document.getElementById("sidebarRole").textContent=currentUser.role;applyPermissions();initialize();}
+        };
+
+        // Cloud-aware activity logger.
+        const originalLogActivity = logActivity;
+        logActivity = function(action, entityId){
+            if(!currentUser)return;
+            activityLog.unshift({id:crypto.randomUUID(),user:currentUser.role,action,taskId:entityId||null,time:nowISO()});
+            activityLog=activityLog.slice(0,500);
+            if(cloudMode && currentUser.authId){
+                supabaseClient.from("activity_logs").insert({actor_id:currentUser.authId,action,entity_type:entityId?"entity":null,entity_id:entityId||null}).then(({error})=>{if(error)console.warn("activity log",error);});
+            }else localStorage.setItem("basair_activity",JSON.stringify(activityLog));
+        };
+
+        // Cloud-aware report approval/rejection. These call the database functions created earlier.
+        const localApproveReport = approveReport;
+        approveReport = async function(){
+            if(!cloudMode){localApproveReport();return;}
+            if(!isAdmin()||!editingReport)return;
+            const {error}=await supabaseClient.rpc("approve_weekly_report",{p_report_id:editingReport});
+            if(error){showToast("❌ تأیید گزارش ناموفق بود: "+error.message,"error");return;}
+            await cloudInitialize(); closeModal("reportModal"); showToast("✅ گزارش تأیید شد.","success");
+        };
+
+        const localRejectReportFromList = rejectReportFromList;
+        rejectReportFromList = async function(id){
+            if(!cloudMode){localRejectReportFromList(id);return;}
+            if(!isAdmin())return;
+            const feedback=prompt("علت رد گزارش را وارد کنید:","");
+            if(feedback===null||!feedback.trim())return;
+            const {error}=await supabaseClient.rpc("reject_weekly_report",{p_report_id:id,p_feedback:feedback.trim()});
+            if(error){showToast("❌ رد گزارش ناموفق بود: "+error.message,"error");return;}
+            await cloudInitialize(); showToast("✅ گزارش رد شد و برای اصلاح باز شد.","warning");
+        };
+
+        // Cloud equipment lifecycle: approval creates a real equipment_loans row.
+        const localDecideLoanRequest = decideLoanRequest;
+        decideLoanRequest = async function(id){
+            if(!cloudMode){localDecideLoanRequest(id);return;}
+            if(!isAdmin())return;
+            const r=loanRequests.find(x=>x.id===id); if(!r)return;
+            const choices=r.items.map((it,i)=>({it,i,v:document.getElementById(`loanDecision_${id}_${i}`)?.value||"pending"}));
+            if(choices.some(x=>x.v==="pending")){showToast("❌ برای همه تجهیزات تصمیم بگیرید.","error");return;}
+            for(const x of choices){
+                const eq=equipment.find(e=>e.code===x.it.code);
+                if(!eq?.id) continue;
+                const decision=x.v==="approve"?"APPROVED":"REJECTED";
+                const {error}=await supabaseClient.rpc("decide_equipment_request_item",{p_item_id:x.it.id,p_decision:decision,p_note:null});
+                if(error){showToast("❌ بررسی درخواست ناموفق بود: "+error.message,"error");return;}
+            }
+            await cloudInitialize();
+            showToast("✅ تصمیم تجهیزات ثبت و امانت‌های تأییدشده ایجاد شد.","success");
+        };
+
+        const localRejectAllLoanRequest = rejectAllLoanRequest;
+        rejectAllLoanRequest = async function(id){
+            if(!cloudMode){localRejectAllLoanRequest(id);return;}
+            if(!isAdmin())return;
+            const r=loanRequests.find(x=>x.id===id);if(!r)return;
+            for(const it of r.items){
+                const {error}=await supabaseClient.rpc("decide_equipment_request_item",{p_item_id:it.id,p_decision:"REJECTED",p_note:"رد کامل درخواست توسط مدیر رسانه"});
+                if(error){showToast("❌ رد درخواست ناموفق بود: "+error.message,"error");return;}
+            }
+            await cloudInitialize();showToast("درخواست امانت رد شد.","warning");
+        };
+
+        const localReturnEquipment = returnEquipment;
+        returnEquipment = async function(code){
+            if(!cloudMode){localReturnEquipment(code);return;}
+            if(!isAdmin())return;
+            const e=equipment.find(x=>x.code===code);if(!e)return;
+            const loanId=e.loanId;
+            if(!loanId){showToast("❌ شناسه امانت پیدا نشد.","error");return;}
+            if(!confirm(`بازگشت «${e.name}» از ${e.loanTo||"نامشخص"} ثبت شود؟`))return;
+            const {error}=await supabaseClient.rpc("return_equipment",{p_loan_id:loanId,p_condition:"سالم",p_note:null});
+            if(error){showToast("❌ ثبت برگشت ناموفق بود: "+error.message,"error");return;}
+            await cloudInitialize();showToast("✅ بازگشت تجهیز ثبت شد.","success");
+        };
+
+        // Make cloud ids stable before the first write.
+        const originalCloudSaveAll = cloudSaveAll;
+        cloudSaveAll = async function(){
+            projects.forEach(x=>x.id=cloudUuid(x.id));
+            tasks.forEach(x=>x.id=cloudUuid(x.id));
+            reports.forEach(x=>x.id=cloudUuid(x.id));
+            people.forEach(x=>x.id=cloudUuid(x.id));
+            equipment.forEach(x=>x.id=cloudUuid(x.id));
+            loanRequests.forEach(x=>x.id=cloudUuid(x.id));
+            equipment.forEach(e=>{ if(e.parent){ const p=equipment.find(x=>x.code===e.parent); if(p)e.parentId=p.id; }});
+            return originalCloudSaveAll();
+        };
+
+        // Start application with Supabase session detection.
         checkSession();
     </script>
 
