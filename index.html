@@ -1614,7 +1614,7 @@
 
         function nowISO() { return new Date().toISOString(); }
 
-        function isAdmin() { return currentUser && currentUser.dept === "all"; }
+        function isAdmin() { return currentUser && (currentUser.dept === "all" || currentUser.role === "ADMIN"); }
 
         function managerList() { return [
                 ["مدیر فیلمبرداری", "فیلمبرداری"],
@@ -3893,14 +3893,16 @@
 
             const {data:profile,error:profileError}=await supabaseClient
                 .from("profiles")
-                .select("*, departments(name)")
+                .select("*")
                 .eq("id",uid)
-                .single();
+                .maybeSingle();
 
-            if(profileError||!profile){
+            if(profileError || !profile){
                 await supabaseClient.auth.signOut();
-                console.error("Profile lookup:",profileError);
-                error.textContent="حساب وارد شد، اما پروفایل مدیریتی آن در جدول profiles وجود ندارد.";
+                console.error("Profile lookup:", profileError);
+                error.textContent = profileError
+                    ? "ورود انجام شد، اما خواندن پروفایل از Supabase با خطا مواجه شد."
+                    : "برای این حساب پروفایل مدیریتی پیدا نشد.";
                 error.style.display="block";
                 return;
             }
@@ -3922,7 +3924,7 @@
             currentUser={
                 authId:uid,
                 role:profile.role,
-                dept:profile.role==="مدیر رسانه"?"all":cloudDepartmentName(profile.department_id),
+                dept:(profile.role==="مدیر رسانه" || profile.role==="ADMIN")?"all":cloudDepartmentName(profile.department_id),
                 departmentId:profile.department_id,
                 email:data.user?.email||email
             };
@@ -3979,7 +3981,7 @@
                     .from("profiles")
                     .select("*")
                     .eq("id",uid)
-                    .single();
+                    .maybeSingle();
 
                 if(profileError||!profile){
                     await supabaseClient.auth.signOut();
@@ -3987,8 +3989,11 @@
                     currentUser=null;
                     document.getElementById("app").style.display="none";
                     document.getElementById("loginPage").style.display="flex";
-                    document.getElementById("loginError").textContent="برای این حساب، پروفایل مدیریتی در Supabase وجود ندارد.";
+                    document.getElementById("loginError").textContent = profileError
+                        ? "جلسه وارد شد، اما خواندن پروفایل از Supabase با خطا مواجه شد."
+                        : "برای این حساب پروفایل مدیریتی پیدا نشد.";
                     document.getElementById("loginError").style.display="block";
+                    console.error("Session profile lookup:", profileError);
                     return;
                 }
 
@@ -4013,7 +4018,7 @@
                 currentUser={
                     authId:uid,
                     role:profile.role,
-                    dept:profile.role==="مدیر رسانه"?"all":cloudDepartmentName(profile.department_id),
+                    dept:(profile.role==="مدیر رسانه" || profile.role==="ADMIN")?"all":cloudDepartmentName(profile.department_id),
                     departmentId:profile.department_id,
                     email:session.user.email||""
                 };
