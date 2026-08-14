@@ -1051,7 +1051,7 @@
         <div class="login-box">
             <div class="login-logo">ب</div>
             <h1>سامانه مدیریت رسانه بصائر</h1>
-            <p>رمز دسترسی مدیر یا مدیر تخصصی را وارد کنید.</p>
+            <p>با حساب کاربری Supabase وارد سامانه شوید.</p>
             <div class="login-field">
                 <label>ایمیل</label>
                 <input id="loginEmail" type="email" autocomplete="username" placeholder="ایمیل حساب Supabase">
@@ -1061,7 +1061,7 @@
                 <input id="loginPassword" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter') login()">
             </div>
             <button class="login-btn" onclick="login()">ورود به سامانه</button>
-            <div id="loginError" class="login-error">رمز عبور اشتباه است.</div>
+            <div id="loginError" class="login-error"></div>
         </div>
     </div>
 
@@ -3859,32 +3859,96 @@
         }
 
         login = async function(){
-            const email=(document.getElementById("loginEmail")?.value||"").trim();
-            const pass=document.getElementById("loginPassword").value.trim();
+            const email=(document.getElementById("loginEmail")?.value||"").trim().toLowerCase();
+            const pass=document.getElementById("loginPassword").value;
             const error=document.getElementById("loginError");
             error.style.display="none";
+            error.textContent="";
+
             if(!email){
-                // Backward-compatible local login until Supabase Auth users are created.
-                if(USERS[pass]){
-                    currentUser=USERS[pass]; cloudMode=false;
-                    sessionStorage.setItem("basair_user",pass);
-                    document.getElementById("loginPage").style.display="none"; document.getElementById("app").style.display="block";
-                    document.getElementById("currentRole").textContent=currentUser.role; document.getElementById("sidebarRole").textContent=currentUser.role;
-                    applyPermissions(); initialize(); logActivity("ورود محلی به سامانه",null); return;
-                }
-                error.textContent="ایمیل را وارد کنید تا از Supabase وارد شوید."; error.style.display="block"; return;
+                error.textContent="ایمیل حساب Supabase را وارد کنید.";
+                error.style.display="block";
+                return;
             }
+            if(!pass){
+                error.textContent="رمز عبور را وارد کنید.";
+                error.style.display="block";
+                return;
+            }
+
             const {data,error:authError}=await supabaseClient.auth.signInWithPassword({email,password:pass});
-            if(authError){error.textContent=authError.message||"ورود ناموفق بود.";error.style.display="block";return;}
+            if(authError){
+                console.error("Supabase Auth:",authError);
+                error.textContent="ایمیل یا رمز عبور صحیح نیست، یا حساب Supabase فعال نیست.";
+                error.style.display="block";
+                return;
+            }
+
             const uid=authDataId(data);
-            const {data:profile,error:profileError}=await supabaseClient.from("profiles").select("*, departments(name)").eq("id",uid).single();
-            if(profileError||!profile){await supabaseClient.auth.signOut();error.textContent="برای این حساب، پروفایل مدیریتی در Supabase ساخته نشده است.";error.style.display="block";return;}
-            currentUser={authId:uid,role:profile.role,dept:profile.role==="مدیر رسانه"?"all":cloudDepartmentName(profile.department_id),departmentId:profile.department_id,email};
+            if(!uid){
+                error.textContent="ورود انجام نشد؛ شناسه کاربر دریافت نشد.";
+                error.style.display="block";
+                return;
+            }
+
+            const {data:profile,error:profileError}=await supabaseClient
+                .from("profiles")
+                .select("*, departments(name)")
+                .eq("id",uid)
+                .single();
+
+            if(profileError||!profile){
+                await supabaseClient.auth.signOut();
+                console.error("Profile lookup:",profileError);
+                error.textContent="حساب وارد شد، اما پروفایل مدیریتی آن در جدول profiles وجود ندارد.";
+                error.style.display="block";
+                return;
+            }
+
+            if(profile.is_active===false){
+                await supabaseClient.auth.signOut();
+                error.textContent="این حساب غیرفعال است.";
+                error.style.display="block";
+                return;
+            }
+
             cloudMode=true;
+            cloudProfiles=[profile];
+            try{
+                const {data:deps}=await supabaseClient.from("departments").select("*");
+                cloudDepartments=deps||[];
+            }catch(_){ cloudDepartments=[]; }
+
+            currentUser={
+                authId:uid,
+                role:profile.role,
+                dept:profile.role==="مدیر رسانه"?"all":cloudDepartmentName(profile.department_id),
+                departmentId:profile.department_id,
+                email:data.user?.email||email
+            };
+
+            sessionStorage.removeItem("basair_user");
             sessionStorage.setItem("basair_cloud","1");
-            document.getElementById("loginPage").style.display="none";document.getElementById("app").style.display="block";
-            document.getElementById("currentRole").textContent=currentUser.role;document.getElementById("sidebarRole").textContent=currentUser.role;
-            applyPermissions(); await cloudInitialize(); logActivity("ورود به سامانه",null);
+            document.getElementById("loginPage").style.display="none";
+            document.getElementById("app").style.display="block";
+            document.getElementById("currentRole").textContent=currentUser.role||"کاربر";
+            document.getElementById("sidebarRole").textContent=currentUser.role||"کاربر";
+            applyPermissions();
+
+            try{
+                await cloudInitialize();
+                logActivity("ورود به سامانه",null);
+                showToast("✅ ورود موفق بود.","success");
+            }catch(err){
+                console.error(err);
+                await supabaseClient.auth.signOut();
+                cloudMode=false;
+                currentUser=null;
+                document.getElementById("app").style.display="none";
+                document.getElementById("loginPage").style.display="flex";
+                error.textContent="ورود انجام شد، اما دریافت اطلاعات سامانه ناموفق بود: "+(err.message||err);
+                error.style.display="block";
+            }
         };
 
         function authDataId(data){ return data?.user?.id || null; }
@@ -3898,22 +3962,79 @@
         };
 
         checkSession = async function(){
-            const {data}=await supabaseClient.auth.getSession();
-            if(data?.session?.user){
-                const uid=data.session.user.id;
-                const {data:profile}=await supabaseClient.from("profiles").select("*").eq("id",uid).single();
-                if(profile){
-                    cloudMode=true;
-                    cloudProfiles=[profile];
-                    try{cloudDepartments=await supabaseClient.from("departments").select("*").then(x=>x.data||[]);}catch(_){cloudDepartments=[];}
-                    currentUser={authId:uid,role:profile.role,dept:profile.role==="مدیر رسانه"?"all":cloudDepartmentName(profile.department_id),departmentId:profile.department_id,email:data.session.user.email||""};
-                    document.getElementById("loginPage").style.display="none";document.getElementById("app").style.display="block";
-                    document.getElementById("currentRole").textContent=currentUser.role;document.getElementById("sidebarRole").textContent=currentUser.role;
-                    applyPermissions(); await cloudInitialize(); return;
+            try{
+                const {data,error:sessionError}=await supabaseClient.auth.getSession();
+                if(sessionError) console.error("Supabase session:",sessionError);
+                const session=data?.session;
+                if(!session?.user){
+                    cloudMode=false;
+                    currentUser=null;
+                    document.getElementById("app").style.display="none";
+                    document.getElementById("loginPage").style.display="flex";
+                    return;
                 }
+
+                const uid=session.user.id;
+                const {data:profile,error:profileError}=await supabaseClient
+                    .from("profiles")
+                    .select("*")
+                    .eq("id",uid)
+                    .single();
+
+                if(profileError||!profile){
+                    await supabaseClient.auth.signOut();
+                    cloudMode=false;
+                    currentUser=null;
+                    document.getElementById("app").style.display="none";
+                    document.getElementById("loginPage").style.display="flex";
+                    document.getElementById("loginError").textContent="برای این حساب، پروفایل مدیریتی در Supabase وجود ندارد.";
+                    document.getElementById("loginError").style.display="block";
+                    return;
+                }
+
+                if(profile.is_active===false){
+                    await supabaseClient.auth.signOut();
+                    cloudMode=false;
+                    currentUser=null;
+                    document.getElementById("app").style.display="none";
+                    document.getElementById("loginPage").style.display="flex";
+                    document.getElementById("loginError").textContent="این حساب غیرفعال است.";
+                    document.getElementById("loginError").style.display="block";
+                    return;
+                }
+
+                cloudMode=true;
+                cloudProfiles=[profile];
+                try{
+                    const {data:deps}=await supabaseClient.from("departments").select("*");
+                    cloudDepartments=deps||[];
+                }catch(_){ cloudDepartments=[]; }
+
+                currentUser={
+                    authId:uid,
+                    role:profile.role,
+                    dept:profile.role==="مدیر رسانه"?"all":cloudDepartmentName(profile.department_id),
+                    departmentId:profile.department_id,
+                    email:session.user.email||""
+                };
+
+                sessionStorage.removeItem("basair_user");
+                sessionStorage.setItem("basair_cloud","1");
+                document.getElementById("loginPage").style.display="none";
+                document.getElementById("app").style.display="block";
+                document.getElementById("currentRole").textContent=currentUser.role||"کاربر";
+                document.getElementById("sidebarRole").textContent=currentUser.role||"کاربر";
+                applyPermissions();
+                await cloudInitialize();
+            }catch(err){
+                console.error("Session initialization:",err);
+                cloudMode=false;
+                currentUser=null;
+                document.getElementById("app").style.display="none";
+                document.getElementById("loginPage").style.display="flex";
+                document.getElementById("loginError").textContent="اتصال به حساب Supabase برقرار نشد.";
+                document.getElementById("loginError").style.display="block";
             }
-            const pass=sessionStorage.getItem("basair_user");
-            if(pass&&USERS[pass]){currentUser=USERS[pass];cloudMode=false;document.getElementById("loginPage").style.display="none";document.getElementById("app").style.display="block";document.getElementById("currentRole").textContent=currentUser.role;document.getElementById("sidebarRole").textContent=currentUser.role;applyPermissions();initialize();}
         };
 
         // Cloud-aware activity logger.
@@ -4004,6 +4125,16 @@
             equipment.forEach(e=>{ if(e.parent){ const p=equipment.find(x=>x.code===e.parent); if(p)e.parentId=p.id; }});
             return originalCloudSaveAll();
         };
+
+        // Keep the UI synchronized with Supabase Auth.
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            if(event === "SIGNED_OUT" || !session){
+                cloudMode=false;
+                currentUser=null;
+                document.getElementById("app").style.display="none";
+                document.getElementById("loginPage").style.display="flex";
+            }
+        });
 
         // Start application with Supabase session detection.
         checkSession();
