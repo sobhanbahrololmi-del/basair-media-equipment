@@ -2828,9 +2828,9 @@
                     <tr>
                     <td>${escapeHTML(p.name)}</td>
                     <td>${escapeHTML(p.role||"-")}</td>
-                    <td>${escapeHTML(p.dept||"-")}</td>
-                    <td>${p.status==="فعال"?'<span class="badge badge-green">فعال</span>':'<span class="badge badge-gray">غیرفعال</span>'}</td>
-                    <td>${escapeHTML(p.skills||"-")}</td>
+                    <td>${escapeHTML(p.dept||p.department||"-")}</td>
+                    <td>${(p.status||((p.isActive===false)?"غیرفعال":"فعال"))==="فعال"?'<span class="badge badge-green">فعال</span>':'<span class="badge badge-gray">غیرفعال</span>'}</td>
+                    <td>${escapeHTML(p.skills||p.description||"-")}</td>
                     <td>${isAdmin()?`<button class="btn btn-danger" onclick="deletePerson(${i})">حذف</button>`:"-"}</td>
                     </tr>`).join("") : `<tr><td colspan="6" class="empty">نیرویی ثبت نشده است.</td></tr>`;
         }
@@ -2843,33 +2843,71 @@
             document.getElementById("personModal").classList.add("show");
         }
 
-        function savePerson() {
+        async function savePerson() {
             if (!isAdmin()) return;
             const name = document.getElementById("personName").value.trim();
             if (!name) { showToast("❌ نام الزامی است.", "error"); return; }
-            people.push({
-                name: name,
+
+            const person = {
+                id: crypto.randomUUID(),
+                name,
                 role: document.getElementById("personRole").value.trim(),
                 dept: document.getElementById("personDept").value,
+                department: document.getElementById("personDept").value,
                 status: document.getElementById("personStatus").value,
-                skills: document.getElementById("personSkills").value.trim()
-            });
-            logActivity("افزودن نیروی جدید: " + name, null);
-            saveAll();
+                isActive: document.getElementById("personStatus").value === "فعال",
+                skills: document.getElementById("personSkills").value.trim(),
+                description: document.getElementById("personSkills").value.trim()
+            };
+
+            if (cloudMode) {
+                const { error } = await supabaseClient.from("people").insert({
+                    id: person.id,
+                    name: person.name,
+                    role: person.role || null,
+                    department: person.department || null,
+                    phone: null,
+                    description: person.description || null,
+                    is_active: person.isActive
+                });
+                if (error) {
+                    console.error("people.insert:", error);
+                    showToast("❌ ثبت نیرو در Supabase ناموفق بود: " + (error.message || error), "error");
+                    return;
+                }
+            } else {
+                people.push(person);
+                localStorage.setItem("basair_people", JSON.stringify(people));
+            }
+
+            if (cloudMode) people.push(person);
+            logActivity("افزودن نیروی جدید: " + name, person.id);
             renderPeople();
             updateDashboard();
             closeModal("personModal");
             showToast("✅ نیرو با موفقیت ثبت شد.", "success");
         }
 
-        function deletePerson(i) {
+        async function deletePerson(i) {
             if (!isAdmin()) return;
             const p = people[i];
             if (!p) return;
             if (!confirm(`نیروی «${p.name}» حذف شود؟`)) return;
+
+            if (cloudMode) {
+                const { error } = await supabaseClient.from("people").delete().eq("id", p.id);
+                if (error) {
+                    console.error("people.delete:", error);
+                    showToast("❌ حذف نیرو از Supabase ناموفق بود: " + (error.message || error), "error");
+                    return;
+                }
+            } else {
+                people.splice(i, 1);
+                localStorage.setItem("basair_people", JSON.stringify(people));
+            }
+
             people.splice(i, 1);
-            logActivity("حذف نیرو: " + p.name, null);
-            saveAll();
+            logActivity("حذف نیرو: " + p.name, p.id);
             renderPeople();
             updateDashboard();
             showToast("🗑 نیرو حذف شد.", "warning");
@@ -3698,7 +3736,18 @@
                 };
             });
 
-            people = peopleRows.map(p=>({id:p.id,name:p.name||"",role:p.role||"",department:p.department||"",phone:p.phone||"",description:p.description||"",isActive:p.is_active!==false}));
+            people = peopleRows.map(p=>({
+                id:p.id,
+                name:p.name||"",
+                role:p.role||"",
+                department:p.department||"",
+                dept:p.department||"",
+                phone:p.phone||"",
+                description:p.description||"",
+                skills:p.description||"",
+                status:p.is_active===false?"غیرفعال":"فعال",
+                isActive:p.is_active!==false
+            }));
 
             const codeById = Object.fromEntries(equipmentRows.map(e=>[e.id,e.code]));
             equipment = equipmentRows.map(e=>({
@@ -3776,7 +3825,15 @@
                 }));
                 if(taskPayload.length){ const {error}=await supabaseClient.from("tasks").upsert(taskPayload); if(error) throw error; }
 
-                const peoplePayload=people.map(p=>({id:cloudUuid(p.id),name:p.name,role:p.role||null,department:p.department||null,phone:p.phone||null,description:p.description||null,is_active:p.isActive!==false}));
+                const peoplePayload=people.map(p=>({
+                    id:cloudUuid(p.id),
+                    name:p.name,
+                    role:p.role||null,
+                    department:p.department||p.dept||null,
+                    phone:p.phone||null,
+                    description:p.description||p.skills||null,
+                    is_active:p.isActive!==false && p.status!=="غیرفعال"
+                }));
                 if(peoplePayload.length){const {error}=await supabaseClient.from("people").upsert(peoplePayload);if(error)throw error;}
 
                 const eqByCode={};
